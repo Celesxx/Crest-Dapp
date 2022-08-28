@@ -1,0 +1,90 @@
+#root
+{
+  height: 100vh;
+  width: 100%;
+  background: #0B0B0F;
+  color: white;
+  
+}
+
+.home 
+{
+  height: 100%;
+  width: 100%;
+  background: #0B0B0F;
+}
+
+.home-body 
+{
+  z-index: 9;
+  height: 90%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-core
+{
+  height: 50%;
+  width: 37%;
+  margin-bottom: 10%;
+}
+
+.home-title
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+  text-align: center;
+} 
+
+.title-small { font-size: 68px !important; }
+.title-big { font-size: 95px !important; }
+.home-button { width: 100%; }
+
+.button-input
+{
+  width: 20%;
+  background: linear-gradient(225deg, #18C8FF 14.89%, #933FFE 85.85%);
+  border-radius: 10px !important;
+}
+
+.home-ellipse
+{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0; 
+  z-index: 8;
+  overflow: hidden;
+}
+
+.ellipse
+{
+  border: 1px solid rgba(125, 125, 125, 0.6);
+  border-radius: 50%;
+  transform: rotate(14.21deg);
+  margin-right: 8%;
+  margin-bottom: 5%;
+}
+
+.l1
+{
+  height: 50%;
+  width: 60%;
+}
+
+.l2
+{
+  height: 70%;
+  width: 80%;
+}
+
+.l3
+{
+  height: 90%;
+  width: 100%;
+}

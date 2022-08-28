@@ -1,0 +1,80 @@
+
+.navbar
+{
+  position: relative;
+  height: 9%;
+  align-items: center;
+  justify-content: space-between;
+  background: #0B0B0F;
+  z-index: 10;
+  border-bottom: 1px solid white;
+}
+
+.navbar-logo 
+{ 
+  width: 40%; 
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.navbar-logo-core
+{ 
+  width: 60%; 
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.navbar-link
+{
+  width: 20%;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 22px;
+}
+
+.link
+{
+  text-decoration: none;
+  color: white
+}
+
+.link:hover
+{
+  color:red
+}
+
+.navbar-button 
+{ 
+  width: 40%; 
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-button-core
+{ 
+  width: 60%; 
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.button
+{
+  font-style: normal;
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.market-button
+{
+  width: 25%;
+  border: 1px solid white !important;
+  border-radius: 10px !important;
+}
+
+.dapp-button
+{
+  width: 50%;
+  background: linear-gradient(225deg, #18C8FF 14.89%, #933FFE 85.85%);
+  border-radius: 10px !important;
+}
