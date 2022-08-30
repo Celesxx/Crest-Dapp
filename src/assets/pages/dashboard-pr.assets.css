@@ -1,0 +1,56 @@
+.dashboard-personnal-cards
+{
+    width: 60%;
+    height: 40%;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    gap: 25px;
+    overflow-x: auto;
+}
+
+.dashboard-personnal-cards::-webkit-scrollbar { display: none; }
+
+.personnal-cards
+{
+
+    flex: 1 1 auto;
+    height: 50%;
+    width: 20%;
+    border: 1px solid white;
+    border-radius: 22px;
+}
+
+.dashboard-personnal-info
+{
+    height: 40%;
+    width: 60%;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    gap: 25px;
+}
+
+.personnal-info-cards
+{
+    height: 90%;
+    width: 40%;
+    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.info-cards
+{
+    height: 45%;
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 22px;
+}
+
+.info-title
+{
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+}

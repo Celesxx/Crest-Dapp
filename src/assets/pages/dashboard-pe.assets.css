@@ -1,0 +1,60 @@
+.dashboard-core
+{
+    width: 60%;
+    height: 80%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 24px;
+}
+
+.dashboard-cards
+{
+    height: 30%;
+    width: 30%;
+}
+
+.dashboard-items
+{
+    height: 80%;
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 22px;
+}
+
+.title-dashboard { padding-left: 5%; }
+
+.dashboard-link
+{
+    width: 100%;
+    height: 100%;
+}
+
+.dashboard-badge-core
+{
+    height: 30%;
+    width: 30%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.dashboard-badge
+{
+    height: 80%;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.dashboard-badge-items
+{
+    border: 1px solid white;
+    border-radius: 22px;
+    width: 100%;
+    height: 20%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-badge-title{ margin-left: 5%; }
+.dashboard-badge-count{ margin-right: 5%; }

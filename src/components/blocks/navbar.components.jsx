@@ -1,19 +1,9 @@
 import 'assets/blocks/navbar.assets.css';
 import 'assets/global.assets.css';
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
 import Logo from 'assets/img/crest-icon.png'
 import LogoName from 'assets/img/crest-name.png'
 
-// const LocationFilter = () => 
-// {
-//  let navigate = useNavigate();
-//  LocationFilter()
-//   function handleChange(value) {
-//     navigate(`${value}`);
-//     value = "";
-//   }
-// }
 
 class Navbar extends React.Component 
 {
@@ -29,29 +19,27 @@ class Navbar extends React.Component
       return(
           <div className="navbar flex row">
 
-            <div className="navbar-logo flex row">
-              <div className="navbar-logo-core flex row">
-                <img className="logo-crest" src={Logo} alt={Logo} />
-              </div>
+            <div className="navbar-logo flex row center">
+              <img className="logo-crest" src={Logo} alt={Logo} />
             </div>
 
-            <div className="navbar-link flex row">
+            <div className="navbar-core flex row">
 
-              <select className="navbar-select" onChange={event => this.handleLanguage(event.target.value)}>
-                <option>Language</option>
-                <option value="east">French</option>
-                <option value="west">English</option>
-                <option value="south">Japanese</option>
-              </select>
+                <select className="navbar-select" onChange={event => this.handleLanguage(event.target.value)}>
+                  <option>Language</option>
+                  <option value="east">French</option>
+                  <option value="west">English</option>
+                  <option value="south">Japanese</option>
+                </select>
 
-              <select className="navbar-select" onChange={event => this.handleLanguage(event.target.value)}>
-                <option>Ressources</option>
-                <option value="east">Charts</option>
-                <option value="west">Documentation</option>
-                <option value="south">Disclaimer</option>
-                <option value="south">Teams</option>
-              </select>
-              
+                <select className="navbar-select" onChange={event => this.handleLanguage(event.target.value)}>
+                  <option>Ressources</option>
+                  <option value="east">Charts</option>
+                  <option value="west">Documentation</option>
+                  <option value="south">Disclaimer</option>
+                  <option value="south">Teams</option>
+                </select>
+                
             </div>
 
             <div className="navbar-title flex row center">
@@ -60,8 +48,8 @@ class Navbar extends React.Component
 
             <div className="navbar-button flex row">
               <div className="navbar-button-core flex row">
-                <div className="button market-button flex row center"> <p>Buy/Sell</p> </div>
-                <div className="button dapp-button flex row center"> <p>Launch Dapp</p> </div>
+                <button className="button market-button flex row center"> <p>Buy/Sell $CREST</p> </button>
+                <button className="button dapp-button flex row center"> <p>Connect Wallet</p> </button>
               </div>
             </div>
 

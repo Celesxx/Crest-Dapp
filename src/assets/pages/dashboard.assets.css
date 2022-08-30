@@ -1,0 +1,60 @@
+.dashboard-button
+{
+    width: 60%;
+    height: 20%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dashboard-button-core
+{
+    width: 30%;
+    height: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.button-dash
+{
+    color: white;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+
+
+.button-protocol
+{
+    height: 20%;
+    width: 40%;
+    border: 0px !important;
+    background: rgba(0,0,0,0.0) !important;
+    border-left: 3px solid rgb(0, 133, 255) !important;
+    border-right: 3px solid rgba(255, 26, 136, 0.8) !important;
+    background-image: linear-gradient(90deg, rgb(255, 26, 136), #0085FF),linear-gradient(90deg, rgb(0, 133, 255), #00FBBF) !important;
+    background-size: 100% 2px !important;
+    background-position: 0 0, 0 100% !important;
+    background-repeat: no-repeat !important;
+    border-radius: 10px !important;
+}
+
+.button-personnal
+{
+    height: 20%;
+    width: 40%;
+    border: 0px !important;
+    background: rgba(0,0,0,0.0) !important;
+    border-left: 3px solid rgb(1, 194, 222) !important;
+    border-right: 3px solid rgba(243, 255, 254, 0.8) !important;
+    background-image: linear-gradient(90deg, rgb(1, 194, 222), rgb(243, 255, 254)),linear-gradient(90deg, rgb(1, 194, 222), #F3FFFE) !important;
+    background-size: 100% 2px !important;
+    background-position: 0 0, 0 100% !important;
+    background-repeat: no-repeat !important;
+    border-radius: 10px !important;
+}
+
+.button-dash:hover
+{
+    transform: scale(0.95, 0.95);
+}

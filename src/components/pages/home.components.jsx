@@ -1,8 +1,8 @@
 import 'assets/index.assets.css';
 import 'assets/global.assets.css';
 import React from "react";
-import { Link } from "react-router-dom";
 import Navbar from "components/blocks/navbar.components.jsx"
+import Leftbar from "components/blocks/leftbar.components.jsx"
 
 class Index extends React.Component 
 {
@@ -12,6 +12,7 @@ class Index extends React.Component
         <div className="home p1">
 
           <Navbar></Navbar>
+          <Leftbar></Leftbar>
 
           <div className="home-body flex column">
            

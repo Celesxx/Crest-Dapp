@@ -1,4 +1,5 @@
-body {
+body 
+{
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -7,12 +8,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-family: 'Inter';
 
-  }
+}
   
-  code {
+code
+{
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
-  }
+}
 
 
 .flex { display: flex; }
@@ -20,3 +22,10 @@ body {
 .column { flex-direction: column; }
 .center { justify-content: center; align-items: center; }
 .h1 { margin: 0; }
+button
+{
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: white;
+}
