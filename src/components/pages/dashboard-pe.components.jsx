@@ -5,7 +5,7 @@ import 'assets/pages/dashboard-pe.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
-import { useHistory } from 'react-router-dom';
+import Sphere from "assets/img/sphere.svg"
 
 class Dashboard extends React.Component 
 {
@@ -81,16 +81,8 @@ class Dashboard extends React.Component
 
             </div>
 
-            <div className="home-ellipse flex column center">
-                <div className="ellipse l1"></div>
-            </div>
-            
-            <div className="home-ellipse flex column center">
-                <div className="ellipse l2"></div>
-            </div>
-
-            <div className="home-ellipse flex column center">
-                <div className="ellipse l3"></div>
+            <div className="home-sphere flex column center flex row center">
+                <img src={Sphere} alt={Sphere} className="sphere-img" />
             </div>
 
         </div>

@@ -1,10 +1,11 @@
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/pages/dashboard.assets.css'
-import 'assets/pages/dashboard-pr.assets.css'
+import "assets/index.assets.css";
+import "assets/global.assets.css";
+import "assets/pages/dashboard.assets.css"
+import "assets/pages/dashboard-pr.assets.css"
 import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
+import Sphere from "assets/img/sphere.svg"
 
 class Dashboard extends React.Component 
 {
@@ -29,10 +30,6 @@ class Dashboard extends React.Component
 
                 <div className="dashboard-personnal-cards flex">
 
-                    <div className="personnal-cards flex column"> </div>
-                    <div className="personnal-cards flex column"> </div>
-                    <div className="personnal-cards flex column"> </div>
-                    <div className="personnal-cards flex column"> </div>
                     <div className="personnal-cards flex column"> </div>
                     <div className="personnal-cards flex column"> </div>
                     <div className="personnal-cards flex column"> </div>
@@ -65,17 +62,10 @@ class Dashboard extends React.Component
 
             </div>
 
-            <div className="home-ellipse flex column center">
-                <div className="ellipse l1"></div>
+            <div className="home-sphere flex column center flex row center">
+                <img src={Sphere} alt={Sphere} className="sphere-img" />
             </div>
             
-            <div className="home-ellipse flex column center">
-                <div className="ellipse l2"></div>
-            </div>
-
-            <div className="home-ellipse flex column center">
-                <div className="ellipse l3"></div>
-            </div>
 
         </div>
 

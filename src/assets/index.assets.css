@@ -91,3 +91,20 @@
   height: 90%;
   width: 100%;
 }
+
+
+.home-sphere
+{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0; 
+  z-index: 8;
+  overflow: hidden;
+}
+
+.sphere-img
+{
+  height: 100%;
+  width: 100%;
+}

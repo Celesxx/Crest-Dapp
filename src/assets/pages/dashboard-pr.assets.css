@@ -13,10 +13,9 @@
 
 .personnal-cards
 {
-
-    flex: 1 1 auto;
+    flex: 1 0 20%;
     height: 50%;
-    width: 20%;
+    max-width: 20%;
     border: 1px solid white;
     border-radius: 22px;
 }
