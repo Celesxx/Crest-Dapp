@@ -1,0 +1,148 @@
+.profile-laderboard
+{
+    height: 20%;
+    width: 70%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-laderboard-core
+{
+    height: 100%;
+    width: 70%;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+}
+
+
+.profile-laderboard-cards
+{
+    flex: 1 1 25%;
+    max-width: 30%;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.profile-score
+{
+    height: 40%;
+    width: 85%;
+    border: 1px solid white;
+    border-radius: 22px;
+}
+
+.profile-title
+{
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.claim-all-button
+{
+    height: 20%;
+    width: 20%;
+    background: rgba(0,0,0,0.0) !important;
+    border: 0;
+    border-left: 3px solid rgb(1, 194, 222) !important;
+    border-right: 3px solid rgba(243, 255, 254, 0.8) !important;
+    background-image: linear-gradient(90deg, rgb(1, 194, 222), rgb(243, 255, 254)),linear-gradient(90deg, rgb(1, 194, 222), #F3FFFE) !important;
+    background-size: 100% 2px !important;
+    background-position: 0 0, 0 100% !important;
+    background-repeat: no-repeat !important;
+    border-radius: 10px !important;
+}
+
+.profile-table-core
+{
+    height: 60%;
+    width: 70%;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+
+.profile-table-heads
+{
+    padding-top: 8%;
+    width: 80%;
+    height: 10%;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    border-bottom: 1px solid white;
+}
+
+.profile-table-radio
+{
+    height: 100%;
+    width: 8%;
+}
+
+.profile-table-radio-core
+{
+    height: 100%;
+    width: 50%;
+    border-right: 1px solid white;
+    justify-content: flex-start;
+}
+
+.profile-radio-input
+{
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    height: 50%;
+    width: 50%;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+
+
+.profile-radio-input:checked
+{
+    background-color: linear-gradient(225.97deg, #8F00FF 0%, #00E0FF 101,75%);
+}
+
+.profile-table-title, .profile-table-desc
+{
+    flex: 1 1 20%;
+    max-width: 25%;
+    margin: 0;
+}
+
+.profile-table-title
+{
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.profile-table-data
+{
+    width: 80%;
+    height: 10%;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    border-bottom: 1px solid white;
+}
+
+.profile-table-button-core{ height: 100%;}
+
+.profile-table-button
+{
+    height: 60%;
+    width: 60%;
+    background: rgba(0,0,0,0.0) !important;
+    border: 0;
+    border-left: 2px solid rgb(1, 194, 222) !important;
+    border-right: 2px solid rgba(243, 255, 254, 0.8) !important;
+    background-image: linear-gradient(90deg, rgb(1, 194, 222), rgb(243, 255, 254)),linear-gradient(90deg, rgb(1, 194, 222), #F3FFFE) !important;
+    background-size: 100% 2px !important;
+    background-position: 0 0, 0 100% !important;
+    background-repeat: no-repeat !important;
+    border-radius: 10px !important;
+}

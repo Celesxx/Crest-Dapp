@@ -71,7 +71,7 @@
 .shop-items-button
 {
     height: 10%;
-    width: 60%;
+    width: 70%;
     background: rgba(0,0,0,0.0) !important;
     border-right: 3px solid rgb(0, 133, 255) !important;
     border-left: 3px solid rgba(255, 26, 136, 0.8) !important;
@@ -80,4 +80,5 @@
     background-position: 0 0, 0 100% !important;
     background-repeat: no-repeat !important;
     border-radius: 10px !important;
+    border: 0;
 }

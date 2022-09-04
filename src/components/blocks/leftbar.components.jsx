@@ -36,7 +36,12 @@ class Leftbar extends React.Component
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/nft" className="link"><p>My NFT's</p></Link>
+                    <Link to="/profile" className="link"><p>My NFT's</p></Link>
+                    <div className="link-bar"></div>
+                </div>
+
+                <div className="leftbar-link flex column">
+                    <Link to="/swap" className="link"><p>Swap</p></Link>
                     <div className="link-bar"></div>
                 </div>
 

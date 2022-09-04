@@ -81,7 +81,7 @@
 .navbar-button-core
 { 
   height: 100%;
-  width: 60%; 
+  width: 70%; 
   justify-content: space-evenly;
   align-items: center;
 }
@@ -96,7 +96,7 @@
 .button:hover{ transform: scale(0.95, 0.95); }
 
 .market-button
-{
+{ 
   height: 40%;
   width: 40%;
   border: 1px solid white !important;
@@ -109,4 +109,5 @@
   width: 40%;
   background: linear-gradient(223.25deg, #FF1887 6.33%, #0085FF 41.92%, #00FBBF 85.72%);
   border-radius: 10px !important;
+  border: 0;
 }
