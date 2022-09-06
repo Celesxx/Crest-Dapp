@@ -6,9 +6,48 @@ import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
 import Sphere from "assets/img/sphere.svg"
+import Web3 from 'web3'
 
 class Dashboard extends React.Component 
 {
+
+    constructor(props) 
+    {
+        super(props);
+        this.state = 
+        {
+            price: 0,
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+    
+    getPrice(event) 
+    {
+        this.setState(
+        {
+            [event.target.name]: event.target.value
+        });  
+    }
+
+    async componentWillMount() 
+    {
+        await this.loadWeb3()
+        await this.loadBlockchainData()
+    }
+
+    async checkWeb3()
+    {
+        if(this.$store.state.connected)
+        {
+            window.web3 = new Web3(window.ethereum)
+            await window.ethereum.enable()
+
+            const web3 = window.web3
+            this.contract = new web3.eth.Contract(this.contract_abi, this.contract_address);
+            this.connected = true
+            this.getEvent()
+        }
+    }
 
     render()
     {
@@ -35,7 +74,7 @@ class Dashboard extends React.Component
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">$CREST Price</p>
-                        <div className="dashboard-items"></div>
+                        <div className="dashboard-items flex row center">{this.state.price}</div>
                     </div>
 
                     <div className="dashboard-cards flex column">
