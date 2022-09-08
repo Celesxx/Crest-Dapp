@@ -6,53 +6,70 @@ import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
 import Sphere from "assets/img/sphere.svg"
-import Web3 from 'web3'
+import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
+import { connect } from 'react-redux'
+import UserContext from 'userContext.js'
+import Address from 'contracts/address.contracts.json'
+import AbiUniswap from 'contracts/abis/router/UniswapV2Pair.sol/UniswapV2Pair.json'
+import { ethers } from "ethers";
+import Web3Modal from 'web3modal'
+import ContractHelper from 'helpers/contract.helpers.js'
+
+const MapStateToProps = (state) => {
+    return { 
+        address: state.login.address,
+        provider : state.login.provider,
+        price : state.dashboard.price
+    }; 
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginAction: (loginState, data) => { dispatch(LoginActions(loginState, data)); },
+        dashboardAction: (dashboardState, data) => { dispatch(DashboardActions(dashboardState, data)); },
+    };
+};
 
 class Dashboard extends React.Component 
 {
+    static contextType = UserContext
 
     constructor(props) 
     {
         super(props);
         this.state = 
         {
-            price: 0,
+            provider: {},
+            price: null,
         };
-        this.handleChange = this.handleChange.bind(this);
+
+        // this.getDataDashBoard = this.getDataDashBoard.bind(this);
     }
-    
-    getPrice(event) 
+
+    async UNSAFE_componentWillMount () 
     {
-        this.setState(
+        if(this.props.address != "")
         {
-            [event.target.name]: event.target.value
-        });  
-    }
-
-    async componentWillMount() 
-    {
-        await this.loadWeb3()
-        await this.loadBlockchainData()
-    }
-
-    async checkWeb3()
-    {
-        if(this.$store.state.connected)
+            let contractHelper = new ContractHelper()
+            const data = await contractHelper.getProvider()
+            const price = await contractHelper.getPrice(data)
+            this.state.price = price
+            this.forceUpdate();
+        }else
         {
-            window.web3 = new Web3(window.ethereum)
-            await window.ethereum.enable()
-
-            const web3 = window.web3
-            this.contract = new web3.eth.Contract(this.contract_abi, this.contract_address);
-            this.connected = true
-            this.getEvent()
+            console.log("test0")
         }
     }
+    
+    componentDidUpdate(prevProps, prevState) {
+        this.state.provider = this.props.provider
+        this.state.price = this.props.price
+    }
+
 
     render()
     {
-        
-
       return(
         <div className="home p1">
 
@@ -74,7 +91,7 @@ class Dashboard extends React.Component
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">$CREST Price</p>
-                        <div className="dashboard-items flex row center">{this.state.price}</div>
+                        <div className="dashboard-items flex row center"><p className="dashboard-text-stat">{this.state.price}</p></div>
                     </div>
 
                     <div className="dashboard-cards flex column">
@@ -130,4 +147,4 @@ class Dashboard extends React.Component
     }
 }
 
-export default Dashboard;
+export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);

@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #0B0B0F !important;
+    background: black !important;
     border: 0;
     border-right: 3px solid rgb(0, 133, 255) !important;
     border-left: 3px solid rgba(255, 26, 136, 0.8) !important;

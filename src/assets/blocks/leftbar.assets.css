@@ -7,7 +7,7 @@
     left: 0;
     align-items: center;
     justify-content: space-around;
-    background: #0B0B0F;
+    background: black;
     z-index: 10;
     border-right: 1px solid white;
 }

@@ -7,7 +7,7 @@ import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
 import Sphere from "assets/img/sphere.svg"
 import Badge1Popup from "components/popup/buy-badge1.components"
-
+import Ruby from 'assets/img/ruby.mp4'
 class Dashboard extends React.Component 
 {
 
@@ -34,7 +34,11 @@ class Dashboard extends React.Component
                     <div className="shop-items-cards flex column">
 
                         <h3 className="shop-items-title">Badge Name 1</h3>
-                        <div className="shop-items"></div>
+                        <div className="shop-items">
+                            <video className="shop-video" autoPlay muted loop>
+                                <source src={Ruby} type="video/mp4" />
+                            </video>
+                        </div>
                         <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
                         <Badge1Popup></Badge1Popup>
                     
@@ -43,7 +47,11 @@ class Dashboard extends React.Component
                     <div className="shop-items-cards flex column">
 
                         <h3 className="shop-items-title">Badge Name 1</h3>
-                        <div className="shop-items"></div>
+                        <div className="shop-items">
+                            <video className="shop-video" autoPlay muted loop>
+                                <source src={Ruby} type="video/mp4" />
+                            </video>
+                        </div>
                         <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
                         <Badge1Popup></Badge1Popup>
                     
@@ -52,7 +60,11 @@ class Dashboard extends React.Component
                     <div className="shop-items-cards flex column">
 
                         <h3 className="shop-items-title">Badge Name 1</h3>
-                        <div className="shop-items"></div>
+                        <div className="shop-items">
+                            <video className="shop-video" autoPlay muted loop>
+                                <source src={Ruby} type="video/mp4" />
+                            </video>
+                        </div>
                         <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
                         <Badge1Popup></Badge1Popup>
                     

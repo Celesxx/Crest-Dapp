@@ -58,3 +58,9 @@
 
 .dashboard-badge-title{ margin-left: 5%; }
 .dashboard-badge-count{ margin-right: 5%; }
+
+.dashboard-text-stat
+{
+    font-size: 22px;
+    font-weight: 800;
+}

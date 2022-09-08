@@ -3,85 +3,101 @@ import 'assets/global.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
 import LogoName from 'assets/img/crest-name.png'
-import { login, disconnect } from 'store/reducers/login.reducer.js'
-import { useSelector, useDispatch, connect } from 'react-redux'
+// import { login, disconnect } from 'store/reducers/login.reducer.js'
+import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
-
+import Web3 from 'web3'
+// import Web3ContextProvider from 'components/pages/test2';
+import { ethers, providers } from 'ethers'
+import Notiflix from 'notiflix';
+import Web3Modal from 'web3modal'
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import network from 'contracts/network.contracts.js'
+import UserContext from 'userContext.js'
 
 const MapStateToProps = (state) => {
-  return { address: state.login }; 
+  return { address: state.login.address }; 
 };
-
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginAction: (loginState, address, setErrorHandler) => {
-      dispatch(LoginActions(loginState, address, setErrorHandler));
+    loginAction: (loginState, data) => {
+      dispatch(LoginActions(loginState, data));
     },
   };
 };
 
+
 class Navbar extends React.Component 
 {
-
+  static contextType = UserContext
+  
   constructor(props) 
   {
       super(props);
+
       this.state = 
       {
-        address: "test1",
-        dispatch: null,
+        address: "",
+        isMetamaskSupported: false,
+        isLoggedIn: false,
+        provider: {},
       };
 
       // this.connectWallet = this.connectWallet.bind(this);
-      this.test = this.test.bind(this);
+  }
+
+  async UNSAFE_componentWillMount() 
+  {
+    if (window.ethereum) 
+    {
+        this.state.isMetamaskSupported = true
+        if(this.props.address != "") 
+        {
+          this.state.isLoggedIn = true
+          this.state.address = this.props.address
+        }
+        this.state.provider = new ethers.providers.JsonRpcProvider(network.rpcUrls[0])
+    }
   }
 
   componentDidUpdate (prevProps, prevState) {
-    console.log("test000000")
-    console.log(this.props.address)
     this.state.address = this.props.address
   }
 
-  test = () =>
+
+  connectWallet = async () => 
   {
-    this.props.loginAction({address: this.state.address})
+      if (this.state.isMetamaskSupported) 
+      {
+
+        const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
+        let web3Modal = new Web3Modal( { cacheProvider: true, providerOptions, disableInjectedProvider: false })
+
+        const instance = await web3Modal.connect()
+        const newProvider = new ethers.providers.Web3Provider(instance);
+        const chainId = (await newProvider.getNetwork()).chainId
+
+        if (chainId == network.chainId) 
+        {
+          this.state.provider = newProvider
+          this.state.address = await newProvider.getSigner().getAddress()
+          this.state.isLoggedIn = true
+
+          this.props.loginAction({address: this.state.address, action: 'address'})
+          this.context.provider = newProvider
+        }else 
+        {
+          Notiflix.Notify.failure(
+          "Required Network - " + network.chainName, { timeout: 2500, width: '300px', position: 'right-top' });
+        }
+
+      }else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)
+      else window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
   }
 
-  // async connectWallet()
-  // {
-  //     if (window.ethereum) 
-  //     {
-        
-  //       window.web3 = new Web3(window.ethereum)
-  //       await window.ethereum.enable()
-        
-  //       const web3 = window.web3
-  //       const accounts = await web3.eth.getAccounts()
-  //       this.$store.commit('setAccount', accounts[0])
-  //       this.isLoggedIn = true
 
-  //     }
-  //     else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)
-  //     else window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-  // }
-
-
-  
-  async componentWillMount() 
-  {
-    // this.state.address = await this.props.login  
-    console.log("willMountFunction")
-    console.log(`test props : ${this.props}`)
-    // let test = await useSelector((state) => state.loginMetamask.value)
-
-    // if (window.ethereum) 
-    // {
-    //     this.isMetamaskSupported = true
-    //     if(this.$store.state.account != null) this.isLoggedIn = true
-    // }
-  }
 
   render()
     {
@@ -118,7 +134,12 @@ class Navbar extends React.Component
             <div className="navbar-button flex row">
               <div className="navbar-button-core flex row">
                 <button className="button market-button flex row center"> <p>Buy/Sell $CREST</p> </button>
-                <button className="button dapp-button flex row center" onClick={() => this.test()}> <p>Connect Wallet</p> </button>
+                {
+                  this.state.isLoggedIn 
+                  ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{this.state.address}</p></div>
+                  :<button className="button dapp-button flex row center" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
+                }
+                
               </div>
             </div>
 

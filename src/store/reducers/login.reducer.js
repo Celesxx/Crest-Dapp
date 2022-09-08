@@ -4,19 +4,25 @@ export const loginSlice = createSlice(
 {
   name: 'loginMetamask',
   initialState: {
-    value: "",
+    address: "",
+    provider: "",
   },
+
   reducers: 
   {
     login: (state, action) => 
-    { 
-      console.log("test1")
-      console.log("state : ", state.value)
-      console.log("action : ", action.payload.address)
-      state.value = action.payload.address
-      console.log("state after : ", state.value)
+    {
+      switch(action.payload.action)
+      {
+          case 'address': 
+              state.address = action.payload.address 
+              break;
+
+          case 'provider':
+              state.provider = action.payload.provider
+              break;
+      }
     },
-    
   },
 })
 

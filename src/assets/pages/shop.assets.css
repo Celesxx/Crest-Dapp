@@ -54,9 +54,17 @@
 .shop-items
 {
     height: 50%;
-    width: 100%;
+    width: 75%;
+    background: black;
     border: 1px solid white;
     border-radius: 22px;
+}
+
+.shop-video
+{
+    height: 100%;
+    width: 100%;
+    border-radius: 22px; 
 }
 
 .shop-items-description
