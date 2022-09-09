@@ -73,7 +73,7 @@ class Navbar extends React.Component
       {
 
         const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
-        let web3Modal = new Web3Modal( { cacheProvider: true, providerOptions, disableInjectedProvider: false })
+        let web3Modal = new Web3Modal( { cacheProvider: true, providerOptions, disableInjectedProvider: false, theme: "dark" })
 
         const instance = await web3Modal.connect()
         const newProvider = new ethers.providers.Web3Provider(instance);

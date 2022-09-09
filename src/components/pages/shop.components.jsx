@@ -8,6 +8,9 @@ import Leftbar from "components/blocks/leftbar.components.jsx"
 import Sphere from "assets/img/sphere.svg"
 import Badge1Popup from "components/popup/buy-badge1.components"
 import Ruby from 'assets/img/ruby.mp4'
+import Amber from 'assets/img/amber.mp4'
+import Amethyst from 'assets/img/amethyst.mp4'
+
 class Dashboard extends React.Component 
 {
 
@@ -49,7 +52,7 @@ class Dashboard extends React.Component
                         <h3 className="shop-items-title">Badge Name 1</h3>
                         <div className="shop-items">
                             <video className="shop-video" autoPlay muted loop>
-                                <source src={Ruby} type="video/mp4" />
+                                <source src={Amber} type="video/mp4" />
                             </video>
                         </div>
                         <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
@@ -62,7 +65,7 @@ class Dashboard extends React.Component
                         <h3 className="shop-items-title">Badge Name 1</h3>
                         <div className="shop-items">
                             <video className="shop-video" autoPlay muted loop>
-                                <source src={Ruby} type="video/mp4" />
+                                <source src={Amethyst} type="video/mp4" />
                             </video>
                         </div>
                         <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>

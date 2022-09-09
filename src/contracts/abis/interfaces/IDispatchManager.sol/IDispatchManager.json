@@ -21,6 +21,11 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "from",
         "type": "address"
       },

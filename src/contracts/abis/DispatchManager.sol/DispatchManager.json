@@ -8,11 +8,6 @@
       },
       {
         "internalType": "address",
-        "name": "_router",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_token",
         "type": "address"
       },
@@ -70,6 +65,11 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "from",
         "type": "address"
       },
@@ -89,11 +89,6 @@
       {
         "internalType": "address",
         "name": "_owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_router",
         "type": "address"
       },
       {
@@ -143,6 +138,32 @@
   },
   {
     "inputs": [],
+    "name": "lm",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lmRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "minAmountSwap",
     "outputs": [
       {
@@ -181,19 +202,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "router",
-    "outputs": [
-      {
-        "internalType": "contract IUniswapV2Router02",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -207,6 +215,19 @@
       }
     ],
     "name": "setIsManager",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_lm",
+        "type": "address"
+      }
+    ],
+    "name": "setLm",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -255,6 +276,11 @@
       {
         "internalType": "uint256",
         "name": "_burnRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_lmRate",
         "type": "uint256"
       },
       {

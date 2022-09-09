@@ -18,7 +18,7 @@
       },
       {
         "internalType": "address",
-        "name": "_nodeManager",
+        "name": "_badgeManager",
         "type": "address"
       },
       {
@@ -61,12 +61,12 @@
   },
   {
     "inputs": [],
-    "name": "DENOM",
+    "name": "BADGE_MANAGER",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract IBadgeManager",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -74,12 +74,12 @@
   },
   {
     "inputs": [],
-    "name": "NODE_MANAGER",
+    "name": "DENOM",
     "outputs": [
       {
-        "internalType": "contract INodeManager",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

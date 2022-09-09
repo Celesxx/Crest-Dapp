@@ -6,12 +6,46 @@ import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
 import Sphere from "assets/img/sphere.svg"
+import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
+import { connect } from 'react-redux'
+
+
+const MapStateToProps = (state) => {
+    return { 
+        address: state.login.address,
+        resToken: state.dashboard.resToken,
+        resStable: state.dashboard.resStable,
+        totalSupply : state.dashboard.totalSupply,
+        totalBurn : state.dashboard.totalBurn,
+        price : state.dashboard.price,
+        marketCap : state.dashboard.marketCap,
+        totalBadges : state.dashboard.totalBadges,
+        globalBadges : state.dashboard.globalBadges,
+        badge1 : state.dashboard.badge1,
+        badge2 : state.dashboard.badge2,
+        badge3 : state.dashboard.badge3,
+    }; 
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginAction: (loginState, data) => { dispatch(LoginActions(loginState, data)); },
+        dashboardAction: (dashboardState, data) => { dispatch(DashboardActions(dashboardState, data)); },
+    };
+};
+
 
 class Dashboard extends React.Component 
 {
-
+    constructor(props) 
+    {
+        super(props);
+        this.state = 
+        {
+        }
+    }
     
-
   render()
     {
       return(
@@ -76,4 +110,4 @@ class Dashboard extends React.Component
     }
 }
 
-export default Dashboard;
+export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);
