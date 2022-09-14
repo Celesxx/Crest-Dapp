@@ -6,13 +6,176 @@ import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
 import Sphere from "assets/img/sphere.svg"
+import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
+import { connect } from 'react-redux'
+import Address from 'contracts/address.contracts.json'
+import ContractHelper from "helpers/contract.helpers";
+import { BigNumber } from "ethers";
+import Amber from 'assets/img/amber.mp4'
+import Amethyst from 'assets/img/amethyst.mp4'
+import Ruby from 'assets/img/ruby.mp4'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { fireEvent } from '@testing-library/react';
+
+const MapStateToProps = (state) => {
+    return { 
+        address: state.login.address,
+        resToken: state.dashboard.resToken,
+        resStable: state.dashboard.resStable,
+        totalSupply: state.dashboard.totalSupply,
+        totalBurn: state.dashboard.totalBurn,
+        price: state.dashboard.price,
+        marketCap: state.dashboard.marketCap,
+        totalNfts: state.dashboard.totalNfts,
+        dailyReward: state.dashboard.dailyReward,
+        pendingReward: state.dashboard.pendingReward,
+        crestBalance: state.dashboard.crestBalance,
+        nftsDatas: state.dashboard.nftsDatas,
+        totalBadges: state.dashboard.totalBadges,
+        badges: state.dashboard.badges,
+        claimBadges: state.dashboard.claimBadges
+    }; 
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginAction: (data) => { dispatch(LoginActions(data)); },
+        dashboardAction: (data) => { dispatch(DashboardActions(data)); },
+    };
+};
+
+
+
 
 class Dashboard extends React.Component 
 {
 
+    constructor(props) 
+    {
+        super(props);
+        this.state = 
+        {
+            badges: JSON.parse(JSON.stringify(this.props.badges)),
+            claimBadges : JSON.parse(JSON.stringify(this.props.claimBadges)),
+            address: this.props.address,
+            allChecked: false,
+            nbrCheck: 0,
+            totalReward: {}
+        }
+    }
+
+    async UNSAFE_componentWillMount() 
+    {
+        let contractHelper = new ContractHelper()
+
+        let claimBadges = []
+        for(const [key, value] of Object.entries(this.state.badges))
+        {
+            for(const [keyNft, valueNft] of Object.entries(value.userBadges))
+            {
+                let data = 
+                { 
+                    badgeId: key,
+                    nft : value.name, 
+                    id : valueNft.tokenId, 
+                    date : null, 
+                    claimDate : null,
+                    roi: null, 
+                    lifetime: null, 
+                    rewards: null,
+                    checked: false, 
+                }
+
+                data.date = await contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
+                data.claimDate = await contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
+
+                let [ formatPrice, formatRewardAmount ] = [ await contractHelper.setFormatUnit(value.price, 6), await contractHelper.setFormatUnit(value.rewardAmount, 6) ]
+                let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
+
+                data.roi = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
+                data.lifetime = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
+                let formatRewards = await contractHelper.getPendingRewards(valueNft, value.rewardAmount)
+                data.rewards = await contractHelper.setFormatUnit(formatRewards.toString(), 6)
+
+                claimBadges.push(data)
+            }
+
+            this.state.totalReward[key] = 0.0
+        }
+
+        for(const badge of this.state.claimBadges) { this.state.totalReward[badge.badgeId] += badge.rewards }
+        await this.props.dashboardAction({claimBadges: claimBadges, action: "claimBadges"})
+    }
+
+    async singleSelect(key, value)
+    {
+        let contractHelper = new ContractHelper()
+        const provider = await contractHelper.getProvider()
+        await contractHelper.claimBadge(this.state.address, [value.badgeId], [[value.id]], provider)
+    }
+
+    multipleSelect(key, value)
+    {
+        let claimBadges = JSON.parse(JSON.stringify(this.state.claimBadges))
+        claimBadges[key].checked = !claimBadges[key].checked
+        this.state.claimBadges = claimBadges
+        claimBadges[key].checked === true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1
+        this.forceUpdate();
+    }
+
+    allSelect()
+    {
+        let claimBadges = JSON.parse(JSON.stringify(this.state.claimBadges))
+        claimBadges.map(badge => {badge.checked = !badge.checked})
+        claimBadges.map(badge => {badge.checked == true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1})
+        this.state.claimBadges = claimBadges
+        this.state.allChecked = !this.state.allChecked
+        this.forceUpdate();
+    }
+
+    async claimAllBadges()
+    {
+        let contractHelper = new ContractHelper()
+        const provider = await contractHelper.getProvider()
+
+        let data = {}
+        for(const badge of this.state.claimBadges) 
+        {
+            if(badge.checked)
+            {
+                if(data[badge.badgeId] === undefined) data[badge.badgeId] = [badge.id] 
+                else data[badge.badgeId].push(badge.id)
+            }
+        }
+        console.log(`address : ${this.state.address}`)
+        let tokenIds = []
+        let badgeIndex = []
+
+        Object.keys(data).map((key) => {badgeIndex.push(parseInt(key))})
+        Object.values(data).map((value) => {tokenIds.push(value)})
+
+        console.log(badgeIndex)
+        console.log(tokenIds)
+        await contractHelper.claimBadge(this.state.address, badgeIndex, tokenIds, provider)
+    }
+    
+    componentDidUpdate(prevProps, prevState, snapshot) 
+    {
+        for(const [key, value] of Object.entries(this.state))
+        {
+            if (prevProps[key] !== this.props[key])
+            {   
+                this.state[key] = this.props[key] 
+
+                this.forceUpdate();
+            }
+        }
+    }
+
     render()
     {
-        
       return(
         <div className="home p1">
 
@@ -25,24 +188,22 @@ class Dashboard extends React.Component
 
                     <div className="profile-laderboard-core flex row">
 
-                        <div className="profile-laderboard-cards flex column">
-                            <p className="profile-title">My NFT's</p>
-                            <div className="profile-score flex row center">0</div>
-                        </div>
-
-                        <div className="profile-laderboard-cards flex column">
-                            <p className="profile-title">My NFT's</p>
-                            <div className="profile-score flex row center">0</div>
-                        </div>
-
-                        <div className="profile-laderboard-cards flex column">
-                            <p className="profile-title">My NFT's</p>
-                            <div className="profile-score flex row center">0</div>
-                        </div>
+                        {
+                            this.state.badges.map((value, key) => 
+                            {
+                                return (
+                                    <div key={key} className="profile-laderboard-cards flex column">
+                                        <p className="profile-title">{value.name}</p>
+                                        <div className="profile-score flex row center">{this.state.totalReward[key]}</div>
+                                    </div>
+                                )
+                            })
+                        }
+                        
 
                     </div>
 
-                    <button className="claim-all-button button">Claim selected NFT'S (0/3)</button>
+                    <button className="claim-all-button button" onClick={() => this.claimAllBadges()}>Claim selected NFT'S ({this.state.nbrCheck}/{this.state.claimBadges.length})</button>
 
                 </div>
 
@@ -51,7 +212,10 @@ class Dashboard extends React.Component
                     <div className="profile-table-heads flex row">
                         <div className="profile-table-radio profile-table-title flex row center">
                             <div className="profile-table-radio-core flex row center">
-                                <input type="radio" className="profile-radio-input" id="radio-0" name="radio-all" />
+                                <div className="profile-table-input flex row center">
+                                    <input type="checkbox" checked={this.state.allChecked} className="profile-radio-input" id="radio-all" name="radio-all" onChange={() => this.allSelect()} />
+                                    { this.state.allChecked != false && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
+                                </div>
                             </div>
                         </div>
                         <p className="profile-table-title">NFT's</p>
@@ -64,59 +228,36 @@ class Dashboard extends React.Component
                         <p className="profile-table-title"></p>
                     </div>
 
-                    <div className="profile-table-data flex row">
-                        <div className="profile-table-radio profile-table-title flex row center">
-                            <div className="profile-table-radio-core flex row center">
-                                <input type="radio" className="profile-radio-input" id="radio-0" name="radio-all" />
-                            </div>
-                        </div>
-                        <p className="profile-table-desc">Badge1</p>
-                        <p className="profile-table-desc">#00000</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">xx:xx:xx</p>
-                        <p className="profile-table-desc">xx:xx:xx</p>
-                        <div className="profile-table-desc profile-table-button-core flex row center">
-                            <button className="button profile-table-button">claim</button>
-                        </div>
-                    </div>
-
-                    <div className="profile-table-data flex row">
-                        <div className="profile-table-radio profile-table-title flex row center">
-                            <div className="profile-table-radio-core flex row center">
-                                <input type="radio" className="profile-radio-input" id="radio-0" name="radio-all" />
-                            </div>
-                        </div>
-                        <p className="profile-table-desc">Badge1</p>
-                        <p className="profile-table-desc">#00000</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">xx:xx:xx</p>
-                        <p className="profile-table-desc">xx:xx:xx</p>
-                        <div className="profile-table-desc profile-table-button-core flex row center">
-                            <button className="button profile-table-button">claim</button>
-                        </div>
-                    </div>
-
-                    <div className="profile-table-data flex row">
-                        <div className="profile-table-radio profile-table-title flex row center">
-                            <div className="profile-table-radio-core flex row center">
-                                <input type="radio" className="profile-radio-input" id="radio-0" name="radio-all" />
-                            </div>
-                        </div>
-                        <p className="profile-table-desc">Badge1</p>
-                        <p className="profile-table-desc">#00000</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">00/00/20xx</p>
-                        <p className="profile-table-desc">xx:xx:xx</p>
-                        <p className="profile-table-desc">xx:xx:xx</p>
-                        <div className="profile-table-desc profile-table-button-core flex row center">
-                            <button className="button profile-table-button">claim</button>
-                        </div>
-                    </div>
+                    {
+                        this.state.claimBadges.length != 0 && 
+                        (
+                            this.state.claimBadges.map((value, key) => 
+                            {
+                                return (
+                                    <div key={key} className="profile-table-data flex row">
+                                        <div className="profile-table-radio profile-table-title flex row center" >
+                                            <div className="profile-table-radio-core flex row center">
+                                                <div className="profile-table-input flex row center">
+                                                    <input type="checkbox" checked={this.state.claimBadges[key].checked} className="profile-radio-input" id={`radio-${key}`} name={`radio-${key}`} onChange={() => this.multipleSelect(key, value)} />
+                                                    { this.state.claimBadges[key].checked != false && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p className="profile-table-desc">{value.nft}</p>
+                                        <p className="profile-table-desc">{value.id}</p>
+                                        <p className="profile-table-desc">{value.date}</p>
+                                        <p className="profile-table-desc">{value.claimDate}</p>
+                                        <p className="profile-table-desc">{value.roi}</p>
+                                        <p className="profile-table-desc">{value.lifetime}</p>
+                                        <p className="profile-table-desc">{value.rewards}</p>
+                                        <div className="profile-table-desc profile-table-button-core flex row center">
+                                            <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>claim</button>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        )
+                    }
 
                 </div>
 
@@ -132,4 +273,4 @@ class Dashboard extends React.Component
     }
 }
 
-export default Dashboard;
+export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);

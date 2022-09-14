@@ -17,22 +17,24 @@ const MapStateToProps = (state) => {
         address: state.login.address,
         resToken: state.dashboard.resToken,
         resStable: state.dashboard.resStable,
-        totalSupply : state.dashboard.totalSupply,
-        totalBurn : state.dashboard.totalBurn,
-        price : state.dashboard.price,
-        marketCap : state.dashboard.marketCap,
-        totalBadges : state.dashboard.totalBadges,
-        globalBadges : state.dashboard.globalBadges,
-        badge1 : state.dashboard.badge1,
-        badge2 : state.dashboard.badge2,
-        badge3 : state.dashboard.badge3,
+        totalSupply: state.dashboard.totalSupply,
+        totalBurn: state.dashboard.totalBurn,
+        price: state.dashboard.price,
+        marketCap: state.dashboard.marketCap,
+        totalNfts: state.dashboard.totalNfts,
+        dailyReward: state.dashboard.dailyReward,
+        pendingReward: state.dashboard.pendingReward,
+        crestBalance: state.dashboard.crestBalance,
+        nftsDatas: state.dashboard.nftsDatas,
+        totalBadges: state.dashboard.totalBadges,
+        badges: state.dashboard.badges
     }; 
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginAction: (loginState, data) => { dispatch(LoginActions(loginState, data)); },
-        dashboardAction: (dashboardState, data) => { dispatch(DashboardActions(dashboardState, data)); },
+        loginAction: (data) => { dispatch(LoginActions(data)); },
+        dashboardAction: (data) => { dispatch(DashboardActions(data)); },
     };
 };
 
@@ -45,33 +47,14 @@ class Dashboard extends React.Component
         super(props);
         this.state = 
         {
-            provider: {},
             resToken: this.props.resToken,
             resStable: this.props.resStable,
-            totalSupply: this.props.totalSupply,
-            totalBurn: this.props.totalBurn,
-            price: this.props.price,
-            marketCap: this.props.marketCap,
+            totalSupply: this.props.totalSupply != null ? this.props.totalSupply.toFixed(2): this.props.totalSupply,
+            totalBurn: this.props.totalBurn != null ? this.props.totalBurn.toFixed(2) : this.props.totalBurn,
+            price: this.props.price != null ? this.props.price.toFixed(2) : this.props.price,
+            marketCap: this.props.marketCap != null ? this.props.marketCap.toFixed(2) : this.props.marketCap,
             totalBadges: this.props.totalBadges,
-            globalBadges: this.props.globalBadges,
-            badge1: 
-            {
-                name: this.props.badge1.name,
-                totalSupply: this.props.badge1.totalSupply,
-                max: this.props.badge1.max,
-            },
-            badge2:
-            {
-                name: this.props.badge2.name,
-                totalSupply: this.props.badge2.totalSupply,
-                max: this.props.badge2.max,
-            },
-            badge3:
-            {
-                name: this.props.badge3.name,
-                totalSupply: this.props.badge3.totalSupply,
-                max: this.props.badge3.max,
-            },
+            badges: this.props.badges,
         };
 
     }
@@ -88,30 +71,28 @@ class Dashboard extends React.Component
             const { price, marketCap } = await contractHelper.getMarketCapAndPrice(resStable, resToken, totalSupply, 6)
             const globalBadges = await contractHelper.getGlobalBadges(provider)
             const totalBadges = await contractHelper.getTotalNft(globalBadges)
-
-            this.props.dashboardAction({resToken: resToken, action: "resToken"})
-            this.props.dashboardAction({resStable: resStable, action: "resStable"})
-            this.props.dashboardAction({totalSupply: totalSupply, action: "totalSupply"})
-            this.props.dashboardAction({totalBurn: totalBurn, action: "totalBurn"})
-            this.props.dashboardAction({price: price, action: "price"})
-            this.props.dashboardAction({marketCap: marketCap, action: "marketCap"})
-            this.props.dashboardAction({totalBadges: totalBadges, action: "totalBadges"})
-            this.props.dashboardAction({globalBadges: globalBadges, action: "globalBadges"})
-
             const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
 
-            this.state.price = this.props.price
-            this.state.resToken = this.props.resToken
-            this.state.resStable = this.props.resStable
-            this.state.totalSupply = formatUnit.totalSupply
-            this.state.totalBurn = formatUnit.totalBurn
-            this.state.marketCap = this.props.marketCap
-            this.state.totalBadges = this.props.totalBadges
-            console.log(this.props.globalBadges)
-            this.state.badge1 = this.props.globalBadges[0]
-            this.state.badge2 = this.props.globalBadges[1]
-            this.state.badge3 = this.props.globalBadges[2]
+            let data = 
+            {
+                resToken : resToken,
+                resStable: resStable, 
+                totalSupply: formatUnit.totalSupply,
+                totalBurn: formatUnit.totalBurn,
+                price: price, 
+                marketCap: marketCap,
+                badges: globalBadges,
+                totalBadges: totalBadges, 
+            }
 
+
+            this.props.dashboardAction({data : data, action: "dashboard-pe"})
+
+            for(const [key, value] of Object.entries(data))
+            {
+                if(this.state[key] !== undefined) this.state[key] = value
+                else console.log(`value not exist : ${key}`)
+            }
 
             this.forceUpdate();
         }
@@ -180,16 +161,16 @@ class Dashboard extends React.Component
                         <div className="dashboard-badge flex column">
 
                             <div className="dashboard-badge-items flex row">
-                                <p className="dashboard-badge-title">{this.state.badge1.name}</p>
-                                <p className="dashboard-badge-count">{this.state.badge1.totalSupply}/{this.state.badge1.max}</p>
+                                <p className="dashboard-badge-title">{this.state.badges.length != 0 ? this.state.badges[0].name : '' }</p>
+                                <p className="dashboard-badge-count">{this.state.badges.length != 0 ? this.state.badges[0].totalSupply : ''}/{this.state.badges.length != 0 ? this.state.badges[0].max : ''}</p>
                             </div>
                             <div className="dashboard-badge-items flex row">
-                                <p className="dashboard-badge-title">{this.state.badge2.name}</p>
-                                <p className="dashboard-badge-count">{this.state.badge2.totalSupply}/{this.state.badge2.max}</p>
+                                <p className="dashboard-badge-title">{this.state.badges.length != 0 ? this.state.badges[1].name : '' }</p>
+                                <p className="dashboard-badge-count">{this.state.badges.length != 0 ? this.state.badges[1].totalSupply : ''}/{this.state.badges.length != 0 ? this.state.badges[1].max : ''}</p>
                             </div>
                             <div className="dashboard-badge-items flex row">
-                                <p className="dashboard-badge-title">{this.state.badge3.name}</p>
-                                <p className="dashboard-badge-count">{this.state.badge3.totalSupply}/{this.state.badge3.max}</p>
+                                <p className="dashboard-badge-title">{this.state.badges.length != 0 ? this.state.badges[2].name : '' }</p>
+                                <p className="dashboard-badge-count">{this.state.badges.length != 0 ? this.state.badges[2].totalSupply : ''}/{this.state.badges.length != 0 ? this.state.badges[2].max : ''}</p>
                             </div>
 
                         </div>

@@ -47,7 +47,7 @@
     border-radius: 22px;
 }
 
-.info-title
+.info-title, .info-text
 {
     font-style: normal;
     font-weight: 800;

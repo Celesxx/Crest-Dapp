@@ -13,7 +13,7 @@ class Index extends React.Component
 
           <Navbar></Navbar>
           <Leftbar></Leftbar>
-
+        
           <div className="home-body flex column">
            
           </div>
