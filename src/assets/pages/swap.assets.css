@@ -1,0 +1,192 @@
+.swap-core-base
+{
+    justify-content: space-between;
+    align-items: center;
+    height: 70%;
+    width: 70%;
+}
+
+.swap-title-core
+{
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+    height: 10%;
+    width: 70%;
+}
+
+.swap-title
+{
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: normal;
+}
+
+.swap-description
+{
+    font-size: 22px;
+    font-weight: 400;
+    font-style: normal;
+    color: #ababab;
+}
+
+
+.swap-core
+{
+    height: 100%;
+    width: 40%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.swap-content-core
+{
+    position: relative;
+    display: flex;
+    height: 80%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: center;
+}
+
+.card-core
+{
+    height: 30%;
+    width: 80%;
+}
+
+
+.card-content 
+{
+    height: 30%;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.card-title-core
+{
+    justify-content: flex-start;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    margin-left: 3%;
+}
+
+.card-logo
+{
+    height: 34%;
+    width: auto;
+}
+
+.card-title
+{
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.card-balance
+{
+    height: 100%;
+    width: 60%;
+    justify-content: flex-end;
+}
+
+.card-balance-text
+{
+    height: auto;
+    width: auto;
+    color: #ababab;
+    margin-right: 10%;
+    text-align: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+.card-input-core
+{
+    position: relative;
+    height: 65%;
+    width: 100%;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+
+
+.card-input
+{
+    height: 100%;
+    width: 100%;
+    border: 1px solid white;
+    border-radius: 22px;
+    background: transparent;
+    color: white;
+    font-size: 35px;
+    text-align: center;
+}
+
+.card-max
+{
+    position: absolute;
+    top: 80%;
+    right: 80%;
+    font-weight: 800;
+    transform: translate(-50%, -50%);
+    border: 0;
+    font-size: 20px;
+    background: -webkit-linear-gradient(45deg, #3300FF, #00C2FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+.card-swap-core
+{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 80%;
+}
+
+.card-swap-button
+{
+    height: 60%;
+    width: auto;
+    border: 0;
+}
+
+.card-swap-arrow
+{
+    height: 100%;
+    width: auto;
+}
+
+.swap-button-core
+{
+    height: 15%;
+    width: 100%;
+}
+.swap-button
+{
+    height: 70%;
+    width: 45%;
+    border: 0px !important;
+    background: rgba(0,0,0,0.0) !important;
+    border: 0;
+    border-right: 2px solid rgb(0, 133, 255) !important;
+    border-left: 2px solid rgba(255, 26, 136, 0.8) !important;
+    background-image: 
+    linear-gradient(90deg, #ff1a88, #0085FF),
+    linear-gradient(90deg, #ff1a88, #0085FF) !important;
+    background-size: 100% 2px !important;
+    background-position: 0 0, 0 100% !important;
+    background-repeat: no-repeat !important;
+    border-radius: 14px !important;
+}

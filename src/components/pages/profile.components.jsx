@@ -9,15 +9,11 @@ import Sphere from "assets/img/sphere.svg"
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
-import Address from 'contracts/address.contracts.json'
 import ContractHelper from "helpers/contract.helpers";
-import { BigNumber } from "ethers";
-import Amber from 'assets/img/amber.mp4'
-import Amethyst from 'assets/img/amethyst.mp4'
-import Ruby from 'assets/img/ruby.mp4'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import { fireEvent } from '@testing-library/react';
+import Restricted from "components/blocks/restricted.components.jsx"
+import LoadingData from "components/blocks/loadingData.components.jsx"
 
 const MapStateToProps = (state) => {
     return { 
@@ -35,7 +31,12 @@ const MapStateToProps = (state) => {
         nftsDatas: state.dashboard.nftsDatas,
         totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
-        claimBadges: state.dashboard.claimBadges
+        claimBadges: state.dashboard.claimBadges,
+        totalReward: state.dashboard.totalReward,
+        startLoading: state.dashboard.startLoading,
+        loading: state.dashboard.loading,
+        loadingMax: state.dashboard.loadingMax,
+        loadingOver: state.dashboard.loadingOver,
     }; 
 };
 
@@ -62,52 +63,56 @@ class Dashboard extends React.Component
             address: this.props.address,
             allChecked: false,
             nbrCheck: 0,
-            totalReward: {}
+            totalReward: this.props.totalReward,
+            startLoading: this.props.startLoading,
+            loading: this.props.loading,
+            loadingMax: this.props.loadingMax,
+            loadingOver: this.props.loadingOver,
         }
     }
 
-    async UNSAFE_componentWillMount() 
-    {
-        let contractHelper = new ContractHelper()
+    // async UNSAFE_componentWillMount() 
+    // {
+    //     let contractHelper = new ContractHelper()
 
-        let claimBadges = []
-        for(const [key, value] of Object.entries(this.state.badges))
-        {
-            for(const [keyNft, valueNft] of Object.entries(value.userBadges))
-            {
-                let data = 
-                { 
-                    badgeId: key,
-                    nft : value.name, 
-                    id : valueNft.tokenId, 
-                    date : null, 
-                    claimDate : null,
-                    roi: null, 
-                    lifetime: null, 
-                    rewards: null,
-                    checked: false, 
-                }
+    //     let claimBadges = []
+    //     for(const [key, value] of Object.entries(this.state.badges))
+    //     {
+    //         for(const [keyNft, valueNft] of Object.entries(value.userBadges))
+    //         {
+    //             let data = 
+    //             { 
+    //                 badgeId: key,
+    //                 nft : value.name, 
+    //                 id : valueNft.tokenId, 
+    //                 date : null, 
+    //                 claimDate : null,
+    //                 roi: null, 
+    //                 lifetime: null, 
+    //                 rewards: null,
+    //                 checked: false, 
+    //             }
 
-                data.date = await contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
-                data.claimDate = await contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
+    //             data.date = await contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
+    //             data.claimDate = await contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
 
-                let [ formatPrice, formatRewardAmount ] = [ await contractHelper.setFormatUnit(value.price, 6), await contractHelper.setFormatUnit(value.rewardAmount, 6) ]
-                let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
+    //             let [ formatPrice, formatRewardAmount ] = [ await contractHelper.setFormatUnit(value.price, 6), await contractHelper.setFormatUnit(value.rewardAmount, 6) ]
+    //             let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
 
-                data.roi = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
-                data.lifetime = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
-                let formatRewards = await contractHelper.getPendingRewards(valueNft, value.rewardAmount)
-                data.rewards = await contractHelper.setFormatUnit(formatRewards.toString(), 6)
+    //             data.roi = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
+    //             data.lifetime = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
+    //             let formatRewards = await contractHelper.getPendingRewards(valueNft, value.rewardAmount)
+    //             data.rewards = await contractHelper.setFormatUnit(formatRewards.toString(), 6)
 
-                claimBadges.push(data)
-            }
+    //             claimBadges.push(data)
+    //         }
 
-            this.state.totalReward[key] = 0.0
-        }
+    //         this.state.totalReward[key] = 0.0
+    //     }
 
-        for(const badge of this.state.claimBadges) { this.state.totalReward[badge.badgeId] += badge.rewards }
-        await this.props.dashboardAction({claimBadges: claimBadges, action: "claimBadges"})
-    }
+    //     for(const badge of this.state.claimBadges) { this.state.totalReward[badge.badgeId] += badge.rewards }
+    //     await this.props.dashboardAction({claimBadges: claimBadges, action: "saveData"})
+    // }
 
     async singleSelect(key, value)
     {
@@ -149,7 +154,6 @@ class Dashboard extends React.Component
                 else data[badge.badgeId].push(badge.id)
             }
         }
-        console.log(`address : ${this.state.address}`)
         let tokenIds = []
         let badgeIndex = []
 
@@ -182,7 +186,16 @@ class Dashboard extends React.Component
             <Navbar></Navbar>
             <Leftbar></Leftbar>
 
+            {
+                this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
+                ( <LoadingData /> )
+            }
             <div className="home-body flex column">
+
+                {
+                    this.state.address == "" &&
+                    ( <Restricted /> )
+                }
 
                 <div className="profile-laderboard flex row">
 

@@ -269,6 +269,22 @@ class ContractHelper
 
 
 
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {String} erc20Address
+    * @param {String} targetAddress
+    * @param {Structure} provider
+    **/
+    async setApproveAllowance(erc20Address, targetAddress, provider) 
+    {
+        const erc20 = new ethers.Contract(erc20Address, AbiToken, provider)
+        return (await erc20.connect(provider.getSigner()).approve(targetAddress, ethers.constants.MaxUint256)).wait()
+    }
+
+
+
+
+
 
     /*------------------------------  ------------------------------*/
     /** 
@@ -440,12 +456,14 @@ class ContractHelper
     * @param {String} address
     * @param {Number} amountIn
     * @param {Number} amountOutMin
+    * @param {Array} path
+    * @param {Number} deadline
     * @param {Structure} provider
     **/
-    async swapToken(address, badgeIndex, tokenIds, provider)
+    async swapToken(address, amountIn, amountOutMin, path, deadline,  provider)
     {
-        const badgeManager = new ethers.Contract(Address.badgeManager, abiBadgeManager, provider)
-        await(await token.connect(provider.getSigner()).swapExactTokensForTokens(amountIn, amountOutMin, [address, address], userAddr, deadline)).wait()
+        const token = new ethers.Contract(Address.token, AbiToken, provider)
+        await(await token.connect(provider.getSigner()).swapExactTokensForTokens(amountIn, amountOutMin, path, address, deadline)).wait()
     }
 
 

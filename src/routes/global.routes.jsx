@@ -5,6 +5,7 @@ import DashboardPersonnal from "components/pages/dashboard-pr.components.jsx";
 import Shop from "components/pages/shop.components.jsx";
 import Profile from "components/pages/profile.components.jsx";
 import Swap from "components/pages/swap.components.jsx";
+import ProtectedRoute from "routes/protected.routes.jsx"
 
 function BaseRoute()
 {
@@ -13,7 +14,7 @@ function BaseRoute()
             <Route path="/" exact component={Index} />
             <Route path="/home" exact component={Index} />
             <Route path="/dashboard" exact component={DashboardProtocol} />
-            <Route path="/dashboard/personnal" exact component={DashboardPersonnal} />
+            <ProtectedRoute path="/dashboard/personnal" exact component={DashboardPersonnal} />
             <Route path="/shop" exact component={Shop} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/swap" exact component={Swap} />

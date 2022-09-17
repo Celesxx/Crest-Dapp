@@ -5,11 +5,12 @@ import 'assets/pages/dashboard-pe.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.components.jsx"
 import Leftbar from "components/blocks/leftbar.components.jsx"
+import Restricted from "components/blocks/restricted.components.jsx"
+import LoadingData from "components/blocks/loadingData.components.jsx"
 import Sphere from "assets/img/sphere.svg"
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
-import UserContext from 'userContext.js'
 import ContractHelper from 'helpers/contract.helpers.js'
 
 const MapStateToProps = (state) => {
@@ -27,7 +28,11 @@ const MapStateToProps = (state) => {
         crestBalance: state.dashboard.crestBalance,
         nftsDatas: state.dashboard.nftsDatas,
         totalBadges: state.dashboard.totalBadges,
-        badges: state.dashboard.badges
+        badges: state.dashboard.badges,
+        startLoading: state.dashboard.startLoading,
+        loading: state.dashboard.loading,
+        loadingMax: state.dashboard.loadingMax,
+        loadingOver: state.dashboard.loadingOver,
     }; 
 };
 
@@ -40,13 +45,13 @@ const mapDispatchToProps = (dispatch) => {
 
 class Dashboard extends React.Component 
 {
-    static contextType = UserContext
 
     constructor(props) 
     {
         super(props);
         this.state = 
         {
+            address: this.props.address,
             resToken: this.props.resToken,
             resStable: this.props.resStable,
             totalSupply: this.props.totalSupply != null ? this.props.totalSupply.toFixed(2): this.props.totalSupply,
@@ -55,50 +60,64 @@ class Dashboard extends React.Component
             marketCap: this.props.marketCap != null ? this.props.marketCap.toFixed(2) : this.props.marketCap,
             totalBadges: this.props.totalBadges,
             badges: this.props.badges,
+            startLoading: this.props.startLoading,
+            loading: this.props.loading,
+            loadingMax: this.props.loadingMax,
+            loadingOver: this.props.loadingOver,
         };
 
     }
 
-    async UNSAFE_componentWillMount () 
+    // async UNSAFE_componentWillMount () 
+    // {
+    //     if(this.props.address != "")
+    //     {
+    //         let contractHelper = new ContractHelper()
+    //         const provider = await contractHelper.getProvider()
+
+    //         const { resToken, resStable } = await contractHelper.getReserves(provider)
+    //         const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
+    //         const { price, marketCap } = await contractHelper.getMarketCapAndPrice(resStable, resToken, totalSupply, 6)
+    //         const globalBadges = await contractHelper.getGlobalBadges(provider)
+    //         const totalBadges = await contractHelper.getTotalNft(globalBadges)
+    //         const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
+
+    //         let data = 
+    //         {
+    //             resToken : resToken,
+    //             resStable: resStable, 
+    //             totalSupply: formatUnit.totalSupply,
+    //             totalBurn: formatUnit.totalBurn,
+    //             price: price, 
+    //             marketCap: marketCap,
+    //             badges: globalBadges,
+    //             totalBadges: totalBadges, 
+    //         }
+
+
+    //         this.props.dashboardAction({data : data, action: "saveData"})
+
+    //         for(const [key, value] of Object.entries(data))
+    //         {
+    //             if(this.state[key] !== undefined) this.state[key] = value
+    //             else console.log(`value not exist : ${key}`)
+    //         }
+
+    //         this.forceUpdate();
+    //     }
+    // }
+    
+    componentDidUpdate(prevProps, prevState, snapshot) 
     {
-        if(this.props.address != "")
+        for(const [key, value] of Object.entries(this.state))
         {
-            let contractHelper = new ContractHelper()
-            const provider = await contractHelper.getProvider()
-
-            const { resToken, resStable } = await contractHelper.getReserves(provider)
-            const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-            const { price, marketCap } = await contractHelper.getMarketCapAndPrice(resStable, resToken, totalSupply, 6)
-            const globalBadges = await contractHelper.getGlobalBadges(provider)
-            const totalBadges = await contractHelper.getTotalNft(globalBadges)
-            const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
-
-            let data = 
-            {
-                resToken : resToken,
-                resStable: resStable, 
-                totalSupply: formatUnit.totalSupply,
-                totalBurn: formatUnit.totalBurn,
-                price: price, 
-                marketCap: marketCap,
-                badges: globalBadges,
-                totalBadges: totalBadges, 
+            if (prevProps[key] !== this.props[key])
+            {   
+                this.state[key] = this.props[key] 
+                this.forceUpdate();
             }
-
-
-            this.props.dashboardAction({data : data, action: "dashboard-pe"})
-
-            for(const [key, value] of Object.entries(data))
-            {
-                if(this.state[key] !== undefined) this.state[key] = value
-                else console.log(`value not exist : ${key}`)
-            }
-
-            this.forceUpdate();
         }
     }
-    
-   
 
 
     render()
@@ -108,8 +127,17 @@ class Dashboard extends React.Component
 
             <Navbar></Navbar>
             <Leftbar></Leftbar>
-
+            
+            {
+                this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
+                ( <LoadingData /> )
+            }
             <div className="home-body flex column">
+
+                {
+                    this.state.address == "" &&
+                    ( <Restricted /> )
+                }
 
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">

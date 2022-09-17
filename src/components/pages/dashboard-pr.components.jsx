@@ -15,6 +15,8 @@ import { BigNumber } from "ethers";
 import Amber from 'assets/img/amber.mp4'
 import Amethyst from 'assets/img/amethyst.mp4'
 import Ruby from 'assets/img/ruby.mp4'
+import Restricted from "components/blocks/restricted.components.jsx"
+import LoadingData from "components/blocks/loadingData.components.jsx"
 
 const MapStateToProps = (state) => {
     return { 
@@ -28,7 +30,7 @@ const MapStateToProps = (state) => {
         totalNfts: state.dashboard.totalNfts,
         dailyReward: state.dashboard.dailyReward,
         pendingReward: state.dashboard.pendingReward,
-        crestBalance: state.dashboard.crestBalance,
+        tokenUser: state.dashboard.tokenUser,
         nftsDatas: state.dashboard.nftsDatas,
         totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges
@@ -52,59 +54,59 @@ class Dashboard extends React.Component
         this.state = 
         {
             badges: JSON.parse(JSON.stringify(this.props.badges)),
-            crestBalance: this.props.crestBalance,
+            tokenUser: this.props.tokenUser,
             dailyReward: this.props.dailyReward,
             pendingReward: this.props.pendingReward,
 
         }
     }
 
-    async UNSAFE_componentWillMount() 
-    {
-        let contractHelper = new ContractHelper() 
-        const provider = await contractHelper.getProvider()
+    // async UNSAFE_componentWillMount() 
+    // {
+    //     let contractHelper = new ContractHelper() 
+    //     const provider = await contractHelper.getProvider()
 
-        let data = 
-        {
-            badges: this.state.badges,
-            pendingReward: BigNumber.from(0),
-            dailyReward: null,
-            crestBalance: null
-        }
+    //     let data = 
+    //     {
+    //         badges: this.state.badges,
+    //         pendingReward: BigNumber.from(0),
+    //         dailyReward: null,
+    //         tokenUser: { balance: null, }
+    //     }
 
-        for(let i = 0; i < Address.badges.length; i++) 
-        { 
-            const nft = await contractHelper.nftSingleBalance(i, this.props.address, provider)
-            const nftsInfo = await contractHelper.getNftsDatasAtIndex(i, this.props.address, nft, provider)
-            data.badges[i]["userBadges"] = nftsInfo
-            data.badges[i]["userNbrBadge"] = nft
-        }
+    //     for(let i = 0; i < Address.badges.length; i++) 
+    //     { 
+    //         const nft = await contractHelper.nftSingleBalance(i, this.props.address, provider)
+    //         const nftsInfo = await contractHelper.getNftsDatasAtIndex(i, this.props.address, nft, provider)
+    //         data.badges[i]["userBadges"] = nftsInfo
+    //         data.badges[i]["userNbrBadge"] = nft
+    //     }
 
-        let crestBalance = await contractHelper.getERC20Balance(this.props.address, Address.token, provider)
-        data.crestBalance = await contractHelper.setFormatUnit(crestBalance, 6)
+    //     let crestBalance = await contractHelper.getERC20Balance(this.props.address, Address.token, provider)
+    //     data.tokenUser.balance = await contractHelper.setFormatUnit(crestBalance, 6)
         
-        for(const badgesInfo of data.badges)
-        {
-            for(const singleBadges of badgesInfo.userBadges)
-            {
-                let total = await contractHelper.getPendingRewards(singleBadges, badgesInfo.rewardAmount)
-                data.pendingReward = data.pendingReward.add(total)
-            }
-        }
+    //     for(const badgesInfo of data.badges)
+    //     {
+    //         for(const singleBadges of badgesInfo.userBadges)
+    //         {
+    //             let total = await contractHelper.getPendingRewards(singleBadges, badgesInfo.rewardAmount)
+    //             data.pendingReward = data.pendingReward.add(total)
+    //         }
+    //     }
 
-        data.pendingReward = await contractHelper.setFormatUnit(data.pendingReward.toString(), 6)
-        for(const badge of data.badges) data.dailyReward += badge.userNbrBadge * await contractHelper.setFormatUnit(badge.rewardAmount,6)
+    //     data.pendingReward = await contractHelper.setFormatUnit(data.pendingReward.toString(), 6)
+    //     for(const badge of data.badges) data.dailyReward += badge.userNbrBadge * await contractHelper.setFormatUnit(badge.rewardAmount,6)
 
-        for(const [key, value] of Object.entries(data))
-        {
-            if(this.state[key] !== undefined) this.state[key] = value
-            else console.log(`value not exist : ${key}`)
-        }
-        this.props.dashboardAction({data: data, action: "dashboard-pr"})
+    //     for(const [key, value] of Object.entries(data))
+    //     {
+    //         if(this.state[key] !== undefined) this.state[key] = value
+    //         else console.log(`value not exist : ${key}`)
+    //     }
+    //     this.props.dashboardAction({data: data, action: "saveData"})
 
 
-        this.forceUpdate();
-    }
+    //     this.forceUpdate();
+    // }
 
 
     componentDidUpdate(prevProps, prevState, snapshot) 
@@ -127,7 +129,16 @@ class Dashboard extends React.Component
             <Navbar></Navbar>
             <Leftbar></Leftbar>
 
+            {
+                this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
+                ( <LoadingData /> )
+            }
             <div className="home-body flex column">
+
+                {
+                    this.state.address == "" &&
+                    ( <Restricted /> )
+                }
 
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
@@ -193,7 +204,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My $CREST Balance</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.crestBalance}
+                                {this.state.tokenUser.balance}
                             </p>
                         </div>
                     </div>

@@ -3,35 +3,35 @@ import 'assets/global.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
 import LogoName from 'assets/img/crest-name.png'
-// import { login, disconnect } from 'store/reducers/login.reducer.js'
 import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import Web3 from 'web3'
-// import Web3ContextProvider from 'components/pages/test2';
 import { ethers, providers } from 'ethers'
 import Notiflix from 'notiflix';
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import network from 'contracts/network.contracts.js'
-import UserContext from 'userContext.js'
+import LoadingHelper from 'helpers/loadingData.helpers.js'
 
 const MapStateToProps = (state) => {
-  return { address: state.login.address }; 
+  return { 
+    address: state.login.address,
+    loading: state.dashboard.loading,
+  }; 
 };
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginAction: (loginState, data) => {
-      dispatch(LoginActions(loginState, data));
-    },
+      loginAction: (data) => { dispatch(LoginActions(data)); },
+      dashboardAction: (data) => { dispatch(DashboardActions(data)); },
   };
 };
 
 
 class Navbar extends React.Component 
 {
-  static contextType = UserContext
   
   constructor(props) 
   {
@@ -39,13 +39,12 @@ class Navbar extends React.Component
 
       this.state = 
       {
-        address: "",
+        address: this.props.address,
         isMetamaskSupported: false,
         isLoggedIn: false,
-        provider: {},
+        loading: this.props.loading,
+        loadginOver: this.props.loadingOver,
       };
-
-      // this.connectWallet = this.connectWallet.bind(this);
   }
 
   async UNSAFE_componentWillMount() 
@@ -53,17 +52,20 @@ class Navbar extends React.Component
     if (window.ethereum) 
     {
         this.state.isMetamaskSupported = true
-        if(this.props.address != "") 
-        {
-          this.state.isLoggedIn = true
-          this.state.address = this.props.address
-        }
-        this.state.provider = new ethers.providers.JsonRpcProvider(network.rpcUrls[0])
+        if(this.props.address != "") { this.state.isLoggedIn = true }
     }
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    this.state.address = this.props.address
+  componentDidUpdate(prevProps, prevState, snapshot) 
+  {
+      for(const [key, value] of Object.entries(this.state))
+      {
+          if (prevProps[key] !== this.props[key])
+          {   
+            this.state[key] = this.props[key]
+            this.forceUpdate();
+          }
+      }
   }
 
 
@@ -81,12 +83,13 @@ class Navbar extends React.Component
 
         if (chainId == network.chainId) 
         {
-          this.state.provider = newProvider
-          this.state.address = await newProvider.getSigner().getAddress()
           this.state.isLoggedIn = true
+          this.props.loginAction({address: await newProvider.getSigner().getAddress(), action: 'address'})
+          this.props.dashboardAction({loading : {}, action: "startLoading"})
 
-          this.props.loginAction({address: this.state.address, action: 'address'})
-          this.context.provider = newProvider
+          let loadingHelper = new LoadingHelper()
+          await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
+
         }else 
         {
           Notiflix.Notify.failure(
@@ -135,7 +138,7 @@ class Navbar extends React.Component
               <div className="navbar-button-core flex row">
                 <button className="button market-button flex row center"> <p>Buy/Sell $CREST</p> </button>
                 {
-                  this.state.isLoggedIn 
+                  this.state.address !== "" 
                   ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{this.state.address}</p></div>
                   :<button className="button dapp-button flex row center" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
                 }
@@ -148,8 +151,6 @@ class Navbar extends React.Component
       );
     }
 }
-
-
 
 
 export default connect(MapStateToProps, mapDispatchToProps)(Navbar);
