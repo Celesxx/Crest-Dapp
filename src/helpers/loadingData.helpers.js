@@ -1,7 +1,9 @@
 import Address from 'contracts/address.contracts.json'
 import  {ethers, BigNumber, utils, constants } from "ethers"
 import ContractHelper from './contract.helpers'
-
+import Amber from 'assets/img/amber.mp4'
+import Amethyst from 'assets/img/amethyst.mp4'
+import Ruby from 'assets/img/ruby.mp4'
 
 
 class LoadingHelper
@@ -33,6 +35,7 @@ class LoadingHelper
         const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
         props.dashboardAction({loading : {}, action: "loading"})
         const userCrestBalance = await contractHelper.getERC20Balance(address, Address.token, provider)
+        const userStableBalance = await contractHelper.getERC20Balance(address, Address.stable, provider)
         props.dashboardAction({loading : {}, action: "loading"})
         const hasAllowanceToken = await contractHelper.hasAllowance(address, Address.token, Address.lm, provider)
         props.dashboardAction({loading : {}, action: "loading"})
@@ -41,6 +44,7 @@ class LoadingHelper
 
         let data = 
         {
+            videoSrc : [Amber, Amethyst, Ruby, Ruby],
             resToken : resToken,
             resStable: resStable, 
             totalSupply: formatUnit.totalSupply,
@@ -49,11 +53,10 @@ class LoadingHelper
             marketCap: marketCap,
             badges: globalBadges,
             totalBadges: totalNbrBadges,
-            pendingReward: BigNumber.from(0),
-            dailyReward: null,
             tokenUser: { balance: null, allowanceLm: hasAllowanceToken},
             stableUser: { balance: null, allowanceLm: hasAllowanceStable},
             claimBadges: [],
+            pendingReward: BigNumber.from(0),
             totalReward: {}
         }
 
@@ -67,22 +70,14 @@ class LoadingHelper
             data.badges[i]["userNbrBadge"] = nft
         }
         
-
-        for(const badgesInfo of data.badges)
-        {
-            for(const singleBadges of badgesInfo.userBadges)
-            {
-                let total = await contractHelper.getPendingRewards(singleBadges, badgesInfo.rewardAmount)
-                data.pendingReward = data.pendingReward.add(total)
-            }
-        }
+        
         props.dashboardAction({loading : {}, action: "loading"})
        
         data.tokenUser.balance = await contractHelper.setFormatUnit(userCrestBalance, 6)
+        data.stableUser.balance = await contractHelper.setFormatUnit(userStableBalance, 6)
         data.pendingReward = await contractHelper.setFormatUnit(data.pendingReward.toString(), 6)
         props.dashboardAction({loading : {}, action: "loading"})
 
-        for(const badge of data.badges) data.dailyReward += badge.userNbrBadge * await contractHelper.setFormatUnit(badge.rewardAmount,6)
         props.dashboardAction({loading : {}, action: "loading"})
 
 

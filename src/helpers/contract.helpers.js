@@ -69,7 +69,7 @@ class ContractHelper
      * @param {Object} data
      * @param {Number} decimal
     */
-     async setFormatUnit(data, decimal) { return parseFloat(ethers.utils.formatUnits(data, decimal)) }
+     setFormatUnit(data, decimal) { return parseFloat(ethers.utils.formatUnits(data, decimal)) }
     
 
 
@@ -83,7 +83,7 @@ class ContractHelper
      * @param {Object} data
      * @param {Number} decimal
     */
-     async setBignumberUnit(data, decimal) { return ethers.utils.parseUnits(data.toString(), decimal)}
+     setBignumberUnit(data, decimal) { return ethers.utils.parseUnits(data.toString(), decimal)}
 
 
 
@@ -464,6 +464,86 @@ class ContractHelper
     {
         const token = new ethers.Contract(Address.token, AbiToken, provider)
         await(await token.connect(provider.getSigner()).swapExactTokensForTokens(amountIn, amountOutMin, path, address, deadline)).wait()
+    }
+
+
+
+
+
+
+
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {String} erc20Addr
+    * @param {Number} i
+    * @param {String} to
+    * @param {Number} amount
+    * @param {String} influId
+    * @param {Structure} provider
+    **/
+    async createManagedTokens(erc20Addr, i, to, amount, influId, provider) 
+    {
+        const badgeManager = new ethers.Contract(Address.badgeManager, abiBadgeManager, provider)
+        await (await badgeManager.connect(provider.getSigner()).createManagedTokens(erc20Addr, i, to, amount, influId)).wait()
+    }
+
+
+
+
+
+
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {String} erc20Addr
+    * @param {Structure} provider
+    **/
+    async getNameContract(erc20Addr, provider) 
+    {
+        const erc20 = new ethers.Contract(erc20Addr, AbiToken, provider)
+        return await erc20.name()
+    }
+
+
+
+
+
+
+
+
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {Number} amountIn
+    * @param {Number} reserveIn
+    * @param {Number} reserveOut
+    **/
+    getAmountOutUniV2(amountIn, reserveIn, reserveOut) 
+    {
+        const amountInWithFee = ethers.BigNumber.from(amountIn).mul(997)
+        const numerator = amountInWithFee.mul(reserveOut)
+        const denominator = ethers.BigNumber.from(reserveIn).mul(1000).add(amountInWithFee)
+        return numerator.div(denominator)
+    }
+    
+
+
+
+
+
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {Number} amountIn
+    * @param {Number} reserveIn
+    * @param {Number} reserveOut
+    * @param {Boolean} fromStable
+    **/
+    getAmountOut(amountIn, reserveIn, reserveOut, fromStable) 
+    {
+        if (fromStable) { return this.getAmountOutUniV2(amountIn, reserveIn, reserveOut).toString() } 
+        else 
+        {
+            const amountOut = this.getAmountOutUniV2(amountIn, reserveIn, reserveOut)
+            return amountOut.sub(amountOut.mul(1000).div(10000)).toString()
+        }
     }
 
 

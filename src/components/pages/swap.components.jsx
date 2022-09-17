@@ -49,38 +49,35 @@ class Dashboard extends React.Component
           resToken: this.props.resToken,
           resStable: this.props.resStable,
           address: this.props.address,
-          crestAmount: null,
-          usdtAmount: null,
+          dataIn: { name: "$CREST", balance: null, logo: LogoCrest },
+          dataOut: { name: "$USDC", balance: null, logo: LogoCrest },
           sellLoader: "token",
-          balanceStable: null,
-          balanceToken: null,
           startLoading: this.props.startLoading,
           loading: this.props.loading,
           loadingMax: this.props.loadingMax,
           loadingOver: this.props.loadingOver,
+          amountPrice: null,
         }
 
         this.handleChange = this.handleChange.bind(this)
     }
 
-    // async UNSAFE_componentWillMount() 
-    // {
-    //   let contractHelper = new ContractHelper()
-    //   let provider = await contractHelper.getProvider()
-    //   let hasAllowanceToken = await contractHelper.hasAllowance(this.state.address, Address.token, Address.lm, provider)
-    //   let hasAllowanceStable = await contractHelper.hasAllowance(this.state.address, Address.stable, Address.lm, provider)
-
-    //   this.state.balanceToken = await contractHelper.setFormatUnit(this.state.tokenUser.balance, 6)
-    //   this.state.balanceStable = await contractHelper.setFormatUnit(this.state.stableUser.balance, 6)
-    //   let data = 
-    //   {
-    //     tokenUser: { allowanceLm: hasAllowanceToken },
-    //     stableUser: { allowanceLm: hasAllowanceStable },
-    //   }
-
-    //   this.props.dashboardAction({data: data, action: "saveData"})
-    //   this.forceUpdate()
-    // }
+    async UNSAFE_componentWillMount()
+    {
+        if(this.props.tokenUser.balance != null && this.state.address != "")
+        {
+            if(this.state.sellLoader == "token") 
+            {
+              this.state.dataIn.balance = this.props.tokenUser.balance;
+              this.state.dataOut.balance = this.props.stableUser.balance;
+            }
+            else if(this.state.sellLoader == "usdt") 
+            {
+              this.state.dataIn.balance = this.props.stableUser.balance
+              this.state.dataOut.balance = this.props.tokenUser.balance;
+            }
+        }
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) 
     {
@@ -88,17 +85,46 @@ class Dashboard extends React.Component
         {
             if (prevProps[key] !== this.props[key])
             {   
-                this.state[key] = this.props[key] 
+                this.state[key] = this.props[key]
+
+                if(this.state.sellLoader == "token" && this.props.address != "" && key == "tokenUser") 
+                {
+                  this.state.balanceIn = this.props.tokenUser.balance;
+                  this.state.balanceOut = this.props.stableUser.balance;
+                
+                }else if(this.state.sellLoader == "usdt" && this.props.address != "" && key == "tokenUser") 
+                {
+                  this.state.balanceIn = this.props.stableUser.balance
+                  this.state.balanceOut = this.props.tokenUser.balance;
+                }
+
                 this.forceUpdate();
             }
         }
     }
     
-    handleChange(event)
+    handleChange(event, type)
     {
-      let target = event.target
-      if(target.name == "crest") this.state.crestAmount = target.value
-      else if(target.name == "usdt") this.state.usdtAmount = target.value
+      let target
+      if(type === undefined) target = event.target
+      else if(type == "setMaxValue") target = event
+      let contractHelper = new ContractHelper()
+
+      if(this.state.sellLoader == "token" && target.value != "") 
+      {
+        let value = contractHelper.setBignumberUnit(target.value, 6)
+        let amountOut = contractHelper.getAmountOut(value, this.state.resToken, this.state.resStable, false)
+        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
+      }
+      else if(this.state.sellLoader == "usdt" && target.value != "") 
+      {
+        let value = contractHelper.setBignumberUnit(target.value, 6)
+        let amountOut = contractHelper.getAmountOut(value, this.state.resStable, this.state.resToken, true)
+        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
+      
+      }else if(target.value == "") this.state.amountPrice = null
+      this.forceUpdate()
+
     }
 
     async setAllowance()
@@ -109,11 +135,11 @@ class Dashboard extends React.Component
       if(this.state.sellLoader === "token")
       {
         await contractHelper.setApproveAllowance(Address.token, Address.lm, provider)
-        this.props.dashboardAction({data: {tokenUser: {allowanceLm : true}}, action: "swap"})
+        this.props.dashboardAction({data: {tokenUser: {allowanceLm : true}}, action: "saveData"})
       }else if(this.state.sellLoader === "usdt")
       {
         await contractHelper.setApproveAllowance(Address.token, Address.lm, provider)
-        this.props.dashboardAction({data: {stableUser: {allowanceLm : true}}, action: "swap"})
+        this.props.dashboardAction({data: {stableUser: {allowanceLm : true}}, action: "saveData"})
       }
     }
 
@@ -137,27 +163,60 @@ class Dashboard extends React.Component
       const deadline = Math.floor((new Date()).getTime() / 1000) + 600
       await contractHelper.swapToken(this.state.address, amountIn, 0, path, deadline, provider)
 
-      let crestBalance = await contractHelper.getERC20Balance(this.props.address, Address.token, provider)
-      let stableBalance = await contractHelper.getERC20Balance(this.props.address, Address.stable, provider)
-      const { resToken, resStable } = await contractHelper.getReserves(provider)
+    }
 
-      let data = 
-      {
-        tokenUser : { balance : crestBalance }, 
-        stableUser : { balance: stableBalance },
-        resToken : resToken, 
-        resStable: resStable,
-      }
-
-      this.props.dashboardAction({data: data, action : "swap" })
-
+    setMaxValue()
+    {
+      document.getElementById("balanceIn").value = (this.state.dataIn.balance)
+      this.handleChange(document.getElementById("balanceIn"), "setMaxValue")
     }
 
     changeOrder()
     {
-      if(this.state.sellLoader === "token") this.state.sellLoader = "usdt"
-      else if(this.state.sellLoader === "usdt") this.state.sellLoader = "token"
+      if(this.state.sellLoader === "token") 
+      {
+        this.state.sellLoader = "usdt"
+        this.state.dataIn.balance = this.props.stableUser.balance;
+        this.state.dataIn.name = "$USDC"
+        this.state.dataIn.logo = LogoCrest
+        this.state.dataOut.balance = this.props.tokenUser.balance;
+        this.state.dataOut.name = "$CREST";
+        this.state.dataOut.logo = LogoCrest
+      }
+      else if(this.state.sellLoader === "usdt") 
+      {
+        this.state.sellLoader = "token"
+        this.state.dataOut.balance = this.props.stableUser.balance;
+        this.state.dataOut.name = "$USDC"
+        this.state.dataOut.logo = LogoCrest
+        this.state.dataIn.balance = this.props.tokenUser.balance;
+        this.state.dataIn.name = "$CREST";
+        this.state.dataIn.logo = LogoCrest
+      }
       this.forceUpdate();
+    }
+
+    checkNumber(event)
+    {
+      let target = event.target
+      let theEvent = event
+      let key
+      if (theEvent.type === 'paste') 
+      {
+          key = event.clipboardData.getData('text/plain');
+      } else 
+      {
+          key = theEvent.keyCode || theEvent.which;
+          key = String.fromCharCode(key);
+      }
+
+      let regex = /^[0-9]+[.]{0,1}[0-9]{0,6}$/
+      
+      if( !regex.test(target.value + key) )
+      {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+      }
     }
 
     render()
@@ -193,18 +252,18 @@ class Dashboard extends React.Component
                     
                       <div className="card-content flex row">
                         <div className="card-title-core flex row">
-                          <img className="card-logo" src={LogoCrest} alt={LogoCrest}></img>
-                          <h2 className="card-title">CREST</h2>
+                          <img className="card-logo" src={this.state.dataIn.logo} alt={this.state.dataIn.logo}></img>
+                          <h2 className="card-title">{this.state.dataIn.name}</h2>
                         </div>
 
                         <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">balance : {this.state.balanceToken}</p>
+                          <p className="card-balance-text unmargin unpadding">balance : {this.state.dataIn.balance}</p>
                         </div>
                       </div>
 
                       <div className="card-input-core">
-                        <input className="card-input" type="text" name="crest" onChange={this.handleChange}></input>
-                        <button className="card-max">max</button>
+                        <input className="card-input" type="text" name="crest" id="balanceIn" onKeyPress={this.checkNumber} onChange={this.handleChange}></input>
+                        <button className="card-max" onClick={() => this.setMaxValue()}>max</button>
                       </div>
 
                     </div>
@@ -221,17 +280,17 @@ class Dashboard extends React.Component
                     
                       <div className="card-content flex row">
                         <div className="card-title-core flex row">
-                          <img className="card-logo" src={LogoCrest} alt={LogoCrest}></img>
-                          <h2 className="card-title">USDT</h2>
+                          <img className="card-logo" src={this.state.dataOut.logo} alt={this.state.dataOut.logo}></img>
+                          <h2 className="card-title">{this.state.dataOut.name}</h2>
                         </div>
 
                         <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">balance : {this.state.balanceToken}</p>
+                          <p className="card-balance-text unmargin unpadding">balance : {this.state.dataOut.balance}</p>
                         </div>
                       </div>
 
                       <div className="card-input-core">
-                        <input className="card-input" type="text" name="crest" onChange={this.handleChange}></input>
+                        <div className="card-input flex row center" type="text" name="crest">{this.state.amountPrice}</div>
                       </div>
 
                     </div>
@@ -245,7 +304,7 @@ class Dashboard extends React.Component
                       ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>Swap</button> )
 
                       : this.state.sellLoader === "usdt" && this.state.stableUser.allowanceLm 
-                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapUsdt()}>Swap</button> )
+                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>Swap</button> )
                       
                       :( <button className="swap-button button" name="submit" onClick={() => this.setAllowance()}>Approve</button> )
                     }

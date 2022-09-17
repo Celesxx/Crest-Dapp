@@ -5,6 +5,7 @@ export const dashboardSlice = createSlice(
   name: 'dashboard',
   initialState: 
   {
+    videoSrc: [],
     startLoading: false,
     loading: 0,
     loadingMax: 14,
@@ -33,7 +34,7 @@ export const dashboardSlice = createSlice(
       balance: null,
       allowanceLm: false,
     },
-    allowanceDispatchManager: {},
+    erc20DispatchManager: {},
   },
 
   reducers: 
@@ -44,16 +45,6 @@ export const dashboardSlice = createSlice(
       switch(action.payload.action)
       {
         
-        // case 'dashboard-pe': 
-
-        //     for(const [key, value] of Object.entries(action.payload.data))
-        //     {
-        //         if(state[key] !== undefined && key != "badges") state[key] = value
-        //         else if(key == "badges" && state[key].userBadges === undefined || key == "badges" && state[key].userBadges === null ) { state.badges = value.map(badge => Object.assign({}, badge, {userNbrBadge: null, userBadges: []})) }
-        //         else console.log(`value not exist : ${key}`)
-        //     }
-        //     break
-
         case 'saveData':
             
           for(const [key, value] of Object.entries(action.payload.data))
@@ -64,7 +55,8 @@ export const dashboardSlice = createSlice(
                 {
                   for(const [key1, value1] of Object.entries(value)) 
                   { 
-                    if(state[key][key1] !== undefined) { state[key][key1] = value1 } 
+                    if(state[key][key1] !== undefined) { state[key][key1] = value1 }
+                    else state[key] = {...state[key], ...value}
                   }
                 }
                 else state[key] = value 
@@ -82,24 +74,7 @@ export const dashboardSlice = createSlice(
             state.startLoading = true
             break
 
-        // case 'claimBadges': 
-        //     state.claimBadges = action.payload.claimBadges
-        //     break
-
-        // case 'swap': 
-        //   for(const [key, value] of Object.entries(action.payload.data))
-        //   {
-        //       if(state[key] !== undefined)
-        //       { 
-        //         if(typeof(value) === "object")
-        //         {
-        //           for(const [key1, value1] of Object.entries(value)) { if(state[key][key1] !== undefined) { state[key][key1] = value1 } }
-        //         }
-        //         else state[key] = value 
-        //       } 
-        //       else console.log(`value not exist : ${key}`)
-        //   }
-        //   break
+        
 
         default :
             break

@@ -108,6 +108,19 @@
   },
   {
     "inputs": [],
+    "name": "maxToken",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "maxUserToken",
     "outputs": [
       {
@@ -162,7 +175,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "amountIn",
+        "name": "amountOut",
         "type": "uint256"
       }
     ],
@@ -200,6 +213,19 @@
   {
     "inputs": [],
     "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

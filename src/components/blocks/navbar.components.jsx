@@ -114,20 +114,27 @@ class Navbar extends React.Component
 
             <div className="navbar-core flex row">
 
-                <select className="navbar-select" onChange={event => this.handleLanguage(event.target.value)}>
-                  <option>Language</option>
-                  <option value="east">French</option>
-                  <option value="west">English</option>
-                  <option value="south">Japanese</option>
-                </select>
+                
+                <div className="navbar-select" tabIndex="1">
+                  <input name="french" className="navbar-input" type="radio" id="opt1" checked onChange={event => {}}/>
+                  <label htmlFor="opt1" className="navbar-option">French</label>
+                  <input name="english" className="navbar-input" type="radio" id="opt2" onChange={event => {}}/>
+                  <label htmlFor="opt2" className="navbar-option">English</label>
+                  <input name="japanese" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
+                  <label htmlFor="opt3" className="navbar-option navbar-option-last">Japanese</label>
+                </div>
 
-                <select className="navbar-select" onChange={event => this.handleLanguage(event.target.value)}>
-                  <option>Ressources</option>
-                  <option value="east">Charts</option>
-                  <option value="west">Documentation</option>
-                  <option value="south">Disclaimer</option>
-                  <option value="south">Teams</option>
-                </select>
+
+                <div className="navbar-select" tabIndex="1">
+                  <input name="Charts" className="navbar-input" type="radio" id="opt1" checked onChange={event => {}}/>
+                  <label htmlFor="opt1" className="navbar-option">Charts</label>
+                  <input name="Documentation" className="navbar-input" type="radio" id="opt2" onChange={event => {}}/>
+                  <label htmlFor="opt2" className="navbar-option">Docs</label>
+                  <input name="Disclaimer" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
+                  <label htmlFor="opt3" className="navbar-option">Disclaimer</label>
+                  <input name="Teams" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
+                  <label htmlFor="opt3" className="navbar-option navbar-option-last">Teams</label>
+                </div>
                 
             </div>
 

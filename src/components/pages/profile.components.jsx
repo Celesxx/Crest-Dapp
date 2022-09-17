@@ -58,62 +58,40 @@ class Dashboard extends React.Component
         super(props);
         this.state = 
         {
-            badges: JSON.parse(JSON.stringify(this.props.badges)),
+            badges: this.props.badges,
             claimBadges : JSON.parse(JSON.stringify(this.props.claimBadges)),
             address: this.props.address,
             allChecked: false,
             nbrCheck: 0,
-            totalReward: this.props.totalReward,
             startLoading: this.props.startLoading,
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
+            totalReward: this.props.totalReward,
         }
     }
 
-    // async UNSAFE_componentWillMount() 
-    // {
-    //     let contractHelper = new ContractHelper()
 
-    //     let claimBadges = []
+    // getPendingRewardLoop()
+    // {
+    //     let totalReward = []
     //     for(const [key, value] of Object.entries(this.state.badges))
     //     {
+    //         let total = 0.0
     //         for(const [keyNft, valueNft] of Object.entries(value.userBadges))
     //         {
-    //             let data = 
-    //             { 
-    //                 badgeId: key,
-    //                 nft : value.name, 
-    //                 id : valueNft.tokenId, 
-    //                 date : null, 
-    //                 claimDate : null,
-    //                 roi: null, 
-    //                 lifetime: null, 
-    //                 rewards: null,
-    //                 checked: false, 
-    //             }
 
-    //             data.date = await contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
-    //             data.claimDate = await contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
-
-    //             let [ formatPrice, formatRewardAmount ] = [ await contractHelper.setFormatUnit(value.price, 6), await contractHelper.setFormatUnit(value.rewardAmount, 6) ]
-    //             let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
-
-    //             data.roi = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
-    //             data.lifetime = await contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
     //             let formatRewards = await contractHelper.getPendingRewards(valueNft, value.rewardAmount)
-    //             data.rewards = await contractHelper.setFormatUnit(formatRewards.toString(), 6)
+    //             valueNft.
+    //             rewards.push(parseFloat(await contractHelper.setFormatUnit(formatRewards.toString(), 6)))
 
-    //             claimBadges.push(data)
     //         }
 
-    //         this.state.totalReward[key] = 0.0
+    //         data.claimBadges.push(dataClaim)
+
+
     //     }
-
-    //     for(const badge of this.state.claimBadges) { this.state.totalReward[badge.badgeId] += badge.rewards }
-    //     await this.props.dashboardAction({claimBadges: claimBadges, action: "saveData"})
     // }
-
     async singleSelect(key, value)
     {
         let contractHelper = new ContractHelper()
@@ -205,7 +183,7 @@ class Dashboard extends React.Component
                             this.state.badges.map((value, key) => 
                             {
                                 return (
-                                    <div key={key} className="profile-laderboard-cards flex column">
+                                    <div key={`profile-${key}`} className="profile-laderboard-cards flex column">
                                         <p className="profile-title">{value.name}</p>
                                         <div className="profile-score flex row center">{this.state.totalReward[key]}</div>
                                     </div>

@@ -33,7 +33,9 @@ const MapStateToProps = (state) => {
         tokenUser: state.dashboard.tokenUser,
         nftsDatas: state.dashboard.nftsDatas,
         totalBadges: state.dashboard.totalBadges,
-        badges: state.dashboard.badges
+        badges: state.dashboard.badges,
+        videoSrc: state.dashboard.videoSrc,
+        amounDailyReward : 0,
     }; 
 };
 
@@ -55,59 +57,35 @@ class Dashboard extends React.Component
         {
             badges: JSON.parse(JSON.stringify(this.props.badges)),
             tokenUser: this.props.tokenUser,
-            dailyReward: this.props.dailyReward,
-            pendingReward: this.props.pendingReward,
+            videoSrc: this.props.videoSrc,
+            amountDailyReward: null,
+            amountNft: null,
+            amountPendingRewards: null,
 
         }
     }
 
-    // async UNSAFE_componentWillMount() 
-    // {
-    //     let contractHelper = new ContractHelper() 
-    //     const provider = await contractHelper.getProvider()
-
-    //     let data = 
-    //     {
-    //         badges: this.state.badges,
-    //         pendingReward: BigNumber.from(0),
-    //         dailyReward: null,
-    //         tokenUser: { balance: null, }
-    //     }
-
-    //     for(let i = 0; i < Address.badges.length; i++) 
-    //     { 
-    //         const nft = await contractHelper.nftSingleBalance(i, this.props.address, provider)
-    //         const nftsInfo = await contractHelper.getNftsDatasAtIndex(i, this.props.address, nft, provider)
-    //         data.badges[i]["userBadges"] = nftsInfo
-    //         data.badges[i]["userNbrBadge"] = nft
-    //     }
-
-    //     let crestBalance = await contractHelper.getERC20Balance(this.props.address, Address.token, provider)
-    //     data.tokenUser.balance = await contractHelper.setFormatUnit(crestBalance, 6)
-        
-    //     for(const badgesInfo of data.badges)
-    //     {
-    //         for(const singleBadges of badgesInfo.userBadges)
-    //         {
-    //             let total = await contractHelper.getPendingRewards(singleBadges, badgesInfo.rewardAmount)
-    //             data.pendingReward = data.pendingReward.add(total)
-    //         }
-    //     }
-
-    //     data.pendingReward = await contractHelper.setFormatUnit(data.pendingReward.toString(), 6)
-    //     for(const badge of data.badges) data.dailyReward += badge.userNbrBadge * await contractHelper.setFormatUnit(badge.rewardAmount,6)
-
-    //     for(const [key, value] of Object.entries(data))
-    //     {
-    //         if(this.state[key] !== undefined) this.state[key] = value
-    //         else console.log(`value not exist : ${key}`)
-    //     }
-    //     this.props.dashboardAction({data: data, action: "saveData"})
-
-
-    //     this.forceUpdate();
-    // }
-
+    async UNSAFE_componentWillMount()
+    {
+        if(this.state.badges.length !=0)
+        {
+            let [amountDailyReward, amountNft, amountPendingRewards] = [0,0,0]
+            let contractHelper = new ContractHelper()
+            for(const [key, value] of Object.entries(this.state.badges))
+            {
+                amountDailyReward += parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 6)) * value.userNbrBadge
+                amountNft += value.userNbrBadge
+                for(const value1 of value.userBadges)
+                {
+                    amountPendingRewards += parseFloat(await contractHelper.setFormatUnit((await contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),6))
+                }
+            }
+            this.state.amountDailyReward = amountDailyReward
+            this.state.amountNft = amountNft
+            this.state.amountPendingRewards = amountPendingRewards
+            this.forceUpdate()
+        } 
+    }
 
     componentDidUpdate(prevProps, prevState, snapshot) 
     {
@@ -152,39 +130,24 @@ class Dashboard extends React.Component
                 <div className="dashboard-personnal-cards flex">
 
                     {
-                        this.state.badges[0].userNbrBadge != 0 &&
+                        this.state.badges.length != 0 &&
                         (
-                            <div className="personnal-cards flex column">
-                                <video className="shop-video" autoPlay muted loop>
-                                    <source src={Amber} type="video/mp4" />
-                                </video>
-                            </div>
+                            this.state.badges.map((value, key) => 
+                            {
+                                if(value.userNbrBadge != 0)
+                                {
+                                    return(
+                                        <div key={`personal-${key}`} className="personnal-cards flex column">
+                                            <video className="shop-video" autoPlay muted loop>
+                                                <source src={this.state.videoSrc[key]} alt={this.state.videoSrc[key]} type="video/mp4" />
+                                            </video>
+                                        </div>
+                                    )
+                                }
+                            })
                             
                         )
-                    }
-
-                    {
-                        this.state.badges[0].userNbrBadge != 0 && 
-                        (
-                            <div className="personnal-cards flex column">
-                                <video className="shop-video" autoPlay muted loop>
-                                    <source src={Amethyst} type="video/mp4" />
-                                </video>
-                            </div>
-                            
-                        )
-                    }
-
-                    {
-                        this.state.badges[0].userNbrBadge != 0 && 
-                        (
-                            <div className="personnal-cards flex column">
-                                <video className="shop-video" autoPlay muted loop>
-                                    <source src={Ruby} type="video/mp4" />
-                                </video>
-                            </div>
-                            
-                        )
+                        
                     }
 
                 </div>
@@ -195,7 +158,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My NFT's</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.badges[0].userNbrBadge + this.state.badges[1].userNbrBadge + this.state.badges[2].userNbrBadge}
+                                { this.state.amountNft }
                             </p>
                         </div>
                     </div>
@@ -213,7 +176,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My Daily Rewards</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.dailyReward}
+                                {this.state.amountDailyReward}
                             </p>
                         </div>
                     </div>
@@ -222,7 +185,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My Pending Reward</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.pendingReward}
+                                {this.state.amountPendingRewards}
                             </p>
                         </div>
                     </div>

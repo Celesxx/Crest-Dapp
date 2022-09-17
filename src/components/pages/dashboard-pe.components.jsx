@@ -67,45 +67,6 @@ class Dashboard extends React.Component
         };
 
     }
-
-    // async UNSAFE_componentWillMount () 
-    // {
-    //     if(this.props.address != "")
-    //     {
-    //         let contractHelper = new ContractHelper()
-    //         const provider = await contractHelper.getProvider()
-
-    //         const { resToken, resStable } = await contractHelper.getReserves(provider)
-    //         const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-    //         const { price, marketCap } = await contractHelper.getMarketCapAndPrice(resStable, resToken, totalSupply, 6)
-    //         const globalBadges = await contractHelper.getGlobalBadges(provider)
-    //         const totalBadges = await contractHelper.getTotalNft(globalBadges)
-    //         const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
-
-    //         let data = 
-    //         {
-    //             resToken : resToken,
-    //             resStable: resStable, 
-    //             totalSupply: formatUnit.totalSupply,
-    //             totalBurn: formatUnit.totalBurn,
-    //             price: price, 
-    //             marketCap: marketCap,
-    //             badges: globalBadges,
-    //             totalBadges: totalBadges, 
-    //         }
-
-
-    //         this.props.dashboardAction({data : data, action: "saveData"})
-
-    //         for(const [key, value] of Object.entries(data))
-    //         {
-    //             if(this.state[key] !== undefined) this.state[key] = value
-    //             else console.log(`value not exist : ${key}`)
-    //         }
-
-    //         this.forceUpdate();
-    //     }
-    // }
     
     componentDidUpdate(prevProps, prevState, snapshot) 
     {
@@ -188,19 +149,20 @@ class Dashboard extends React.Component
                     <div className="dashboard-badge-core flex column">
                         <div className="dashboard-badge flex column">
 
-                            <div className="dashboard-badge-items flex row">
-                                <p className="dashboard-badge-title">{this.state.badges.length != 0 ? this.state.badges[0].name : '' }</p>
-                                <p className="dashboard-badge-count">{this.state.badges.length != 0 ? this.state.badges[0].totalSupply : ''}/{this.state.badges.length != 0 ? this.state.badges[0].max : ''}</p>
-                            </div>
-                            <div className="dashboard-badge-items flex row">
-                                <p className="dashboard-badge-title">{this.state.badges.length != 0 ? this.state.badges[1].name : '' }</p>
-                                <p className="dashboard-badge-count">{this.state.badges.length != 0 ? this.state.badges[1].totalSupply : ''}/{this.state.badges.length != 0 ? this.state.badges[1].max : ''}</p>
-                            </div>
-                            <div className="dashboard-badge-items flex row">
-                                <p className="dashboard-badge-title">{this.state.badges.length != 0 ? this.state.badges[2].name : '' }</p>
-                                <p className="dashboard-badge-count">{this.state.badges.length != 0 ? this.state.badges[2].totalSupply : ''}/{this.state.badges.length != 0 ? this.state.badges[2].max : ''}</p>
-                            </div>
-
+                        {
+                            this.state.badges.length != 0 &&
+                            (
+                                this.state.badges.map((value, key) => 
+                                {
+                                    return(
+                                        <div key={`dashboard-${key}`} className="dashboard-badge-items flex row">
+                                            <p className="dashboard-badge-title">{value.name }</p>
+                                            <p className="dashboard-badge-count">{value.totalSupply}/{value.max }</p>
+                                        </div>
+                                    )
+                                })
+                            )                    
+                        }
                         </div>
                     </div>
 

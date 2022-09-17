@@ -15,6 +15,8 @@ import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import Restricted from "components/blocks/restricted.components.jsx"
 import LoadingData from "components/blocks/loadingData.components.jsx"
+import ContractHelper from "helpers/contract.helpers";
+import Address from 'contracts/address.contracts.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -38,6 +40,8 @@ const MapStateToProps = (state) => {
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
+        erc20DispatchManager: state.dashboard.erc20DispatchManager,
+        videoSrc: state.dashboard.videoSrc,
     }; 
 };
 
@@ -61,17 +65,54 @@ class Dashboard extends React.Component
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
+            badges: this.props.badges,
+            videoSrc: this.props.videoSrc,
+            erc20DispatchManager: this.props.erc20DispatchManager
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) 
+    async UNSAFE_componentWillMount()
+    {
+        if(Object.keys(this.props.erc20DispatchManager).length == 0 && this.props.address !== "")
+        {
+            let contractHelper = new ContractHelper()
+            const provider = await contractHelper.getProvider()
+            let data = {}
+            for(const address of Address.erc20Token)
+            {
+                data[address] = 
+                {
+                    name: await contractHelper.getNameContract(address, provider),
+                    allowance: await contractHelper.hasAllowance(this.state.address, address, Address.dispatchManager, provider)
+                }
+            }
+            this.props.dashboardAction({data : {erc20DispatchManager: data}, action:"saveData"})
+        }
+    }
+
+
+    async componentDidUpdate(prevProps, prevState, snapshot) 
     {
         for(const [key, value] of Object.entries(this.state))
         {
             if (prevProps[key] !== this.props[key])
             {   
                 this.state[key] = this.props[key] 
-
+                if(this.props.address != "" && key == "address")
+                {
+                    let contractHelper = new ContractHelper()
+                    const provider = await contractHelper.getProvider()
+                    let data = {}
+                    for(const address of Address.erc20Token)
+                    {
+                        data[address] = 
+                        {
+                            name: await contractHelper.getNameContract(address, provider),
+                            allowance: await contractHelper.hasAllowance(this.state.address, address, Address.dispatchManager, provider)
+                        }
+                    }
+                    this.props.dashboardAction({data : {erc20DispatchManager: data}, action:"saveData"})
+                }
                 this.forceUpdate();
             }
         }
@@ -106,44 +147,27 @@ class Dashboard extends React.Component
 
                 <div className="shop-items-core flex row">
 
-                    <div className="shop-items-cards flex column">
+                    {
+                        this.state.badges.map((value, key) =>
+                        {
+                            console.log(`key : ${key}`)
+                            return(
+                            <div key={`shop-${key}`} className="shop-items-cards flex column">
 
-                        <h3 className="shop-items-title">Badge Name 1</h3>
-                        <div className="shop-items">
-                            <video className="shop-video" autoPlay muted loop>
-                                <source src={Ruby} type="video/mp4" />
-                            </video>
-                        </div>
-                        <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
-                        <Badge1Popup></Badge1Popup>
-                    
-                    </div>
+                                <h3 className="shop-items-title">{value.name} </h3>
+                                <div className="shop-items">
+                                    <video className="shop-video" autoPlay muted loop>
+                                        <source src={this.state.videoSrc[key]} type="video/mp4" />
+                                    </video>
+                                </div>
+                                <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
+                                <Badge1Popup badgesIndex={key} ></Badge1Popup>
 
-                    <div className="shop-items-cards flex column">
-
-                        <h3 className="shop-items-title">Badge Name 1</h3>
-                        <div className="shop-items">
-                            <video className="shop-video" autoPlay muted loop>
-                                <source src={Amber} type="video/mp4" />
-                            </video>
-                        </div>
-                        <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
-                        <Badge1Popup></Badge1Popup>
-                    
-                    </div>
-
-                    <div className="shop-items-cards flex column">
-
-                        <h3 className="shop-items-title">Badge Name 1</h3>
-                        <div className="shop-items">
-                            <video className="shop-video" autoPlay muted loop>
-                                <source src={Amethyst} type="video/mp4" />
-                            </video>
-                        </div>
-                        <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
-                        <Badge1Popup></Badge1Popup>
-                    
-                    </div>
+                            </div>
+                            )
+                        })
+                        
+                    }
 
                 </div>
 

@@ -5,16 +5,6 @@
         "internalType": "address",
         "name": "_owner",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_dispatchManager",
-        "type": "address"
-      },
-      {
-        "internalType": "address[]",
-        "name": "addrs",
-        "type": "address[]"
       }
     ],
     "stateMutability": "nonpayable",
@@ -24,39 +14,16 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "from",
+        "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256[]",
-        "name": "iData",
-        "type": "uint256[]"
-      },
-      {
-        "internalType": "uint256[][]",
-        "name": "tokenIds",
-        "type": "uint256[][]"
       }
     ],
-    "name": "claim",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    "name": "conv",
+    "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "name": "contracts",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -64,44 +31,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "i",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "createManagedAirDrop",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "erc20",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "i",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
       {
         "internalType": "uint256",
         "name": "amount",
@@ -113,19 +42,80 @@
         "type": "string"
       }
     ],
-    "name": "createManagedTokens",
-    "outputs": [],
+    "name": "getDiscount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "dispatchManager",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "ids",
     "outputs": [
       {
-        "internalType": "contract IDispatchManager",
+        "internalType": "string",
         "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "influs",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "to",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "influRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "discountRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "released",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pending",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -137,21 +127,30 @@
         "internalType": "address",
         "name": "_owner",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_dispatchManager",
-        "type": "address"
-      },
-      {
-        "internalType": "address[]",
-        "name": "addrs",
-        "type": "address[]"
       }
     ],
     "name": "init",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "inserted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -202,17 +201,12 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "i",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "addr",
-        "type": "address"
+        "internalType": "string",
+        "name": "influId",
+        "type": "string"
       }
     ],
-    "name": "setContract",
+    "name": "releaseInflu",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -221,11 +215,54 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_dispatchManager",
+        "name": "erc20",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "rate",
+        "type": "uint256"
       }
     ],
-    "name": "setDispatchManager",
+    "name": "setConv",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "influId",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "influRate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "discountRate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setInflu",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -287,12 +324,12 @@
         "type": "uint256"
       }
     ],
-    "name": "viewContracts",
+    "name": "viewIdsByIndex",
     "outputs": [
       {
-        "internalType": "address[]",
+        "internalType": "string[]",
         "name": "",
-        "type": "address[]"
+        "type": "string[]"
       },
       {
         "internalType": "uint256",
@@ -305,7 +342,7 @@
   },
   {
     "inputs": [],
-    "name": "viewCountContracts",
+    "name": "viewIdsLength",
     "outputs": [
       {
         "internalType": "uint256",
@@ -314,6 +351,29 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "erc20",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

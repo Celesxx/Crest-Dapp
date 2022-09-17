@@ -17,6 +17,11 @@
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "_router",
+        "type": "address"
+      },
+      {
         "internalType": "address[]",
         "name": "_addrs",
         "type": "address[]"
@@ -62,6 +67,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "claimRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -77,11 +95,29 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "influId",
+        "type": "string"
       }
     ],
     "name": "create",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "influ",
+    "outputs": [
+      {
+        "internalType": "contract IInflus",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -99,6 +135,11 @@
       {
         "internalType": "address",
         "name": "_stable",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_router",
         "type": "address"
       },
       {
@@ -205,6 +246,58 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      }
+    ],
+    "name": "removeMap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "router",
+    "outputs": [
+      {
+        "internalType": "contract IUniswapV2Router02",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_claimRate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setClaimRate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_influ",
+        "type": "address"
+      }
+    ],
+    "name": "setInflu",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "addr",
         "type": "address"
       },
@@ -228,6 +321,36 @@
       }
     ],
     "name": "setLm",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "erc20",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
+          },
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct EnumerableMapping.Data",
+        "name": "data",
+        "type": "tuple"
+      }
+    ],
+    "name": "setMap",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -375,6 +498,89 @@
   {
     "inputs": [],
     "name": "treasuryRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cursor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "size",
+        "type": "uint256"
+      }
+    ],
+    "name": "viewMapDataByIndex",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
+          },
+          {
+            "internalType": "address",
+            "name": "router",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct EnumerableMapping.Data[]",
+        "name": "",
+        "type": "tuple[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cursor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "size",
+        "type": "uint256"
+      }
+    ],
+    "name": "viewMapKeysByIndex",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "viewMapSize",
     "outputs": [
       {
         "internalType": "uint256",

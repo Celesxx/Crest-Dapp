@@ -60,15 +60,16 @@
 {
     height: 60%;
     width: 70%;
+    margin-top: 5%;
     justify-content: flex-start;
     align-items: center;
     align-content: center;
+    overflow-y: scroll;
 }
 
 
 .profile-table-heads
 {
-    padding-top: 8%;
     width: 80%;
     height: 10%;
     justify-content: space-between;
@@ -159,6 +160,7 @@
 
 .profile-table-data
 {
+    min-height: 10%;
     width: 80%;
     height: 10%;
     justify-content: space-between;
