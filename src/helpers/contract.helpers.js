@@ -37,7 +37,7 @@ class ContractHelper
     {
         let fractionDigits = 0;
         if (decimal) fractionDigits = decimal;
-        if (isNaN(number)) throw "NaN"
+        if (isNaN(number)) return null
         return parseFloat(number).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: fractionDigits })
     }
 
@@ -154,7 +154,7 @@ class ContractHelper
     getMarketCapAndPrice(reserveStable, reserveToken, totalSupplyToken, decimal) 
     {
         const price = parseFloat(ethers.utils.formatUnits(reserveStable, decimal)) / parseFloat(ethers.utils.formatUnits(reserveToken, decimal))
-        const totalSupply = parseFloat(ethers.utils.formatUnits(totalSupplyToken, decimal))
+        const totalSupply = parseFloat(totalSupplyToken)
 
         return { price: price, marketCap: price * totalSupply }
     }
@@ -175,13 +175,13 @@ class ContractHelper
             const badge = new ethers.Contract(Address.badges[i], abiBadges, provider)
 
             globalBadges.push(
-                {
-                    name: await badge.name(),
-                    totalSupply: (await badge.totalSupply()).toString(),
-                    price: (await badge.price()).toString(),
-                    max: (await badge.max()).toString(),
-                    rewardAmount: (await badge.rewardAmount()).toString()
-                }
+            {
+                name: await badge.name(),
+                totalSupply: (await badge.totalSupply()).toString(),
+                price: (await badge.price()).toString(),
+                max: (await badge.max()).toString(),
+                rewardAmount: (await badge.rewardAmount()).toString()
+            }
             )
         }
 
@@ -226,7 +226,18 @@ class ContractHelper
 
 
 
-
+    
+    /*------------------------------ Get balance single nft ------------------------------*/
+    /** 
+    * @param {Number} index
+    * @param {Structure} provider
+    **/
+    async nftSingleTotalsupply(index, provider) 
+    {
+        const badge = new ethers.Contract(Address.badges[index], abiBadges, provider)
+        return (await badge.totalSupply()).toString()
+    }
+ 
 
 
 
@@ -546,6 +557,31 @@ class ContractHelper
         }
     }
 
+
+
+
+
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {Number} index
+    * @param {Number} tokenId
+    * @param {Strucuture} provider
+    **/
+    async getNftDatas(index, tokenId, provider) 
+    {
+        const badge = new ethers.Contract(Address.badges[index], abiBadges, provider)
+    
+        const dataNb = 4;
+    
+        let data = (await badge.viewData(tokenId, 0, dataNb))[0]
+        return {
+            tokenId: tokenId,
+            creationTime: data[0].toNumber(),
+            lastClaim: data[1].toNumber(),
+            boostId: data[2].toNumber(),
+            boostRate: data[3].toNumber(),
+        }
+    }
 
 
 }

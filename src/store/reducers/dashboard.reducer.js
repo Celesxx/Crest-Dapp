@@ -8,22 +8,13 @@ export const dashboardSlice = createSlice(
     videoSrc: [],
     startLoading: false,
     loading: 0,
-    loadingMax: 14,
+    loadingMax: 12,
     loadingOver: false,
     resToken: null, 
     resStable: null, 
     totalSupply: null,
     totalBurn: null,
-    price: null,
-    marketCap: null,
-    totalBadges: null,
-    dailyReward: null,
-    pendingReward: null,
-    crestBalance: null,
-    nftsDatas: null,
     badges: [],
-    claimBadges: [],
-    totalReward: {0: null, 1: null, 2: null},
     tokenUser: 
     {
       balance: null,
@@ -46,7 +37,6 @@ export const dashboardSlice = createSlice(
       {
         
         case 'saveData':
-            
           for(const [key, value] of Object.entries(action.payload.data))
           {
               if(state[key] !== undefined)
@@ -55,11 +45,24 @@ export const dashboardSlice = createSlice(
                 {
                   for(const [key1, value1] of Object.entries(value)) 
                   { 
-                    if(state[key][key1] !== undefined) { state[key][key1] = value1 }
-                    else state[key] = {...state[key], ...value}
+                    if(state[key][key1] !== undefined)
+                    {
+                      if(typeof(value1) === "object" && !Array.isArray(value1))
+                      {
+                        for(const [key2, value2] of Object.entries(value1))
+                        {
+                          if(state[key][key1][key2] !== undefined) state[key][key1][key2] = value2
+                          else state[key][key1] = { ...state[key][key1], ...value1 }
+                        }
+                      }else
+                      {
+                        if(state[key][key1] !== undefined) state[key][key1] = value1 
+                        else state[key] = {...state[key], ...value}
+                        
+                      }
+                    }else state[key][key1] = value1
                   }
-                }
-                else state[key] = value 
+                }else state[key] = value 
               } 
               else console.log(`value not exist : ${key}`)
           }
@@ -68,11 +71,16 @@ export const dashboardSlice = createSlice(
         case 'loading':
             state.loading += 1
             if(state.loading == state.loadingMax) { state.loadingOver = true }
-            break;
+            break
 
         case 'startLoading': 
-            state.startLoading = true
-            break
+          state.startLoading = true
+          break
+
+        case 'endLoading': 
+          state.startLoading = false
+          state.loadingOver = false
+          break
 
         
 

@@ -21,14 +21,6 @@ const MapStateToProps = (state) => {
         resStable: state.dashboard.resStable,
         totalSupply: state.dashboard.totalSupply,
         totalBurn: state.dashboard.totalBurn,
-        price: state.dashboard.price,
-        marketCap: state.dashboard.marketCap,
-        totalNfts: state.dashboard.totalNfts,
-        dailyReward: state.dashboard.dailyReward,
-        pendingReward: state.dashboard.pendingReward,
-        crestBalance: state.dashboard.crestBalance,
-        nftsDatas: state.dashboard.nftsDatas,
-        totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
         claimBadges: state.dashboard.claimBadges,
         totalReward: state.dashboard.totalReward,
@@ -111,6 +103,18 @@ class BuyPopup extends React.Component
         let contractHelper = new ContractHelper()
         const provider = await contractHelper.getProvider()
         await contractHelper.createManagedTokens(this.state.tokenChoices, this.state.badgesIndex, this.state.address, this.state.buyNbr, '', provider)
+
+        const newBalance = await contractHelper.nftSingleBalance(this.state.badgesIndex, this.state.address, provider)
+        const newTotalSupply = await contractHelper.nftSingleTotalsupply(this.state.badgesIndex, provider)
+        const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
+        const formatUnit = await contractHelper.setFormatUnits({totalBurn : totalBurn, totalSupply: totalSupply}, 6)
+        const getAllUserBadges = await contractHelper.getNftsDatasAtIndex(this.state.badgesIndex, this.state.address, newBalance, provider)
+
+        let badge = {}
+        badge[this.state.badgesIndex] = {}
+        badge[this.state.badgesIndex] = { userNbrBadge : newBalance, totalSupply : newTotalSupply, userBadges : getAllUserBadges}
+
+        this.props.dashboardAction({data: {badges :  badge, totalSupply: formatUnit.totalSupply, totalBurn: formatUnit.totalBurn} , action : 'saveData'})
     }
     
     render()

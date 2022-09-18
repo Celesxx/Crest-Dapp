@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import Restricted from "components/blocks/restricted.components.jsx"
 import LoadingData from "components/blocks/loadingData.components.jsx"
+import Address from 'contracts/address.contracts.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -22,17 +23,7 @@ const MapStateToProps = (state) => {
         resStable: state.dashboard.resStable,
         totalSupply: state.dashboard.totalSupply,
         totalBurn: state.dashboard.totalBurn,
-        price: state.dashboard.price,
-        marketCap: state.dashboard.marketCap,
-        totalNfts: state.dashboard.totalNfts,
-        dailyReward: state.dashboard.dailyReward,
-        pendingReward: state.dashboard.pendingReward,
-        crestBalance: state.dashboard.crestBalance,
-        nftsDatas: state.dashboard.nftsDatas,
-        totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
-        claimBadges: state.dashboard.claimBadges,
-        totalReward: state.dashboard.totalReward,
         startLoading: state.dashboard.startLoading,
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
@@ -59,7 +50,7 @@ class Dashboard extends React.Component
         this.state = 
         {
             badges: this.props.badges,
-            claimBadges : JSON.parse(JSON.stringify(this.props.claimBadges)),
+            claimBadges : [],
             address: this.props.address,
             allChecked: false,
             nbrCheck: 0,
@@ -67,37 +58,82 @@ class Dashboard extends React.Component
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
-            totalReward: this.props.totalReward,
+            totalReward: [],
+            interval : null
         }
     }
 
-
-    // getPendingRewardLoop()
-    // {
-    //     let totalReward = []
-    //     for(const [key, value] of Object.entries(this.state.badges))
-    //     {
-    //         let total = 0.0
-    //         for(const [keyNft, valueNft] of Object.entries(value.userBadges))
-    //         {
-
-    //             let formatRewards = await contractHelper.getPendingRewards(valueNft, value.rewardAmount)
-    //             valueNft.
-    //             rewards.push(parseFloat(await contractHelper.setFormatUnit(formatRewards.toString(), 6)))
-
-    //         }
-
-    //         data.claimBadges.push(dataClaim)
-
-
-    //     }
-    // }
-    async singleSelect(key, value)
+    
+    UNSAFE_componentWillMount()
     {
-        let contractHelper = new ContractHelper()
-        const provider = await contractHelper.getProvider()
-        await contractHelper.claimBadge(this.state.address, [value.badgeId], [[value.id]], provider)
+        if(this.state.interval == null) { this.state.interval = setInterval(() => this.loadClaimDatas(), 1000) }
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) 
+    {
+        for(const [key, value] of Object.entries(this.state))
+        {
+            if (prevProps[key] !== this.props[key])
+            {   
+                this.state[key] = this.props[key] 
+                if(key == "badges" && this.state.address != "") 
+                {
+                    if(this.state.interval == null) this.state.interval = setInterval(() => this.loadClaimDatas(), 1000)
+                }
+                this.forceUpdate();
+            }
+        }
+    }
+
+    componentWillUnmount()
+    {
+        clearInterval(this.state.interval)
+        this.state.interval = null
+    }
+    
+
+    loadClaimDatas()
+    {
+        this.state.claimBadges = []
+        this.state.totalReward = []
+        let contractHelper = new ContractHelper()
+        for(const [key, value] of Object.entries(this.state.badges))
+        {
+            let amountReward = 0.0
+            for(const [keyNft, valueNft] of Object.entries(value.userBadges))
+            {
+                let dataClaim = 
+                { 
+                    badgeId: key,
+                    nft : value.name, 
+                    id : valueNft.tokenId, 
+                    date : null, 
+                    claimDate : null,
+                    roi: null, 
+                    lifetime: null, 
+                    rewards: null,
+                    checked: false, 
+                }
+
+                dataClaim.date = contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
+                dataClaim.claimDate = contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
+
+                let [ formatPrice, formatRewardAmount ] = [ contractHelper.setFormatUnit(value.price, 6), contractHelper.setFormatUnit(value.rewardAmount, 6) ]
+                let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
+
+                dataClaim.roi = contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
+                dataClaim.lifetime = contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
+                let formatRewards = contractHelper.getPendingRewards(valueNft, value.rewardAmount)
+                dataClaim.rewards = contractHelper.setFormatUnit(formatRewards.toString(), 6)
+                amountReward += parseFloat(dataClaim.rewards)
+
+                this.state.claimBadges.push(dataClaim)
+            }
+            this.state.totalReward.push(amountReward)
+        }
+        this.forceUpdate()
+    }
+
 
     multipleSelect(key, value)
     {
@@ -116,6 +152,15 @@ class Dashboard extends React.Component
         this.state.claimBadges = claimBadges
         this.state.allChecked = !this.state.allChecked
         this.forceUpdate();
+    }
+
+    async singleSelect(key, value)
+    {
+        let contractHelper = new ContractHelper()
+        const provider = await contractHelper.getProvider()
+        await contractHelper.claimBadge(this.state.address, [value.badgeId], [[value.id]], provider)
+        await this.reloadDataClaim()
+        this.state.allChecked = false
     }
 
     async claimAllBadges()
@@ -138,26 +183,44 @@ class Dashboard extends React.Component
         Object.keys(data).map((key) => {badgeIndex.push(parseInt(key))})
         Object.values(data).map((value) => {tokenIds.push(value)})
 
-        console.log(badgeIndex)
-        console.log(tokenIds)
         await contractHelper.claimBadge(this.state.address, badgeIndex, tokenIds, provider)
+        this.state.allChecked = false
+
+        await this.reloadDataClaim()
+
+    }
+
+    async reloadDataClaim()
+    {
+        let contractHelper = new ContractHelper()
+        const provider = await contractHelper.getProvider()
+        let newData = []
+        for(let i = 0; i < Address.badges.length; i++) 
+        { 
+            const nftsInfo = await contractHelper.getNftsDatasAtIndex(i, this.state.address, this.state.badges[i].userNbrBadge, provider)
+            newData.push({userBadges: nftsInfo})
+        }
+
+        for(const [key, value] of Object.entries(this.state.badges))
+        {
+            let badge = {}
+            badge[key] = {}
+            badge[key] = newData[key]
+            this.props.dashboardAction({data: {badges :  badge} , action : 'saveData'})
+        }
+
+        const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
+        const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
+        const formatUnit = await contractHelper.setFormatUnits({userCrestBalance : userCrestBalance, totalSupply: totalSupply}, 6)
+        this.props.dashboardAction({data : {tokenUser: {balance : formatUnit.userCrestBalance}, totalSupply : formatUnit.totalSupply}, action : 'saveData'})
+        
     }
     
-    componentDidUpdate(prevProps, prevState, snapshot) 
-    {
-        for(const [key, value] of Object.entries(this.state))
-        {
-            if (prevProps[key] !== this.props[key])
-            {   
-                this.state[key] = this.props[key] 
-
-                this.forceUpdate();
-            }
-        }
-    }
+    
 
     render()
     {
+        let contractHelper = new ContractHelper()
       return(
         <div className="home p1">
 
@@ -185,7 +248,7 @@ class Dashboard extends React.Component
                                 return (
                                     <div key={`profile-${key}`} className="profile-laderboard-cards flex column">
                                         <p className="profile-title">{value.name}</p>
-                                        <div className="profile-score flex row center">{this.state.totalReward[key]}</div>
+                                        <div className="profile-score flex row center">{contractHelper.getNb(this.state.totalReward[key], 6)}</div>
                                     </div>
                                 )
                             })
@@ -240,7 +303,7 @@ class Dashboard extends React.Component
                                         <p className="profile-table-desc">{value.claimDate}</p>
                                         <p className="profile-table-desc">{value.roi}</p>
                                         <p className="profile-table-desc">{value.lifetime}</p>
-                                        <p className="profile-table-desc">{value.rewards}</p>
+                                        <p className="profile-table-desc">{contractHelper.getNb(value.rewards, 6)}</p>
                                         <div className="profile-table-desc profile-table-button-core flex row center">
                                             <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>claim</button>
                                         </div>

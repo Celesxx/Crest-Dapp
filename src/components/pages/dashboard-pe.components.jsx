@@ -20,14 +20,14 @@ const MapStateToProps = (state) => {
         resStable: state.dashboard.resStable,
         totalSupply: state.dashboard.totalSupply,
         totalBurn: state.dashboard.totalBurn,
-        price: state.dashboard.price,
-        marketCap: state.dashboard.marketCap,
-        totalNfts: state.dashboard.totalNfts,
-        dailyReward: state.dashboard.dailyReward,
-        pendingReward: state.dashboard.pendingReward,
-        crestBalance: state.dashboard.crestBalance,
-        nftsDatas: state.dashboard.nftsDatas,
-        totalBadges: state.dashboard.totalBadges,
+        //price: state.dashboard.price,
+        //marketCap: state.dashboard.marketCap,
+        // totalNfts: state.dashboard.totalNfts,
+        // dailyReward: state.dashboard.dailyReward,
+        // pendingReward: state.dashboard.pendingReward,
+        // crestBalance: state.dashboard.crestBalance,
+        // nftsDatas: state.dashboard.nftsDatas,
+        //totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
         startLoading: state.dashboard.startLoading,
         loading: state.dashboard.loading,
@@ -54,11 +54,11 @@ class Dashboard extends React.Component
             address: this.props.address,
             resToken: this.props.resToken,
             resStable: this.props.resStable,
-            totalSupply: this.props.totalSupply != null ? this.props.totalSupply.toFixed(2): this.props.totalSupply,
-            totalBurn: this.props.totalBurn != null ? this.props.totalBurn.toFixed(2) : this.props.totalBurn,
-            price: this.props.price != null ? this.props.price.toFixed(2) : this.props.price,
-            marketCap: this.props.marketCap != null ? this.props.marketCap.toFixed(2) : this.props.marketCap,
-            totalBadges: this.props.totalBadges,
+            totalSupply: this.props.totalSupply,
+            totalBurn: this.props.totalBurn,
+            price: null,
+            marketCap: null,
+            totalBadges: null,
             badges: this.props.badges,
             startLoading: this.props.startLoading,
             loading: this.props.loading,
@@ -67,6 +67,23 @@ class Dashboard extends React.Component
         };
 
     }
+
+
+    UNSAFE_componentWillMount()
+    {
+        if(this.state.resStable != null && this.props.resToken && this.state.totalSupply != null && this.state.address != 0 && this.state.badges.length != 0)
+        {
+            let contractHelper = new ContractHelper()
+            const { price, marketCap } = contractHelper.getMarketCapAndPrice(this.props.resStable, this.props.resToken, this.props.totalSupply, 6)
+            const totalNbrBadges = contractHelper.getTotalNft(this.props.badges)
+            this.state.price = price
+            this.state.marketCap = marketCap
+            this.state.totalBadges = totalNbrBadges
+            this.forceUpdate()
+        } 
+    }
+
+
     
     componentDidUpdate(prevProps, prevState, snapshot) 
     {
@@ -74,6 +91,15 @@ class Dashboard extends React.Component
         {
             if (prevProps[key] !== this.props[key])
             {   
+                if(this.state.resStable != null && this.props.resToken && this.state.totalSupply != null && this.props.address != "" && this.state.badges.length != 0)
+                {
+                    let contractHelper = new ContractHelper()
+                    const { price, marketCap } = contractHelper.getMarketCapAndPrice(this.props.resStable, this.props.resToken, this.props.totalSupply, 6)
+                    const totalNbrBadges = contractHelper.getTotalNft(this.props.badges)
+                    this.state.price = price
+                    this.state.marketCap = marketCap
+                    this.state.totalBadges = totalNbrBadges
+                }
                 this.state[key] = this.props[key] 
                 this.forceUpdate();
             }
@@ -83,6 +109,7 @@ class Dashboard extends React.Component
 
     render()
     {
+        let contractHelper = new ContractHelper()
       return(
         <div className="home p1">
 
@@ -114,35 +141,35 @@ class Dashboard extends React.Component
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">$CREST Price</p>
                         <div className="dashboard-items flex row center">
-                            <p className="dashboard-text-stat">{this.state.price}</p>
+                            <p className="dashboard-text-stat">{contractHelper.getNb(this.state.price, 2)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">Market Cap</p>
                         <div className="dashboard-items flex row center">
-                            <p className="dashboard-text-stat">{this.state.marketCap}</p>
+                            <p className="dashboard-text-stat">{contractHelper.getNb(this.state.marketCap, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">Total NFT's</p>
                         <div className="dashboard-items flex row center">
-                            <p className="dashboard-text-stat">{this.state.totalBadges}</p>
+                            <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalBadges, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">Total Supply</p>
                         <div className="dashboard-items flex row center">
-                            <p className="dashboard-text-stat">{this.state.totalSupply}</p>
+                            <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalSupply, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">Total Token Burn</p>
                         <div className="dashboard-items flex row center">
-                            <p className="dashboard-text-stat">{this.state.totalBurn}</p>
+                            <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalBurn, 0)}</p>
                         </div>
                     </div>
 
@@ -157,7 +184,7 @@ class Dashboard extends React.Component
                                     return(
                                         <div key={`dashboard-${key}`} className="dashboard-badge-items flex row">
                                             <p className="dashboard-badge-title">{value.name }</p>
-                                            <p className="dashboard-badge-count">{value.totalSupply}/{value.max }</p>
+                                            <p className="dashboard-badge-count">{contractHelper.getNb(value.totalSupply, 0)}/{contractHelper.getNb(value.max, 0)}</p>
                                         </div>
                                     )
                                 })

@@ -25,17 +25,9 @@ const MapStateToProps = (state) => {
         resStable: state.dashboard.resStable,
         totalSupply: state.dashboard.totalSupply,
         totalBurn: state.dashboard.totalBurn,
-        price: state.dashboard.price,
-        marketCap: state.dashboard.marketCap,
-        totalNfts: state.dashboard.totalNfts,
-        dailyReward: state.dashboard.dailyReward,
-        pendingReward: state.dashboard.pendingReward,
         tokenUser: state.dashboard.tokenUser,
-        nftsDatas: state.dashboard.nftsDatas,
-        totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
         videoSrc: state.dashboard.videoSrc,
-        amounDailyReward : 0,
     }; 
 };
 
@@ -55,36 +47,48 @@ class Dashboard extends React.Component
         super(props);
         this.state = 
         {
-            badges: JSON.parse(JSON.stringify(this.props.badges)),
+            badges: this.props.badges,
             tokenUser: this.props.tokenUser,
             videoSrc: this.props.videoSrc,
             amountDailyReward: null,
             amountNft: null,
-            amountPendingRewards: null,
-
+            amountPendingRewards: [],
+            amountTotalPendingRewards: null,
         }
     }
 
-    async UNSAFE_componentWillMount()
+    
+    UNSAFE_componentWillMount()
     {
-        if(this.state.badges.length !=0)
+        if(this.state.badges.length !=0 && this.state.address != 0)
         {
-            let [amountDailyReward, amountNft, amountPendingRewards] = [0,0,0]
+            let [amountDailyReward, amountNft, amountTotalPendingRewards] = [0,0,0]
             let contractHelper = new ContractHelper()
             for(const [key, value] of Object.entries(this.state.badges))
             {
+                let amountPendingRewards = 0
                 amountDailyReward += parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 6)) * value.userNbrBadge
                 amountNft += value.userNbrBadge
                 for(const value1 of value.userBadges)
                 {
-                    amountPendingRewards += parseFloat(await contractHelper.setFormatUnit((await contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),6))
+                    amountPendingRewards += parseFloat(contractHelper.setFormatUnit((contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),6))
                 }
+                amountTotalPendingRewards += amountPendingRewards
+                this.state.amountPendingRewards.push(amountPendingRewards)
             }
+            
             this.state.amountDailyReward = amountDailyReward
             this.state.amountNft = amountNft
-            this.state.amountPendingRewards = amountPendingRewards
+            this.state.amountTotalPendingRewards = amountTotalPendingRewards
+            this.state.interval = setInterval(() => this.reloadDataTimer(), 1000)
+            
             this.forceUpdate()
         } 
+    }
+
+    componentWillUnmount()
+    {
+        clearInterval(this.state.interval)
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) 
@@ -93,15 +97,39 @@ class Dashboard extends React.Component
         {
             if (prevProps[key] !== this.props[key])
             {   
+                
                 this.state[key] = this.props[key] 
                 this.forceUpdate();
             }
         }
     }
+
+    async reloadDataTimer()
+    {
+        if(this.state.badges.length !=0 && this.state.address != 0)
+        {
+            let contractHelper = new ContractHelper()
+            let amountTotalPendingRewards = 0
+
+            for(const [key, value] of Object.entries(this.state.badges))
+            {
+                let amountPendingRewards = 0
+                for(const value1 of value.userBadges)
+                {
+                    amountPendingRewards += parseFloat(contractHelper.setFormatUnit((contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),6))
+                }
+                amountTotalPendingRewards += amountPendingRewards
+                this.state.amountPendingRewards.push(amountPendingRewards)
+            }
+            this.state.amountTotalPendingRewards = amountTotalPendingRewards
+            this.forceUpdate()
+        } 
+    }
     
   render()
     {
-      return(
+        let contractHelper = new ContractHelper()
+        return(
         <div className="home p1">
 
             <Navbar></Navbar>
@@ -167,7 +195,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My $CREST Balance</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.tokenUser.balance}
+                                {contractHelper.getNb(this.state.tokenUser.balance, 2)}
                             </p>
                         </div>
                     </div>
@@ -176,7 +204,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My Daily Rewards</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.amountDailyReward}
+                                {contractHelper.getNb(this.state.amountDailyReward, 2)}
                             </p>
                         </div>
                     </div>
@@ -185,7 +213,7 @@ class Dashboard extends React.Component
                         <p className="info-title">My Pending Reward</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
-                                {this.state.amountPendingRewards}
+                                {contractHelper.getNb(this.state.amountTotalPendingRewards, 6)}
                             </p>
                         </div>
                     </div>

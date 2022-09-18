@@ -13,11 +13,25 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import network from 'contracts/network.contracts.js'
 import LoadingHelper from 'helpers/loadingData.helpers.js'
+import ContractHelper from "helpers/contract.helpers";
+import Address from 'contracts/address.contracts.json'
 
 const MapStateToProps = (state) => {
   return { 
     address: state.login.address,
+    resToken: state.dashboard.resToken,
+    resStable: state.dashboard.resStable,
+    totalSupply: state.dashboard.totalSupply,
+    totalBurn: state.dashboard.totalBurn,
+    badges: state.dashboard.badges,
+    claimBadges: state.dashboard.claimBadges,
+    totalReward: state.dashboard.totalReward,
+    startLoading: state.dashboard.startLoading,
     loading: state.dashboard.loading,
+    loadingMax: state.dashboard.loadingMax,
+    loadingOver: state.dashboard.loadingOver,
+    erc20DispatchManager: state.dashboard.erc20DispatchManager,
+    videoSrc: state.dashboard.videoSrc
   }; 
 };
 
@@ -39,11 +53,14 @@ class Navbar extends React.Component
 
       this.state = 
       {
+        badges: this.props.badges,
         address: this.props.address,
         isMetamaskSupported: false,
         isLoggedIn: false,
         loading: this.props.loading,
-        loadginOver: this.props.loadingOver,
+        loadingOver: this.props.loadingOver,
+        interval: null,
+        isDisconnect: true
       };
   }
 
@@ -52,7 +69,23 @@ class Navbar extends React.Component
     if (window.ethereum) 
     {
         this.state.isMetamaskSupported = true
-        if(this.props.address != "") { this.state.isLoggedIn = true }
+        if(this.props.address != "") 
+        { 
+          this.state.isLoggedIn = true 
+          let contractHelper = new ContractHelper()
+          let loadingHelper = new LoadingHelper()
+          const provider = await contractHelper.getProvider()
+
+          if(this.state.isDisconnect)
+          {
+            this.props.dashboardAction({loading : {}, action: "startLoading"})
+            await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
+            this.props.dashboardAction({loading : {}, action: "endLoading"})
+            this.state.isDisconnect = false
+          }
+
+          if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+        }
     }
   }
 
@@ -61,8 +94,9 @@ class Navbar extends React.Component
       for(const [key, value] of Object.entries(this.state))
       {
           if (prevProps[key] !== this.props[key])
-          {   
+          {  
             this.state[key] = this.props[key]
+            if(this.state.address != "" && key == "badges" && this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
             this.forceUpdate();
           }
       }
@@ -89,6 +123,7 @@ class Navbar extends React.Component
 
           let loadingHelper = new LoadingHelper()
           await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
+          this.props.dashboardAction({loading : {}, action: "endLoading"})
 
         }else 
         {
@@ -100,7 +135,33 @@ class Navbar extends React.Component
       else window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
   }
 
+  async loadAllContractFunction()
+  {
+    let contractHelper = new ContractHelper()
+    const provider = await contractHelper.getProvider()
 
+    const { resToken, resStable } = await contractHelper.getReserves(provider)
+    const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
+    const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
+
+
+    let data = 
+    {
+        resToken : resToken,
+        resStable: resStable, 
+        totalSupply: formatUnit.totalSupply,
+        totalBurn: formatUnit.totalBurn,
+        badges: {},
+    }
+  
+    for(let i = 0; i < Address.badges.length; i++) 
+    { 
+      data.badges[i] = {}
+      const newTotalSupply = await contractHelper.nftSingleTotalsupply(i, provider)
+      data.badges[i]["totalSupply"] = newTotalSupply
+    }
+    this.props.dashboardAction({data : data, action: "saveData"})
+  }
 
   render()
     {
@@ -146,7 +207,7 @@ class Navbar extends React.Component
                 <button className="button market-button flex row center"> <p>Buy/Sell $CREST</p> </button>
                 {
                   this.state.address !== "" 
-                  ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{this.state.address}</p></div>
+                  ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{ this.state.address.substr(0, 6) + '...' +  this.state.address.substr( this.state.address.length - 6,  this.state.address.length)  }</p></div>
                   :<button className="button dapp-button flex row center" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
                 }
                 

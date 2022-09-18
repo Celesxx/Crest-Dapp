@@ -89,13 +89,13 @@ class Dashboard extends React.Component
 
                 if(this.state.sellLoader == "token" && this.props.address != "" && key == "tokenUser") 
                 {
-                  this.state.balanceIn = this.props.tokenUser.balance;
-                  this.state.balanceOut = this.props.stableUser.balance;
+                  this.state.dataIn.balance = this.props.tokenUser.balance;
+                  this.state.dataOut.balance = this.props.stableUser.balance;
                 
                 }else if(this.state.sellLoader == "usdt" && this.props.address != "" && key == "tokenUser") 
                 {
-                  this.state.balanceIn = this.props.stableUser.balance
-                  this.state.balanceOut = this.props.tokenUser.balance;
+                  this.state.dataIn.balance = this.props.stableUser.balance
+                  this.state.dataOut.balance = this.props.tokenUser.balance;
                 }
 
                 this.forceUpdate();
@@ -149,19 +149,30 @@ class Dashboard extends React.Component
       let provider = await contractHelper.getProvider()
       let path, amountIn
 
-      if(this.state.sellLoader === "token")
-      {
-        path = [Address.token, Address.stable]
-        amountIn = await contractHelper.setBignumberUnit(this.state.crestAmount, 6)
-      }
-      else if(this.state.sellLoader === "usdt")
-      {
-        path = [Address.stable, Address.token] 
-        amountIn = await contractHelper.setBignumberUnit(this.state.usdtAmount, 6)
-      } 
-
+      if(this.state.sellLoader === "token") path = [Address.token, Address.stable]
+      else if(this.state.sellLoader === "usdt") path = [Address.stable, Address.token] 
+      
+      amountIn = await contractHelper.setBignumberUnit(document.getElementById("balanceIn").value, 6)
+      
       const deadline = Math.floor((new Date()).getTime() / 1000) + 600
       await contractHelper.swapToken(this.state.address, amountIn, 0, path, deadline, provider)
+
+      const { resToken, resStable } = await contractHelper.getReserves(provider)
+      const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
+      const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
+      const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
+      const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn, userCrestBalance: userCrestBalance, userStableBalance: userStableBalance }, 6)
+      
+      let data = 
+      {
+        resToken: resToken,
+        resStable: resStable,
+        totalSupply: formatUnit.totalSupply,
+        totalBurn: formatUnit.totalBurn,
+        tokenUser: {balance: formatUnit.userCrestBalance},
+        stableUser: {balance: formatUnit.userStableBalance}
+      }
+      this.props.dashboardAction({data: data, action: "saveData"})
 
     }
 
@@ -221,7 +232,7 @@ class Dashboard extends React.Component
 
     render()
     {
-        
+        let contractHelper = new ContractHelper()
       return(
         <div className="home p1">
 
@@ -257,7 +268,7 @@ class Dashboard extends React.Component
                         </div>
 
                         <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">balance : {this.state.dataIn.balance}</p>
+                          <p className="card-balance-text unmargin unpadding">balance : {contractHelper.getNb(this.state.dataIn.balance, 2)}</p>
                         </div>
                       </div>
 
@@ -285,7 +296,7 @@ class Dashboard extends React.Component
                         </div>
 
                         <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">balance : {this.state.dataOut.balance}</p>
+                          <p className="card-balance-text unmargin unpadding">balance : {contractHelper.getNb(this.state.dataOut.balance, 2)}</p>
                         </div>
                       </div>
 

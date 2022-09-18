@@ -25,17 +25,7 @@ const MapStateToProps = (state) => {
         resStable: state.dashboard.resStable,
         totalSupply: state.dashboard.totalSupply,
         totalBurn: state.dashboard.totalBurn,
-        price: state.dashboard.price,
-        marketCap: state.dashboard.marketCap,
-        totalNfts: state.dashboard.totalNfts,
-        dailyReward: state.dashboard.dailyReward,
-        pendingReward: state.dashboard.pendingReward,
-        crestBalance: state.dashboard.crestBalance,
-        nftsDatas: state.dashboard.nftsDatas,
-        totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
-        claimBadges: state.dashboard.claimBadges,
-        totalReward: state.dashboard.totalReward,
         startLoading: state.dashboard.startLoading,
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
@@ -150,7 +140,6 @@ class Dashboard extends React.Component
                     {
                         this.state.badges.map((value, key) =>
                         {
-                            console.log(`key : ${key}`)
                             return(
                             <div key={`shop-${key}`} className="shop-items-cards flex column">
 
