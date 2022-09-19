@@ -190,3 +190,15 @@
     background-repeat: no-repeat !important;
     border-radius: 14px !important;
 }
+
+.swap-design
+{
+    height: 100%;
+    width: 50%;
+}
+
+.swap-video
+{
+    height: 90%;
+    width: auto;
+}

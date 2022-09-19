@@ -41,7 +41,7 @@ class LoadingHelper
 
         let data = 
         {
-            videoSrc : [Amber, Amethyst, Ruby, Ruby],
+            videoSrc : [Amber, Amethyst, Ruby],
             resToken : resToken,
             resStable: resStable, 
             totalSupply: formatUnit.totalSupply,

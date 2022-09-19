@@ -15,6 +15,8 @@ import network from 'contracts/network.contracts.js'
 import LoadingHelper from 'helpers/loadingData.helpers.js'
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
+import Language from 'assets/language/language.json'
+
 
 const MapStateToProps = (state) => {
   return { 
@@ -31,7 +33,8 @@ const MapStateToProps = (state) => {
     loadingMax: state.dashboard.loadingMax,
     loadingOver: state.dashboard.loadingOver,
     erc20DispatchManager: state.dashboard.erc20DispatchManager,
-    videoSrc: state.dashboard.videoSrc
+    videoSrc: state.dashboard.videoSrc,
+    language: state.login.language,
   }; 
 };
 
@@ -60,32 +63,27 @@ class Navbar extends React.Component
         loading: this.props.loading,
         loadingOver: this.props.loadingOver,
         interval: null,
-        isDisconnect: true
+        language: this.props.language,
       };
+
+      this.handleChange = this.handleChange.bind(this)
   }
 
   async UNSAFE_componentWillMount() 
   {
     if (window.ethereum) 
     {
-        this.state.isMetamaskSupported = true
-        if(this.props.address != "") 
-        { 
-          this.state.isLoggedIn = true 
-          let contractHelper = new ContractHelper()
-          let loadingHelper = new LoadingHelper()
-          const provider = await contractHelper.getProvider()
+      this.state.isMetamaskSupported = true
+      if(this.props.address != "") 
+      { 
+        this.state.isLoggedIn = true 
+        let contractHelper = new ContractHelper()
+        let loadingHelper = new LoadingHelper()
+        const provider = await contractHelper.getProvider()
 
-          if(this.state.isDisconnect)
-          {
-            this.props.dashboardAction({loading : {}, action: "startLoading"})
-            await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
-            this.props.dashboardAction({loading : {}, action: "endLoading"})
-            this.state.isDisconnect = false
-          }
-
-          if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
-        }
+        await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
+        if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+      }
     }
   }
 
@@ -103,6 +101,41 @@ class Navbar extends React.Component
   }
 
 
+  handleChange(event)
+  {
+    let target = event.target
+    console.log(event)
+    console.log(target)
+    console.log(target.name)
+    if(target.name == "french") 
+    {
+      console.log("test french")
+      document.getElementById("french").checked = true;
+      document.getElementById("english").checked = false;
+      document.getElementById("japanese").checked = false;
+      this.props.loginAction({language: "fr", action: "language"})
+    
+    }else if(target.name == "english") 
+    {
+      console.log("test english")
+      document.getElementById("french").checked = false;
+      document.getElementById("english").checked = true;
+      document.getElementById("japanese").checked = false;
+      this.props.loginAction({language: "en", action: "language"})
+    
+    }else if(target.name == "japanese") 
+    {
+      console.log("test japanese")
+      document.getElementById("french").checked = false;
+      document.getElementById("english").checked = false;
+      document.getElementById("japanese").checked = true;
+      this.props.loginAction({language: "jp", action: "language"})
+    
+    }
+  }
+
+
+  
   connectWallet = async () => 
   {
       if (this.state.isMetamaskSupported) 
@@ -127,8 +160,8 @@ class Navbar extends React.Component
 
         }else 
         {
-          Notiflix.Notify.failure(
-          "Required Network - " + network.chainName, { timeout: 2500, width: '300px', position: 'right-top' });
+          Notiflix.Notify.warning(
+          "Required Network - " + network.chainName, { timeout: 1500, width: '500px', position: 'center-top', fontSize: '22px' });
         }
 
       }else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)
@@ -177,24 +210,24 @@ class Navbar extends React.Component
 
                 
                 <div className="navbar-select" tabIndex="1">
-                  <input name="french" className="navbar-input" type="radio" id="opt1" checked onChange={event => {}}/>
-                  <label htmlFor="opt1" className="navbar-option">French</label>
-                  <input name="english" className="navbar-input" type="radio" id="opt2" onChange={event => {}}/>
-                  <label htmlFor="opt2" className="navbar-option">English</label>
-                  <input name="japanese" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
-                  <label htmlFor="opt3" className="navbar-option navbar-option-last">Japanese</label>
+                  <input name="english" className="navbar-input" type="radio" id="english" checked onChange={event => {}} onClick={this.handleChange}/>
+                  <label htmlFor="english" className="navbar-option">English</label>
+                  <input name="french" className="navbar-input" type="radio" id="french" onChange={event => {}} onClick={this.handleChange}/>
+                  <label htmlFor="french" className="navbar-option">French</label>
+                  <input name="japanese" className="navbar-input" type="radio" id="japanese" onChange={event => {}} onClick={this.handleChange}/>
+                  <label htmlFor="japanese" className="navbar-option navbar-option-last">Don't click</label>
                 </div>
 
 
                 <div className="navbar-select" tabIndex="1">
                   <input name="Charts" className="navbar-input" type="radio" id="opt1" checked onChange={event => {}}/>
-                  <label htmlFor="opt1" className="navbar-option">Charts</label>
+                  <label htmlFor="opt1" className="navbar-option"> { Language[this.state.language].navbar.selectDocs.chart } </label>
                   <input name="Documentation" className="navbar-input" type="radio" id="opt2" onChange={event => {}}/>
-                  <label htmlFor="opt2" className="navbar-option">Docs</label>
+                  <label htmlFor="opt2" className="navbar-option">{ Language[this.state.language].navbar.selectDocs.doc }</label>
                   <input name="Disclaimer" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
-                  <label htmlFor="opt3" className="navbar-option">Disclaimer</label>
+                  <label htmlFor="opt3" className="navbar-option">{ Language[this.state.language].navbar.selectDocs.disclaimer }</label>
                   <input name="Teams" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
-                  <label htmlFor="opt3" className="navbar-option navbar-option-last">Teams</label>
+                  <label htmlFor="opt3" className="navbar-option navbar-option-last">{ Language[this.state.language].navbar.selectDocs.team }</label>
                 </div>
                 
             </div>
@@ -204,7 +237,7 @@ class Navbar extends React.Component
             </div>
             <div className="navbar-button flex row">
               <div className="navbar-button-core flex row">
-                <button className="button market-button flex row center"> <p>Buy/Sell $CREST</p> </button>
+                <button className="button market-button flex row center"> <p>{ Language[this.state.language].navbar.buyButton }</p> </button>
                 {
                   this.state.address !== "" 
                   ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{ this.state.address.substr(0, 6) + '...' +  this.state.address.substr( this.state.address.length - 6,  this.state.address.length)  }</p></div>

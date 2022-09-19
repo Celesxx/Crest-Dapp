@@ -15,6 +15,11 @@ import LogoCrest from "assets/img/logoCrest.svg"
 import ArrowUpDown from "assets/img/arrowUpDown.svg"
 import Restricted from "components/blocks/restricted.components.jsx"
 import LoadingData from "components/blocks/loadingData.components.jsx"
+import Language from "assets/language/language.json"
+import LogoSwap from "assets/img/swap-dev.mp4"
+
+
+
 
 const MapStateToProps = (state) => {
     return { 
@@ -27,6 +32,7 @@ const MapStateToProps = (state) => {
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
+        language: state.login.language,
     }; 
 };
 
@@ -57,6 +63,7 @@ class Dashboard extends React.Component
           loadingMax: this.props.loadingMax,
           loadingOver: this.props.loadingOver,
           amountPrice: null,
+          language: this.props.language,
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -251,8 +258,8 @@ class Dashboard extends React.Component
                 }
 
               <div className="swap-title-core flex column">
-                <h1 className="swap-title unpadding unmargin">Swap</h1>
-                <p className="swap-description unpadding unmargin">Trade tokens in an instant</p>
+                <h1 className="swap-title unpadding unmargin">{ Language[this.state.language].swap.title }</h1>
+                <p className="swap-description unpadding unmargin">{ Language[this.state.language].swap.description }</p>
               </div>
 
               <div className="swap-core-base flex row">
@@ -268,13 +275,13 @@ class Dashboard extends React.Component
                         </div>
 
                         <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">balance : {contractHelper.getNb(this.state.dataIn.balance, 2)}</p>
+                          <p className="card-balance-text unmargin unpadding">{ Language[this.state.language].swap.balance } : {contractHelper.getNb(this.state.dataIn.balance, 2)}</p>
                         </div>
                       </div>
 
                       <div className="card-input-core">
                         <input className="card-input" type="text" name="crest" id="balanceIn" onKeyPress={this.checkNumber} onChange={this.handleChange}></input>
-                        <button className="card-max" onClick={() => this.setMaxValue()}>max</button>
+                        <button className="card-max" onClick={() => this.setMaxValue()}>{ Language[this.state.language].swap.maxBtn }</button>
                       </div>
 
                     </div>
@@ -296,7 +303,7 @@ class Dashboard extends React.Component
                         </div>
 
                         <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">balance : {contractHelper.getNb(this.state.dataOut.balance, 2)}</p>
+                          <p className="card-balance-text unmargin unpadding">{ Language[this.state.language].swap.balance } : {contractHelper.getNb(this.state.dataOut.balance, 2)}</p>
                         </div>
                       </div>
 
@@ -312,19 +319,21 @@ class Dashboard extends React.Component
                   <div className="swap-button-core flex row center">
                     {
                       this.state.sellLoader === "token" && this.state.tokenUser.allowanceLm 
-                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>Swap</button> )
+                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
 
                       : this.state.sellLoader === "usdt" && this.state.stableUser.allowanceLm 
-                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>Swap</button> )
+                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
                       
-                      :( <button className="swap-button button" name="submit" onClick={() => this.setAllowance()}>Approve</button> )
+                      :( <button className="swap-button button" name="submit" onClick={() => this.setAllowance()}>{ Language[this.state.language].swap.approveBtn }</button> )
                     }
                   </div>
 
                 </div>
 
-                <div className="swap-design">
-
+                <div className="swap-design flex row center">
+                  <video className="swap-video" autoPlay muted loop>
+                    <source src={LogoSwap} type="video/mp4" />
+                  </video>
                 </div>
 
 
@@ -333,9 +342,9 @@ class Dashboard extends React.Component
 
             </div>
 
-            <div className="home-sphere flex column center flex row center">
+            {/* <div className="home-sphere flex column center flex row center">
                 <img src={Sphere} alt={Sphere} className="sphere-img" />
-            </div>
+            </div> */}
 
         </div>
 

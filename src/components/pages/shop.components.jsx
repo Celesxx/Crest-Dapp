@@ -17,6 +17,7 @@ import Restricted from "components/blocks/restricted.components.jsx"
 import LoadingData from "components/blocks/loadingData.components.jsx"
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
+import Language from 'assets/language/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -32,6 +33,7 @@ const MapStateToProps = (state) => {
         loadingOver: state.dashboard.loadingOver,
         erc20DispatchManager: state.dashboard.erc20DispatchManager,
         videoSrc: state.dashboard.videoSrc,
+        language: state.login.language,
     }; 
 };
 
@@ -57,7 +59,8 @@ class Dashboard extends React.Component
             loadingOver: this.props.loadingOver,
             badges: this.props.badges,
             videoSrc: this.props.videoSrc,
-            erc20DispatchManager: this.props.erc20DispatchManager
+            erc20DispatchManager: this.props.erc20DispatchManager,
+            language: this.props.language,
         }
     }
 
@@ -130,8 +133,8 @@ class Dashboard extends React.Component
 
                 <div className="shop-about-core flex column">
 
-                    <h1 className="shop-title">Buy a badge</h1>
-                    <p className="shop-description">Description Description Description Description Description Description Description </p>
+                    <h1 className="shop-title">{ Language[this.state.language].shop.title }</h1>
+                    <p className="shop-description">{ Language[this.state.language].shop.description }</p>
 
                 </div>
 
@@ -149,7 +152,7 @@ class Dashboard extends React.Component
                                         <source src={this.state.videoSrc[key]} type="video/mp4" />
                                     </video>
                                 </div>
-                                <p className="shop-items-description">Description Description Description Description Description Description Description Description </p>
+                                <p className="shop-items-description">{ Language[this.state.language].shop.badgeDescription[key] }</p>
                                 <Badge1Popup badgesIndex={key} ></Badge1Popup>
 
                             </div>

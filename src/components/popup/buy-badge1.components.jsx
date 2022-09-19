@@ -13,6 +13,7 @@ import Amber from 'assets/img/amber.mp4'
 import Amethyst from 'assets/img/amethyst.mp4'
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
+import Language from 'assets/language/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -29,7 +30,8 @@ const MapStateToProps = (state) => {
         loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
         erc20DispatchManager: state.dashboard.erc20DispatchManager,
-        videoSrc: state.dashboard.videoSrc
+        videoSrc: state.dashboard.videoSrc,
+        language: state.login.language,
     }; 
 };
 
@@ -60,7 +62,8 @@ class BuyPopup extends React.Component
             buyNbr : 1,
             tokenChoices: Address.token,
             erc20DispatchManager: this.props.erc20DispatchManager,
-            videoSrc: this.props.videoSrc
+            videoSrc: this.props.videoSrc,
+            language: this.props.language,
         }
     }
 
@@ -121,7 +124,7 @@ class BuyPopup extends React.Component
     {
         let contractHelper = new ContractHelper()
         return(
-            <Popup trigger={<button className="button shop-items-button">Buy for {contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 6)}$CREST</button>} modal nested>
+            <Popup trigger={<button className="button shop-items-button">{ Language[this.state.language].shop.badgeBuy } {contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 6)}$CREST</button>} modal nested>
             {
                 close => (
                     <div className="shop-popup-base flex row">
@@ -146,16 +149,16 @@ class BuyPopup extends React.Component
                             <div className="shop-popup-info-core flex row">
 
                                 <div className="shop-popup-info-title flex column">
-                                    <p className="shop-popup-text-title">Price</p>
-                                    <p className="shop-popup-text-title">Lifetime</p>
-                                    <p className="shop-popup-text-title">Daily Rewards</p>
-                                    <p className="shop-popup-text-title">Daily Roi</p>
-                                    <p className="shop-popup-text-title">Total Roi</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.price }</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.lifetime }</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.dailyReward }</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.dailyRoi }</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.totalRoi }</p>
                                 </div>
 
                                 <div className="shop-popup-info-desc flex column">
                                     <p className="shop-popup-text-desc">{contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price * this.state.buyNbr, 6)} $CREST</p>
-                                    <p className="shop-popup-text-desc">365 days</p>
+                                    <p className="shop-popup-text-desc">{ Language[this.state.language].shopPop.lifetimeValue }</p>
                                     <p className="shop-popup-text-desc">{contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].rewardAmount, 6)} $CREST</p>
                                     <p className="shop-popup-text-desc">
                                         {
@@ -181,8 +184,8 @@ class BuyPopup extends React.Component
                                 this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
                                 (
                                     this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
-                                    ? <button className="button shop-popup-button" onClick={() => this.buyBadges()}>Buy</button>
-                                    : <button className="button shop-popup-button" onClick={() => this.setAllowance()}>Approve</button>
+                                    ? <button className="button shop-popup-button" onClick={() => this.buyBadges()}>{ Language[this.state.language].shopPop.buyBtn }</button>
+                                    : <button className="button shop-popup-button" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                 )
                             }
                             

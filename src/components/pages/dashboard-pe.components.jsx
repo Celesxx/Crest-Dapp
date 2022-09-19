@@ -12,6 +12,7 @@ import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
 import ContractHelper from 'helpers/contract.helpers.js'
+import Language from 'assets/language/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -20,19 +21,12 @@ const MapStateToProps = (state) => {
         resStable: state.dashboard.resStable,
         totalSupply: state.dashboard.totalSupply,
         totalBurn: state.dashboard.totalBurn,
-        //price: state.dashboard.price,
-        //marketCap: state.dashboard.marketCap,
-        // totalNfts: state.dashboard.totalNfts,
-        // dailyReward: state.dashboard.dailyReward,
-        // pendingReward: state.dashboard.pendingReward,
-        // crestBalance: state.dashboard.crestBalance,
-        // nftsDatas: state.dashboard.nftsDatas,
-        //totalBadges: state.dashboard.totalBadges,
         badges: state.dashboard.badges,
         startLoading: state.dashboard.startLoading,
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
+        language: state.login.language
     }; 
 };
 
@@ -64,6 +58,7 @@ class Dashboard extends React.Component
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
+            language: this.props.language
         };
 
     }
@@ -130,8 +125,8 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">Protocol</button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">Personnal</button>
+                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">{ Language[this.state.language].dashboard.protocolTitle }</button>
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">{ Language[this.state.language].dashboard.personalTitle }</button>
 
                     </div>
                 </div>
@@ -139,35 +134,35 @@ class Dashboard extends React.Component
                 <div className="dashboard-core flex">
 
                     <div className="dashboard-cards flex column">
-                        <p className="title-dashboard">$CREST Price</p>
+                        <p className="title-dashboard">{ Language[this.state.language].dashboard.crestPrice }</p>
                         <div className="dashboard-items flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.price, 2)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
-                        <p className="title-dashboard">Market Cap</p>
+                        <p className="title-dashboard">{ Language[this.state.language].dashboard.marketcap }</p>
                         <div className="dashboard-items flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.marketCap, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
-                        <p className="title-dashboard">Total NFT's</p>
+                        <p className="title-dashboard">{ Language[this.state.language].dashboard.totalNft }</p>
                         <div className="dashboard-items flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalBadges, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
-                        <p className="title-dashboard">Total Supply</p>
+                        <p className="title-dashboard">{ Language[this.state.language].dashboard.totalSupply }</p>
                         <div className="dashboard-items flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalSupply, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
-                        <p className="title-dashboard">Total Token Burn</p>
+                        <p className="title-dashboard">{ Language[this.state.language].dashboard.totalBurn }</p>
                         <div className="dashboard-items flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalBurn, 0)}</p>
                         </div>

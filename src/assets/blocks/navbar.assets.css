@@ -65,8 +65,8 @@
   order:2;
   z-index:1;
   /* transition:background .4s ease-in-out; */
-  box-sizing:border-box;
-  overflow:hidden;
+  box-sizing: border-box;
+  overflow: hidden;
   white-space:nowrap;
 }
 
@@ -90,7 +90,7 @@
   border-right: 1px solid white;
 }
 
-.navbar-select:focus .navbar-option-last{
+.navbar-select:focus .navbar-option-last {
   border-bottom: 1px solid white;
   border-end-end-radius: 22px;
   border-end-start-radius: 22px;
@@ -110,11 +110,10 @@ border-top: 1px solid white;
 }
 
 .navbar-input:checked + label {
-  position:relative;
+  /* position:relative; */
   order: 1;
   z-index:2;
   background: black;
-  
 }
 
 .navbar-input:checked + label:after {
@@ -151,10 +150,7 @@ border-top: 1px solid white;
   color: white
 }
 
-.link:hover
-{
-  color:red
-}
+
 
 .navbar-title
 {

@@ -15,6 +15,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import Restricted from "components/blocks/restricted.components.jsx"
 import LoadingData from "components/blocks/loadingData.components.jsx"
 import Address from 'contracts/address.contracts.json'
+import Language from 'assets/language/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -28,6 +29,7 @@ const MapStateToProps = (state) => {
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
+        language: state.login.language
     }; 
 };
 
@@ -59,7 +61,8 @@ class Dashboard extends React.Component
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
             totalReward: [],
-            interval : null
+            interval : null,
+            language : this.props.language,
         }
     }
 
@@ -257,7 +260,7 @@ class Dashboard extends React.Component
 
                     </div>
 
-                    <button className="claim-all-button button" onClick={() => this.claimAllBadges()}>Claim selected NFT'S ({this.state.nbrCheck}/{this.state.claimBadges.length})</button>
+                    <button className="claim-all-button button" onClick={() => this.claimAllBadges()}>{ Language[this.state.language].profile.claimAllBtn } ({this.state.nbrCheck}/{this.state.claimBadges.length})</button>
 
                 </div>
 
@@ -272,14 +275,14 @@ class Dashboard extends React.Component
                                 </div>
                             </div>
                         </div>
-                        <p className="profile-table-title">NFT's</p>
-                        <p className="profile-table-title">ID</p>
-                        <p className="profile-table-title">Date</p>
-                        <p className="profile-table-title">Claim date</p>
-                        <p className="profile-table-title">ROI DATE</p>
-                        <p className="profile-table-title">Lifetime</p>
-                        <p className="profile-table-title">Rewards</p>
-                        <p className="profile-table-title"></p>
+                        {
+                            Language[this.state.language].profile.tableTitle.map((value, key) => 
+                            {
+                                return(
+                                    <p key={`table-${key}`} className="profile-table-title">{value}</p>
+                                )
+                            })
+                        }
                     </div>
 
                     {
@@ -305,7 +308,7 @@ class Dashboard extends React.Component
                                         <p className="profile-table-desc">{value.lifetime}</p>
                                         <p className="profile-table-desc">{contractHelper.getNb(value.rewards, 6)}</p>
                                         <div className="profile-table-desc profile-table-button-core flex row center">
-                                            <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>claim</button>
+                                            <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>{ Language[this.state.language].profile.claimBtn }</button>
                                         </div>
                                     </div>
                                 )

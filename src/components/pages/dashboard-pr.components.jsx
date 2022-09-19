@@ -17,6 +17,7 @@ import Amethyst from 'assets/img/amethyst.mp4'
 import Ruby from 'assets/img/ruby.mp4'
 import Restricted from "components/blocks/restricted.components.jsx"
 import LoadingData from "components/blocks/loadingData.components.jsx"
+import Language from 'assets/language/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -28,6 +29,7 @@ const MapStateToProps = (state) => {
         tokenUser: state.dashboard.tokenUser,
         badges: state.dashboard.badges,
         videoSrc: state.dashboard.videoSrc,
+        language: state.login.language,
     }; 
 };
 
@@ -54,6 +56,7 @@ class Dashboard extends React.Component
             amountNft: null,
             amountPendingRewards: [],
             amountTotalPendingRewards: null,
+            language: this.props.language
         }
     }
 
@@ -149,8 +152,8 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                    <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">Protocol</button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">Personnal</button>
+                    <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">{ Language[this.state.language].personnal.protocolTitle }</button>
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">{ Language[this.state.language].personnal.personalTitle }</button>
 
                     </div>
                 </div>
@@ -183,7 +186,7 @@ class Dashboard extends React.Component
                 <div className="dashboard-personnal-info flex row">
 
                     <div className="personnal-info-cards flex column">
-                        <p className="info-title">My NFT's</p>
+                        <p className="info-title">{ Language[this.state.language].personnal.myNft }</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
                                 { this.state.amountNft }
@@ -192,7 +195,7 @@ class Dashboard extends React.Component
                     </div>
 
                     <div className="personnal-info-cards flex column">
-                        <p className="info-title">My $CREST Balance</p>
+                        <p className="info-title">{ Language[this.state.language].personnal.crestBalance }</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
                                 {contractHelper.getNb(this.state.tokenUser.balance, 2)}
@@ -201,7 +204,7 @@ class Dashboard extends React.Component
                     </div>
 
                     <div className="personnal-info-cards flex column">
-                        <p className="info-title">My Daily Rewards</p>
+                        <p className="info-title">{ Language[this.state.language].personnal.dailyReward }</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
                                 {contractHelper.getNb(this.state.amountDailyReward, 2)}
@@ -210,7 +213,7 @@ class Dashboard extends React.Component
                     </div>
 
                     <div className="personnal-info-cards flex column">
-                        <p className="info-title">My Pending Reward</p>
+                        <p className="info-title">{ Language[this.state.language].personnal.pendingReward }</p>
                         <div className="info-cards flex row center">
                             <p className="info-text">
                                 {contractHelper.getNb(this.state.amountTotalPendingRewards, 6)}

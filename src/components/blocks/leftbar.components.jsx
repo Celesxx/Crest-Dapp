@@ -6,10 +6,50 @@ import Medium from 'assets/img/medium.png'
 import Discord from 'assets/img/discord.png'
 import Telegram from 'assets/img/telegram.png'
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
+import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
+import Language from 'assets/language/language.json'
+
+
+const MapStateToProps = (state) => {
+  return { 
+    language: state.login.language,
+  }; 
+};
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      loginAction: (data) => { dispatch(LoginActions(data)); },
+  };
+};
 
 
 class Leftbar extends React.Component 
 {
+
+    constructor(props) 
+    {
+        super(props);
+
+        this.state = 
+        {
+        language: this.props.language,
+        };
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) 
+    {
+        for(const [key, value] of Object.entries(this.state))
+        {
+            if (prevProps[key] !== this.props[key])
+            {  
+              this.state[key] = this.props[key]
+              this.forceUpdate();
+            }
+        }
+    }
 
   render()
     {
@@ -21,35 +61,34 @@ class Leftbar extends React.Component
             <div className="leftbar-core flex column">
 
                 <div className="leftbar-link flex column">
-                    <Link to="/home" className="link"><p>Home</p></Link>
+                    <Link to="/home" className="link"><p>{ Language[this.state.language].leftbar.homeTitle }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/dashboard" className="link"><p>Dashboard</p></Link>
+                    <Link to="/dashboard" className="link"><p>{ Language[this.state.language].leftbar.dashboard }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/shop" className="link"><p>Shop</p></Link>
+                    <Link to="/shop" className="link"><p>{ Language[this.state.language].leftbar.shop }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/profile" className="link"><p>My NFT's</p></Link>
+                    <Link to="/profile" className="link"><p>{ Language[this.state.language].leftbar.myNft }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/swap" className="link"><p>Swap</p></Link>
+                    <Link to="/swap" className="link"><p>{ Language[this.state.language].leftbar.swap }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="social-link flex column">
-                    <a href="http://test.com" className="link"><img src={Twitter} alt={Twitter} /> </a>
-                    <a href="http://test.com" className="link"><img src={Medium} alt={Medium} /></a>
-                    <a href="http://test.com" className="link"><img src={Discord} alt={Discord} /></a>
-                    <a href="http://test.com" className="link"><img src={Telegram} alt={Telegram} /></a>
+                    <a href="https://twitter.com/playCrest" className="link"><img src={Twitter} alt={Twitter} /> </a>
+                    <a href="https://medium.com/@playCrest" className="link"><img src={Medium} alt={Medium} /></a>
+                    <a href="https://discord.com/invite/mUHGNqN8Vj" className="link"><img src={Discord} alt={Discord} /></a>
                 </div>
 
             </div>
@@ -58,4 +97,4 @@ class Leftbar extends React.Component
     }
 }
 
-export default Leftbar;
+export default connect(MapStateToProps, mapDispatchToProps)(Leftbar);

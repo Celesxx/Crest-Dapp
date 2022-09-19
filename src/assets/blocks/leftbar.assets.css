@@ -23,7 +23,7 @@
 
 .leftbar-link
 {
-    height: 4%;
+    height: 10%;
     justify-content: space-around;
     align-items: center;
 }
@@ -37,8 +37,14 @@
 .link-bar
 {
     height: 3px;
-    width: 30px;
+    width: 0;
     background: white;
+}
+
+.link:hover + .link-bar
+{ 
+    width: 30px; 
+    animation: link-groth 0.25s linear;
 }
 
 .social-link
