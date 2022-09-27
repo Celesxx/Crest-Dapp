@@ -3,8 +3,8 @@ import "assets/global.assets.css";
 import "assets/pages/dashboard.assets.css"
 import "assets/pages/dashboard-pr.assets.css"
 import React from "react";
-import Navbar from "components/blocks/navbar.components.jsx"
-import Leftbar from "components/blocks/leftbar.components.jsx"
+import Navbar from "components/blocks/navbar.block.jsx"
+import Leftbar from "components/blocks/leftbar.block.jsx"
 import Sphere from "assets/img/sphere.svg"
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
@@ -15,9 +15,9 @@ import { BigNumber } from "ethers";
 import Amber from 'assets/img/amber.mp4'
 import Amethyst from 'assets/img/amethyst.mp4'
 import Ruby from 'assets/img/ruby.mp4'
-import Restricted from "components/blocks/restricted.components.jsx"
-import LoadingData from "components/blocks/loadingData.components.jsx"
-import Language from 'assets/language/language.json'
+import Restricted from "components/blocks/restricted.block.jsx"
+import LoadingData from "components/blocks/loading-data.block.jsx"
+import Language from 'assets/data/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -158,76 +158,94 @@ class Dashboard extends React.Component
                     </div>
                 </div>
 
-                <div className="dashboard-personnal-cards flex">
-
-                    {
-                        this.state.badges.length != 0 &&
-                        (
-                            this.state.badges.map((value, key) => 
-                            {
-                                if(value.userNbrBadge != 0)
-                                {
-                                    return(
-                                        <div key={`personal-${key}`} className="personnal-cards flex column">
-                                            <video className="shop-video" autoPlay muted loop>
-                                                <source src={this.state.videoSrc[key]} alt={this.state.videoSrc[key]} type="video/mp4" />
-                                            </video>
-                                        </div>
-                                    )
-                                }
-                            })
-                            
-                        )
+                <div className="dashboard-personnal-card-core flex column center">
                         
-                    }
+                    <div className="dashboard-personnal-cards flex">
 
-                </div>
+                        {
+                            this.state.badges.length != 0 &&
+                            (
+                                this.state.badges.map((value, key) => 
+                                {
+                                    if(value.userNbrBadge != 0)
+                                    {
+                                        return(
+                                            <div key={`personal-${key}`} className="personnal-cards flex column">
+                                                <video className="personnal-video" autoPlay muted loop>
+                                                    <source src={this.state.videoSrc[key]} alt={this.state.videoSrc[key]} type="video/mp4" />
+                                                </video>
 
-                <div className="dashboard-personnal-info flex row">
+                                            </div>
+                                        )
+                                    } else 
+                                    {
+                                        return(
+                                            <div key={`personal-${key}`} className="personnal-cards flex column">
+                                                <video className="personnal-video" autoPlay muted loop>
+                                                    <source src={this.state.videoSrc[key]} alt={this.state.videoSrc[key]} type="video/mp4" />
+                                                </video>
 
-                    <div className="personnal-info-cards flex column">
-                        <p className="info-title">{ Language[this.state.language].personnal.myNft }</p>
-                        <div className="info-cards flex row center">
-                            <p className="info-text">
-                                { this.state.amountNft }
-                            </p>
-                        </div>
+                                                <div className="personnal-cards-locked flex row center">
+                                                    <h2 className="personnal-cards-title-locked">{Language[this.state.language].personnal.lockedTitle}</h2>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                })
+                                
+                            )
+                            
+                        }
+
                     </div>
 
-                    <div className="personnal-info-cards flex column">
-                        <p className="info-title">{ Language[this.state.language].personnal.crestBalance }</p>
-                        <div className="info-cards flex row center">
-                            <p className="info-text">
-                                {contractHelper.getNb(this.state.tokenUser.balance, 2)}
-                            </p>
-                        </div>
-                    </div>
+                    <div className="dashboard-personnal-info flex row">
 
-                    <div className="personnal-info-cards flex column">
-                        <p className="info-title">{ Language[this.state.language].personnal.dailyReward }</p>
-                        <div className="info-cards flex row center">
-                            <p className="info-text">
-                                {contractHelper.getNb(this.state.amountDailyReward, 2)}
-                            </p>
+                        <div className="personnal-info-cards flex column">
+                            <p className="info-title">{ Language[this.state.language].personnal.myNft }</p>
+                            <div className="info-cards flex row center">
+                                <p className="info-text">
+                                    { this.state.amountNft }
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="personnal-info-cards flex column">
-                        <p className="info-title">{ Language[this.state.language].personnal.pendingReward }</p>
-                        <div className="info-cards flex row center">
-                            <p className="info-text">
-                                {contractHelper.getNb(this.state.amountTotalPendingRewards, 6)}
-                            </p>
+                        <div className="personnal-info-cards flex column">
+                            <p className="info-title">{ Language[this.state.language].personnal.crestBalance }</p>
+                            <div className="info-cards flex row center">
+                                <p className="info-text">
+                                    {contractHelper.getNb(this.state.tokenUser.balance, 2)}
+                                </p>
+                            </div>
                         </div>
+
+                        <div className="personnal-info-cards flex column">
+                            <p className="info-title">{ Language[this.state.language].personnal.dailyReward }</p>
+                            <div className="info-cards flex row center">
+                                <p className="info-text">
+                                    {contractHelper.getNb(this.state.amountDailyReward, 2)}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="personnal-info-cards flex column">
+                            <p className="info-title">{ Language[this.state.language].personnal.pendingReward }</p>
+                            <div className="info-cards flex row center">
+                                <p className="info-text">
+                                    {contractHelper.getNb(this.state.amountTotalPendingRewards, 6)}
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
 
             </div>
 
-            <div className="home-sphere flex column center flex row center">
+            {/* <div className="home-sphere flex column center flex row center">
                 <img src={Sphere} alt={Sphere} className="sphere-img" />
-            </div>
+            </div> */}
             
 
         </div>

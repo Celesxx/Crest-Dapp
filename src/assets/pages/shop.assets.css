@@ -3,7 +3,8 @@
     height: 20%;
     width: 60%;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
 }
 
 .shop-title
@@ -28,10 +29,10 @@
 .shop-items-core
 {
     
-    height: 60%;
+    height: 70%;
     width: 60%;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 
 }
 
@@ -39,9 +40,10 @@
 {
     flex: 1 0 20%;
     max-width: 25%;
+    gap: 30px;
     height: 80%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .shop-items-title
@@ -53,18 +55,23 @@
 
 .shop-items
 {
-    height: 50%;
+    position: relative;
+    z-index: 15;
+    height: 35%;
     width: 75%;
     background: black;
-    border: 1px solid white;
+    border: 2px solid white;
     border-radius: 22px;
 }
 
 .shop-video
 {
+    position: relative;
+    z-index: 14;
     height: 100%;
     width: 100%;
     border-radius: 22px; 
+    object-fit: cover;
 }
 
 .shop-items-description
@@ -74,6 +81,8 @@
     font-weight: 500;
     font-style: normal;
     text-align: center;
+    margin: 0;
+    height: 10%;
 }
 
 .shop-items-button

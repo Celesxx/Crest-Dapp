@@ -3,16 +3,16 @@ import 'assets/global.assets.css';
 import 'assets/pages/dashboard.assets.css'
 import 'assets/pages/dashboard-pe.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.components.jsx"
-import Leftbar from "components/blocks/leftbar.components.jsx"
-import Restricted from "components/blocks/restricted.components.jsx"
-import LoadingData from "components/blocks/loadingData.components.jsx"
+import Navbar from "components/blocks/navbar.block.jsx"
+import Leftbar from "components/blocks/leftbar.block.jsx"
+import Restricted from "components/blocks/restricted.block.jsx"
+import LoadingData from "components/blocks/loading-data.block.jsx"
 import Sphere from "assets/img/sphere.svg"
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
 import ContractHelper from 'helpers/contract.helpers.js'
-import Language from 'assets/language/language.json'
+import Language from 'assets/data/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -58,7 +58,8 @@ class Dashboard extends React.Component
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
-            language: this.props.language
+            language: this.props.language,
+            width: window.innerWidth,
         };
 
     }
@@ -66,6 +67,8 @@ class Dashboard extends React.Component
 
     UNSAFE_componentWillMount()
     {
+        window.addEventListener('resize', this.handleWindowSizeChange);
+
         if(this.state.resStable != null && this.props.resToken && this.state.totalSupply != null && this.state.address != 0 && this.state.badges.length != 0)
         {
             let contractHelper = new ContractHelper()
@@ -78,6 +81,7 @@ class Dashboard extends React.Component
         } 
     }
 
+    componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
 
     
     componentDidUpdate(prevProps, prevState, snapshot) 
@@ -101,9 +105,12 @@ class Dashboard extends React.Component
         }
     }
 
+    handleWindowSizeChange = () => { this.state.width = window.innerWidth };
 
     render()
     {
+        const isMobile = this.state.width <= 500;
+        if(isMobile) console.log("test")
         let contractHelper = new ContractHelper()
       return(
         <div className="home p1">
@@ -192,9 +199,9 @@ class Dashboard extends React.Component
 
             </div>
 
-            <div className="home-sphere flex column center flex row center">
+            {/* <div className="home-sphere flex column center flex row center">
                 <img src={Sphere} alt={Sphere} className="sphere-img" />
-            </div>
+            </div> */}
 
         </div>
 

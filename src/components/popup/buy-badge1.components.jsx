@@ -13,7 +13,7 @@ import Amber from 'assets/img/amber.mp4'
 import Amethyst from 'assets/img/amethyst.mp4'
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
-import Language from 'assets/language/language.json'
+import Language from 'assets/data/language.json'
 
 const MapStateToProps = (state) => {
     return { 

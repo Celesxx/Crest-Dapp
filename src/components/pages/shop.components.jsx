@@ -3,8 +3,8 @@ import 'assets/index.assets.css';
 import 'assets/global.assets.css';
 import 'assets/pages/shop.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.components.jsx"
-import Leftbar from "components/blocks/leftbar.components.jsx"
+import Navbar from "components/blocks/navbar.block.jsx"
+import Leftbar from "components/blocks/leftbar.block.jsx"
 import Sphere from "assets/img/sphere.svg"
 import Badge1Popup from "components/popup/buy-badge1.components"
 import Ruby from 'assets/img/ruby.mp4'
@@ -13,11 +13,11 @@ import Amethyst from 'assets/img/amethyst.mp4'
 import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
-import Restricted from "components/blocks/restricted.components.jsx"
-import LoadingData from "components/blocks/loadingData.components.jsx"
+import Restricted from "components/blocks/restricted.block.jsx"
+import LoadingData from "components/blocks/loading-data.block.jsx"
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
-import Language from 'assets/language/language.json'
+import Language from 'assets/data/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -165,9 +165,9 @@ class Dashboard extends React.Component
 
             </div>
 
-            <div className="home-sphere flex column center flex row center">
+            {/* <div className="home-sphere flex column center flex row center">
                 <img src={Sphere} alt={Sphere} className="sphere-img" />
-            </div>
+            </div> */}
 
         </div>
 

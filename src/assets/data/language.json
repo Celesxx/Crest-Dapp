@@ -19,7 +19,8 @@
             "myNft": "My NFT's",
             "crestBalance": "My $CREST Balance",
             "dailyReward": "My Daily Rewards",
-            "pendingReward": "My Pending Rewards"
+            "pendingReward": "My Pending Rewards",
+            "lockedTitle": "Locked"
         },
 
         "navbar":
@@ -108,7 +109,8 @@
             "myNft": "Mes NFT's",
             "crestBalance": "Mon $CREST Balance",
             "dailyReward": "Mes Récompenses Journalières",
-            "pendingReward": "Mes Récompenses en attente"
+            "pendingReward": "Mes Récompenses en attente",
+            "lockedTitle": "Locked"
         },
 
         "navbar":

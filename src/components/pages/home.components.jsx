@@ -1,21 +1,11 @@
 import 'assets/index.assets.css';
 import 'assets/global.assets.css';
+import 'assets/pages/home.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.components.jsx"
-import Leftbar from "components/blocks/leftbar.components.jsx"
-import LoadingData from "components/blocks/loadingData.components.jsx"
-import LoadingAnimation from 'assets/img/crest-loading.mp4'
-import { connect } from 'react-redux'
-
-const MapStateToProps = (state) => {
-  return { 
-    address: state.login.address,
-    startLoading: state.dashboard.startLoading,
-    loading: state.dashboard.loading,
-    loadingMax: state.dashboard.loadingMax,
-    loadingOver: state.dashboard.loadingOver,
-  }; 
-};
+import Navbar from "components/blocks/navbar.block.jsx"
+import NavbarMobile from "components/blocks/navbarMobile.block.jsx"
+import Leftbar from "components/blocks/leftbar.block.jsx"
+import Home from "components/blocks/home.block.jsx"
 
 class Index extends React.Component 
 {
@@ -26,66 +16,39 @@ class Index extends React.Component
 
       this.state = 
       {
-        address: this.props.address,
-        startLoading: this.props.startLoading,
-        loading: this.props.loading,
-        loadingMax: this.props.loadingMax,
-        loadingOver: this.props.loadingOver,
-        loadingDiv: [],
+        width: window.innerWidth,
       };
+
   }
 
-
-  componentDidUpdate(prevProps, prevState, snapshot) 
-  {
-      for(const [key, value] of Object.entries(this.state))
-      {
-          if (prevProps[key] !== this.props[key])
-          {   
-              this.state[key] = this.props[key]
-              this.forceUpdate();
-          }
-      }
-  }
-
-
-
+  UNSAFE_componentWillMount() { window.addEventListener('resize', this.handleWindowSizeChange); }
+  componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
+  handleWindowSizeChange = () => { this.state.width = window.innerWidth };
 
   render()
     {
-      return(
-        <div className="home p1">
+      const isMobile = this.state.width <= 500;
 
-          <Navbar></Navbar>
-          <Leftbar></Leftbar>
-        
-          <div className="home-body flex column">
-           
-          {
-            this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
-            (
-              <LoadingData />
-            )
-          }
+      if(!isMobile)
+      {
+        return(
+          <div className="home p1">
 
-          </div>
-
-          <div className="home-ellipse flex column center">
-            <div className="ellipse l1"></div>
-          </div>
+            <Navbar></Navbar>
+            <Leftbar></Leftbar>
+            <Home></Home>
           
-          <div className="home-ellipse flex column center">
-            <div className="ellipse l2"></div>
           </div>
 
-          <div className="home-ellipse flex column center">
-            <div className="ellipse l3"></div>
-          </div>
-
-        </div>
-
-      );
+        );
+      }
+      else
+      {
+        return(
+          <NavbarMobile currentPage="home"></NavbarMobile>
+        )
+      }
     }
 }
 
-export default connect(MapStateToProps)(Index);
+export default Index;

@@ -3,8 +3,8 @@ import 'assets/index.assets.css';
 import 'assets/global.assets.css';
 import 'assets/pages/swap.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.components.jsx"
-import Leftbar from "components/blocks/leftbar.components.jsx"
+import Navbar from "components/blocks/navbar.block.jsx"
+import Leftbar from "components/blocks/leftbar.block.jsx"
 import Sphere from "assets/img/sphere.svg"
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
@@ -13,9 +13,9 @@ import Address from 'contracts/address.contracts.json'
 import ContractHelper from "helpers/contract.helpers";
 import LogoCrest from "assets/img/logoCrest.svg"
 import ArrowUpDown from "assets/img/arrowUpDown.svg"
-import Restricted from "components/blocks/restricted.components.jsx"
-import LoadingData from "components/blocks/loadingData.components.jsx"
-import Language from "assets/language/language.json"
+import Restricted from "components/blocks/restricted.block.jsx"
+import LoadingData from "components/blocks/loading-data.block.jsx"
+import Language from "assets/data/language.json"
 import LogoSwap from "assets/img/swap-dev.mp4"
 
 

@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from "react-redux";
 import { store } from "store/store.js";
 import { persistStore } from 'redux-persist'
-import Loading from 'components/blocks/loading.components.jsx'
+import Loading from 'components/blocks/loading.block.jsx'
 // import { Web3ContextProvider } from 'components/pages/test2';
 import {UserProvider, UserConsumer} from 'userContext.js'
 import { CookiesProvider } from 'react-cookie';

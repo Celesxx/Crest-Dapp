@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
-import Language from 'assets/language/language.json'
+import Language from 'assets/data/language.json'
 
 
 const MapStateToProps = (state) => {
