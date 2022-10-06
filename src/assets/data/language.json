@@ -59,7 +59,7 @@
             "lifetimeValue": "365 days",
             "dailyReward": "Daily Rewards",
             "dailyRoi": "Daily ROI",
-            "totalRoi": "Total ROI",
+            "remaining": "Remaining",
             "approveBtn": "Approve",
             "buyBtn": "BUY"
         },
@@ -149,7 +149,7 @@
             "lifetimeValue": "365 jours",
             "dailyReward": "Daily Rewards",
             "dailyRoi": "Daily ROI",
-            "totalRoi": "Total ROI",
+            "remaining": "Remaining",
             "approveBtn": "Approuver",
             "buyBtn": "Acheter"
         },

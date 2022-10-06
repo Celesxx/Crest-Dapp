@@ -1,5 +1,5 @@
-import 'assets/blocks/navbar.assets.css';
-import 'assets/global.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/blocks/navbar.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
 import LogoName from 'assets/img/crest-name.png'
@@ -104,9 +104,6 @@ class Navbar extends React.Component
   handleChange(event)
   {
     let target = event.target
-    console.log(event)
-    console.log(target)
-    console.log(target.name)
     if(target.name == "french") 
     {
       console.log("test french")

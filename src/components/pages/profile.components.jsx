@@ -1,14 +1,15 @@
-import 'assets/animation/keyframes.assets.css'
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/pages/profile.assets.css'
+import 'assets/css/animation/keyframes.assets.css'
+import 'assets/css/index.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/pages/profile.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"
 import { connect } from 'react-redux'
 import LoadingData from "components/blocks/loading-data.block.jsx"
 import Dashboard from 'components/blocks/profile.block.jsx'
-import NavbarMobile from "components/blocks/navbarMobile.block.jsx"
+import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
+import TopBarMobile from "components/blocks/mobile/topbar.mobile.jsx"
 
 const MapStateToProps = (state) => {
     return { 
@@ -31,13 +32,29 @@ class DashboardGlobal extends React.Component
             width: window.innerWidth,
             startLoading: this.props.startLoading,
             loadingOver: this.props.loadingOver,
-        };
+            isMobile: false
 
+        };
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
+    }
+  
+    UNSAFE_componentWillMount() 
+    { 
+      window.addEventListener('resize', this.handleWindowSizeChange);
+      this.state.width = document.documentElement.clientWidth
+      if(this.state.width <= 1500) this.state.isMobile = true
+      else this.state.isMobile = false
+      this.forceUpdate()
+    }
+    componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
+    handleWindowSizeChange(event) 
+    { 
+      this.state.width = document.documentElement.clientWidth
+      if(this.state.width <= 1500) this.state.isMobile = true
+      else this.state.isMobile = false
+      this.forceUpdate()
     }
 
-    UNSAFE_componentWillMount() { window.addEventListener('resize', this.handleWindowSizeChange); }
-    componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
-    handleWindowSizeChange = () => { this.state.width = window.innerWidth };
     componentDidUpdate(prevProps, prevState, snapshot) 
     {
         for(const [key, value] of Object.entries(this.state))
@@ -52,32 +69,30 @@ class DashboardGlobal extends React.Component
 
     render()
     {
-        const isMobile = this.state.width <= 500;
-        if(!isMobile)
+        
+        if(this.state.isMobile != true)
         {
             return(
-            <div className="home p1">
-
-                <Navbar></Navbar>
-                <Leftbar></Leftbar>
-
-                {
-                    this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
-                    ( <LoadingData /> )
-                }
-
-                <Dashboard />
-            
-            </div>
-
-            );
-        }
-        else
+                <div className="home home-profile">
+                    <Navbar></Navbar> 
+                    <Leftbar></Leftbar>
+                    {
+                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        && <LoadingData />
+                    }
+                    <Dashboard width={this.state.width} />
+                </div>
+            )
+        }else
         {
             return(
-                <NavbarMobile currentPage="profile"></NavbarMobile>
+                <div className="home home-profile">
+                    <TopBarMobile></TopBarMobile>
+                    <NavbarMobile currentPage="profile"></NavbarMobile>
+                </div>
             )
         }
+       
     }
 }
 

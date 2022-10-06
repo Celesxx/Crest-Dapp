@@ -1,5 +1,5 @@
-import 'assets/blocks/loading.assets.css';
-import 'assets/global.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/blocks/loading.assets.css';
 import LoadingAnimation from 'assets/img/crest-loading.mp4'
 import React from "react";
 

@@ -1,89 +1,58 @@
-import 'assets/animation/keyframes.assets.css'
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/pages/swap.assets.css'
+import 'assets/css/animation/keyframes.assets.css'
+import 'assets/css/index.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/pages/profile.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"
-import Sphere from "assets/img/sphere.svg"
-import { LoginActions } from 'store/actions/login.actions.js'
-import { DashboardActions } from 'store/actions/dashboard.actions.js'
-import { connect } from 'react-redux'
-import Address from 'contracts/address.contracts.json'
-import ContractHelper from "helpers/contract.helpers";
-import LogoCrest from "assets/img/logoCrest.svg"
-import ArrowUpDown from "assets/img/arrowUpDown.svg"
-import Restricted from "components/blocks/restricted.block.jsx"
 import LoadingData from "components/blocks/loading-data.block.jsx"
-import Language from "assets/data/language.json"
-import LogoSwap from "assets/img/swap-dev.mp4"
-
-
-
+import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
+import Swap from 'components/blocks/swap.block.jsx'
+import { connect } from 'react-redux'
+import TopBarMobile from "components/blocks/mobile/topbar.mobile.jsx"
 
 const MapStateToProps = (state) => {
     return { 
         address: state.login.address,
-        resToken: state.dashboard.resToken,
-        resStable: state.dashboard.resStable,
-        tokenUser: state.dashboard.tokenUser,
-        stableUser: state.dashboard.stableUser,
         startLoading: state.dashboard.startLoading,
-        loading: state.dashboard.loading,
-        loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
-        language: state.login.language,
     }; 
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loginAction: (data) => { dispatch(LoginActions(data)); },
-        dashboardAction: (data) => { dispatch(DashboardActions(data)); },
-    };
-};
-class Dashboard extends React.Component 
+
+class DashboardGlobal extends React.Component 
 {
 
-  constructor(props) 
+    constructor(props) 
     {
         super(props);
         this.state = 
         {
-          tokenUser: this.props.tokenUser,
-          stableUser: this.props.stableUser,
-          resToken: this.props.resToken,
-          resStable: this.props.resStable,
-          address: this.props.address,
-          dataIn: { name: "$CREST", balance: null, logo: LogoCrest },
-          dataOut: { name: "$USDC", balance: null, logo: LogoCrest },
-          sellLoader: "token",
-          startLoading: this.props.startLoading,
-          loading: this.props.loading,
-          loadingMax: this.props.loadingMax,
-          loadingOver: this.props.loadingOver,
-          amountPrice: null,
-          language: this.props.language,
-        }
+            address: this.props.address,
+            startLoading: this.props.startLoading,
+            loadingOver: this.props.loadingOver,
+            width: window.innerWidth,
+            isMobile: false
 
-        this.handleChange = this.handleChange.bind(this)
+        };
+        this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
     }
-
-    async UNSAFE_componentWillMount()
-    {
-        if(this.props.tokenUser.balance != null && this.state.address != "")
-        {
-            if(this.state.sellLoader == "token") 
-            {
-              this.state.dataIn.balance = this.props.tokenUser.balance;
-              this.state.dataOut.balance = this.props.stableUser.balance;
-            }
-            else if(this.state.sellLoader == "usdt") 
-            {
-              this.state.dataIn.balance = this.props.stableUser.balance
-              this.state.dataOut.balance = this.props.tokenUser.balance;
-            }
-        }
+  
+    UNSAFE_componentWillMount() 
+    { 
+      window.addEventListener('resize', this.handleWindowSizeChange);
+      this.state.width = document.documentElement.clientWidth
+      if(this.state.width <= 1500) this.state.isMobile = true
+      else this.state.isMobile = false
+      this.forceUpdate()
+    }
+    componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
+    handleWindowSizeChange(event) 
+    { 
+      this.state.width = document.documentElement.clientWidth
+      if(this.state.width <= 1500) this.state.isMobile = true
+      else this.state.isMobile = false
+      this.forceUpdate()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) 
@@ -92,264 +61,40 @@ class Dashboard extends React.Component
         {
             if (prevProps[key] !== this.props[key])
             {   
-                this.state[key] = this.props[key]
-
-                if(this.state.sellLoader == "token" && this.props.address != "" && key == "tokenUser") 
-                {
-                  this.state.dataIn.balance = this.props.tokenUser.balance;
-                  this.state.dataOut.balance = this.props.stableUser.balance;
-                
-                }else if(this.state.sellLoader == "usdt" && this.props.address != "" && key == "tokenUser") 
-                {
-                  this.state.dataIn.balance = this.props.stableUser.balance
-                  this.state.dataOut.balance = this.props.tokenUser.balance;
-                }
-
+                this.state[key] = this.props[key] 
                 this.forceUpdate();
             }
         }
     }
-    
-    handleChange(event, type)
-    {
-      let target
-      if(type === undefined) target = event.target
-      else if(type == "setMaxValue") target = event
-      let contractHelper = new ContractHelper()
-
-      if(this.state.sellLoader == "token" && target.value != "") 
-      {
-        let value = contractHelper.setBignumberUnit(target.value, 6)
-        let amountOut = contractHelper.getAmountOut(value, this.state.resToken, this.state.resStable, false)
-        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
-      }
-      else if(this.state.sellLoader == "usdt" && target.value != "") 
-      {
-        let value = contractHelper.setBignumberUnit(target.value, 6)
-        let amountOut = contractHelper.getAmountOut(value, this.state.resStable, this.state.resToken, true)
-        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
-      
-      }else if(target.value == "") this.state.amountPrice = null
-      this.forceUpdate()
-
-    }
-
-    async setAllowance()
-    {
-      let contractHelper = new ContractHelper()
-      let provider = await contractHelper.getProvider()
-
-      if(this.state.sellLoader === "token")
-      {
-        await contractHelper.setApproveAllowance(Address.token, Address.lm, provider)
-        this.props.dashboardAction({data: {tokenUser: {allowanceLm : true}}, action: "saveData"})
-      }else if(this.state.sellLoader === "usdt")
-      {
-        await contractHelper.setApproveAllowance(Address.token, Address.lm, provider)
-        this.props.dashboardAction({data: {stableUser: {allowanceLm : true}}, action: "saveData"})
-      }
-    }
-
-    async swapToken()
-    {
-      let contractHelper = new ContractHelper()
-      let provider = await contractHelper.getProvider()
-      let path, amountIn
-
-      if(this.state.sellLoader === "token") path = [Address.token, Address.stable]
-      else if(this.state.sellLoader === "usdt") path = [Address.stable, Address.token] 
-      
-      amountIn = await contractHelper.setBignumberUnit(document.getElementById("balanceIn").value, 6)
-      
-      const deadline = Math.floor((new Date()).getTime() / 1000) + 600
-      await contractHelper.swapToken(this.state.address, amountIn, 0, path, deadline, provider)
-
-      const { resToken, resStable } = await contractHelper.getReserves(provider)
-      const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-      const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
-      const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
-      const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn, userCrestBalance: userCrestBalance, userStableBalance: userStableBalance }, 6)
-      
-      let data = 
-      {
-        resToken: resToken,
-        resStable: resStable,
-        totalSupply: formatUnit.totalSupply,
-        totalBurn: formatUnit.totalBurn,
-        tokenUser: {balance: formatUnit.userCrestBalance},
-        stableUser: {balance: formatUnit.userStableBalance}
-      }
-      this.props.dashboardAction({data: data, action: "saveData"})
-
-    }
-
-    setMaxValue()
-    {
-      document.getElementById("balanceIn").value = (this.state.dataIn.balance)
-      this.handleChange(document.getElementById("balanceIn"), "setMaxValue")
-    }
-
-    changeOrder()
-    {
-      if(this.state.sellLoader === "token") 
-      {
-        this.state.sellLoader = "usdt"
-        this.state.dataIn.balance = this.props.stableUser.balance;
-        this.state.dataIn.name = "$USDC"
-        this.state.dataIn.logo = LogoCrest
-        this.state.dataOut.balance = this.props.tokenUser.balance;
-        this.state.dataOut.name = "$CREST";
-        this.state.dataOut.logo = LogoCrest
-      }
-      else if(this.state.sellLoader === "usdt") 
-      {
-        this.state.sellLoader = "token"
-        this.state.dataOut.balance = this.props.stableUser.balance;
-        this.state.dataOut.name = "$USDC"
-        this.state.dataOut.logo = LogoCrest
-        this.state.dataIn.balance = this.props.tokenUser.balance;
-        this.state.dataIn.name = "$CREST";
-        this.state.dataIn.logo = LogoCrest
-      }
-      this.forceUpdate();
-    }
-
-    checkNumber(event)
-    {
-      let target = event.target
-      let theEvent = event
-      let key
-      if (theEvent.type === 'paste') 
-      {
-          key = event.clipboardData.getData('text/plain');
-      } else 
-      {
-          key = theEvent.keyCode || theEvent.which;
-          key = String.fromCharCode(key);
-      }
-
-      let regex = /^[0-9]+[.]{0,1}[0-9]{0,6}$/
-      
-      if( !regex.test(target.value + key) )
-      {
-        theEvent.returnValue = false;
-        if(theEvent.preventDefault) theEvent.preventDefault();
-      }
-    }
 
     render()
     {
-        let contractHelper = new ContractHelper()
-      return(
-        <div className="home p1">
-
-            <Navbar></Navbar>
-            <Leftbar></Leftbar>
-
-            {
-                this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
-                ( <LoadingData /> )
-            }
-            <div className="home-body flex column">
-
-                {
-                    this.state.address == "" &&
-                    ( <Restricted /> )
-                }
-
-              <div className="swap-title-core flex column">
-                <h1 className="swap-title unpadding unmargin">{ Language[this.state.language].swap.title }</h1>
-                <p className="swap-description unpadding unmargin">{ Language[this.state.language].swap.description }</p>
-              </div>
-
-              <div className="swap-core-base flex row">
-                <div className="swap-core flex column">
-                  <div className="swap-content-core">
-
-                    <div className="card-core flex column center">
-                    
-                      <div className="card-content flex row">
-                        <div className="card-title-core flex row">
-                          <img className="card-logo" src={this.state.dataIn.logo} alt={this.state.dataIn.logo}></img>
-                          <h2 className="card-title">{this.state.dataIn.name}</h2>
-                        </div>
-
-                        <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">{ Language[this.state.language].swap.balance } : {contractHelper.getNb(this.state.dataIn.balance, 2)}</p>
-                        </div>
-                      </div>
-
-                      <div className="card-input-core">
-                        <input className="card-input" type="text" name="crest" id="balanceIn" onKeyPress={this.checkNumber} onChange={this.handleChange}></input>
-                        <button className="card-max" onClick={() => this.setMaxValue()}>{ Language[this.state.language].swap.maxBtn }</button>
-                      </div>
-
-                    </div>
-
-
-                    <div className="card-swap-core flex row center">
-                      <button className="card-swap-button" onClick={() => this.changeOrder()}>
-                        <img src={ArrowUpDown} alt={ArrowUpDown} className="card-swap-arrow" />
-                      </button>
-                    </div>
-
-
-                    <div className="card-core flex column center">
-                    
-                      <div className="card-content flex row">
-                        <div className="card-title-core flex row">
-                          <img className="card-logo" src={this.state.dataOut.logo} alt={this.state.dataOut.logo}></img>
-                          <h2 className="card-title">{this.state.dataOut.name}</h2>
-                        </div>
-
-                        <div className="card-balance flex row center">
-                          <p className="card-balance-text unmargin unpadding">{ Language[this.state.language].swap.balance } : {contractHelper.getNb(this.state.dataOut.balance, 2)}</p>
-                        </div>
-                      </div>
-
-                      <div className="card-input-core">
-                        <div className="card-input flex row center" type="text" name="crest">{this.state.amountPrice}</div>
-                      </div>
-
-                    </div>
-                  
-                  </div>
-                  
-
-                  <div className="swap-button-core flex row center">
+        
+        if(this.state.isMobile != true)
+        {
+            return(
+                <div className="home home-profile">
+                    <Navbar></Navbar> 
+                    <Leftbar></Leftbar>
                     {
-                      this.state.sellLoader === "token" && this.state.tokenUser.allowanceLm 
-                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
-
-                      : this.state.sellLoader === "usdt" && this.state.stableUser.allowanceLm 
-                      ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
-                      
-                      :( <button className="swap-button button" name="submit" onClick={() => this.setAllowance()}>{ Language[this.state.language].swap.approveBtn }</button> )
+                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        && <LoadingData />
                     }
-                  </div>
-
+                    <Swap />
                 </div>
-
-                <div className="swap-design flex row center">
-                  <video className="swap-video" autoPlay muted loop>
-                    <source src={LogoSwap} type="video/mp4" />
-                  </video>
+            )
+        }else
+        {
+            return(
+                <div className="home home-profile">
+                    <TopBarMobile></TopBarMobile>
+                    <NavbarMobile currentPage="swap"></NavbarMobile>
                 </div>
+            )
+        }
 
-
-              </div>
-
-
-            </div>
-
-            {/* <div className="home-sphere flex column center flex row center">
-                <img src={Sphere} alt={Sphere} className="sphere-img" />
-            </div> */}
-
-        </div>
-
-      );
+       
     }
 }
 
-export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(MapStateToProps)(DashboardGlobal);

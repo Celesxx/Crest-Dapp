@@ -1,19 +1,19 @@
+import 'assets/css/animation/keyframes.assets.css'
+import 'assets/css/index.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/pages/shop.assets.css'
+import 'assets/css/popup/buy-badge1.assets.css'
 import React from "react";
 import Popup from 'reactjs-popup';
-import 'assets/animation/keyframes.assets.css'
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/pages/shop.assets.css'
-import 'assets/popup/buy-badge1.assets.css'
-import { connect } from 'react-redux'
-import { LoginActions } from 'store/actions/login.actions.js'
-import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import Ruby from 'assets/img/ruby.mp4'
 import Amber from 'assets/img/amber.mp4'
 import Amethyst from 'assets/img/amethyst.mp4'
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
 import Language from 'assets/data/language.json'
+import { connect } from 'react-redux'
+import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
 
 const MapStateToProps = (state) => {
     return { 
@@ -153,7 +153,7 @@ class BuyPopup extends React.Component
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.lifetime }</p>
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.dailyReward }</p>
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.dailyRoi }</p>
-                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.totalRoi }</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.remaining }</p>
                                 </div>
 
                                 <div className="shop-popup-info-desc flex column">
@@ -170,11 +170,8 @@ class BuyPopup extends React.Component
                                     </p>
                                     <p className="shop-popup-text-desc">
                                         {
-                                        (parseFloat(contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].rewardAmount, 6))
-                                        / 
-                                        parseFloat  (contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 6))
-                                        * 100 * 365).toFixed(2) 
-                                        } %
+                                            contractHelper.getNb(parseInt(this.state.badges[this.state.badgesIndex].max) - parseInt(this.state.badges[this.state.badgesIndex].totalSupply), 0) 
+                                        }
                                     </p>
                                 </div>
 

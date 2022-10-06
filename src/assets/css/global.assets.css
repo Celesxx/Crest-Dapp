@@ -1,7 +1,7 @@
 @font-face {
   font-family: "inter-Regular";
   src: local("inter-Regular"),
-   url(../assets/font/Inter-Regular.ttf) format("truetype");
+   url(assets/font/Inter-Regular.ttf) format("truetype");
 }
 
 

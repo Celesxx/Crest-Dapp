@@ -9,6 +9,13 @@
     justify-content: space-around;
 }
 
+.mobile-navbar-svg
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
 .mobile-navbar-card
 {
     height: 90%;

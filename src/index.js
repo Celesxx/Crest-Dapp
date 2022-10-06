@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import 'assets/global.assets.css';
+import 'assets/css/global.assets.css';
 import BaseRoute from "routes/global.routes.jsx";
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";

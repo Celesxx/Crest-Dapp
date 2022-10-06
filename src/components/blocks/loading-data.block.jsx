@@ -1,6 +1,6 @@
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/blocks/loadingData.assets.css';
+import 'assets/css/index.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/blocks/loadingData.assets.css';
 import React from "react";
 import { connect } from 'react-redux'
 

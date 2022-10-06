@@ -1,6 +1,6 @@
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/pages/home.assets.css'
+import 'assets/css/index.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/pages/home.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"
@@ -47,14 +47,14 @@ class Home extends React.Component
 
   componentDidUpdate(prevProps, prevState, snapshot) 
   {
-      for(const [key, value] of Object.entries(this.state))
-      {
-          if (prevProps[key] !== this.props[key])
-          {   
-              this.state[key] = this.props[key]
-              this.forceUpdate();
-          }
+    for(const [key, value] of Object.entries(this.state))
+    {
+      if (prevProps[key] !== this.props[key])
+      {   
+        this.state[key] = this.props[key]
+        this.forceUpdate();
       }
+    }
   }
 
   handleChange(event)
@@ -106,7 +106,7 @@ class Home extends React.Component
 
                 <div className ="home-head-core flex column">
                     <h1 className="home-head-title">News and Update</h1>
-                    <p className="home-head-desc">here you will find all the news and updates of the daap</p>
+                    <p className="home-head-desc">here you will find all the news and updates of the dApp</p>
                 </div>
 
 

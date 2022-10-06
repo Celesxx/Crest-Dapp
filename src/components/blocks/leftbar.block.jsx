@@ -1,5 +1,5 @@
-import 'assets/blocks/leftbar.assets.css';
-import 'assets/global.assets.css';
+import 'assets/css/blocks/leftbar.assets.css';
+import 'assets/css/global.assets.css';
 import React from "react";
 import Twitter from 'assets/img/twitter.png'
 import Medium from 'assets/img/medium.png'

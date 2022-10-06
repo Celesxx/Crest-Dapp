@@ -1,7 +1,7 @@
-import 'assets/animation/keyframes.assets.css'
-import 'assets/index.assets.css';
-import 'assets/global.assets.css';
-import 'assets/pages/profile.assets.css'
+import 'assets/css/animation/keyframes.assets.css'
+import 'assets/css/index.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/pages/profile.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"

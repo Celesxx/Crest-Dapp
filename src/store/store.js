@@ -12,7 +12,7 @@ const reducers = combineReducers({
  });
  
  const persistConfig = {
-     key: 'root',
+     key: 'crest-dapp',
      storage
  };
  

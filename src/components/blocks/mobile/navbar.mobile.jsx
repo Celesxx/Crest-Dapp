@@ -1,5 +1,5 @@
-import 'assets/global.assets.css';
-import 'assets/blocks/navbarMobile.assets.css';
+import 'assets/css/global.assets.css';
+import 'assets/css/blocks/navbarMobile.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
 import MobileBar from 'assets/img/mobile/mobile-bar.svg'
@@ -37,6 +37,10 @@ class NavbarMobile extends React.Component
     {
       return(
           <div className="mobile-navbar-base flex row">
+
+              {/* <svg className="mobile-navbar-svg" width="280" height="63" viewBox="0 0 280 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M113.563 14.334C105.45 7.32959 96.2887 0 85.5706 0H1C0.447715 0 0 0.447715 0 1V62C0 62.5523 0.447721 63 1.00001 63H279C279.552 63 280 62.5523 280 62V1C280 0.447715 279.552 0 279 0H194.429C183.711 0 174.55 7.32959 166.437 14.334C159.487 20.3345 150.201 24 140 24C129.799 24 120.513 20.3345 113.563 14.334Z" fill="white"/>
+              </svg> */}
 
               <div className="mobile-navbar-card flex row center" id={this.state.nav[0]}>
                 <Link to="/dashboard" className="mobile-navbar-link flex row center">
