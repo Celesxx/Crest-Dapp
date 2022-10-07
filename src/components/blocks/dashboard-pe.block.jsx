@@ -2,17 +2,21 @@ import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/dashboard.assets.css'
 import 'assets/css/pages/dashboard-pe.assets.css'
+import 'assets/css/blocks/mobile/dashboard-pe.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.block.jsx"
-import Leftbar from "components/blocks/leftbar.block.jsx"
 import Restricted from "components/blocks/restricted.block.jsx"
-import LoadingData from "components/blocks/loading-data.block.jsx"
-import Sphere from "assets/img/sphere.svg"
+import ContractHelper from 'helpers/contract.helpers.js'
+import Language from 'assets/data/language.json'
+import PersonnalIcon from 'assets/img/dashboard-personnal.png'
+import GlobalIcon from 'assets/img/dashboard-global.png'
+import AmberLogo from 'assets/img/amberMobileLogo.svg'
+import AmethystLogo from 'assets/img/amethystMobileLogo.svg'
+import RubyLogo from 'assets/img/RubyMobileLogo.svg'
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
-import ContractHelper from 'helpers/contract.helpers.js'
-import Language from 'assets/data/language.json'
+import { withRouter } from 'react-router' 
+
 
 const MapStateToProps = (state) => {
     return { 
@@ -54,6 +58,7 @@ class Dashboard extends React.Component
             marketCap: null,
             totalBadges: null,
             badges: this.props.badges,
+            badgesLogo: [AmberLogo, AmethystLogo, RubyLogo],
             startLoading: this.props.startLoading,
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
@@ -117,8 +122,20 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">{ Language[this.state.language].dashboard.protocolTitle }</button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">{ Language[this.state.language].dashboard.personalTitle }</button>
+                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">
+                            { 
+                                this.state.width <= 1500 
+                                ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>
+                                : Language[this.state.language].dashboard.protocolTitle
+                            }
+                        </button>
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">
+                            { 
+                                this.state.width <= 1500
+                                ? <img className="dashboard-button-logo" src={PersonnalIcon} alt={PersonnalIcon}></img>
+                                : Language[this.state.language].dashboard.personalTitle
+                            }
+                        </button>
 
                     </div>
                 </div>
@@ -171,12 +188,13 @@ class Dashboard extends React.Component
                                     if(this.state.width <= 1500)
                                     {
                                         return(
-                                            <div className="dashboard-badge-items-core flex column center">
+                                            <div key={`dashboard-${key}`} className="dashboard-badge-items-core flex column center">
                                                 <div className="dashboard-badge-img-core flex center">
-                                                    <h1>TEST</h1>
+                                                    <img className="dashboard-badge-img" src={this.state.badgesLogo[key]} alt={this.state.badgesLogo[key]}></img>
                                                 </div>
-                                                <div key={`dashboard-${key}`} className="dashboard-badge-items flex row">
+                                                <div className="dashboard-badge-items flex row">
                                                     <p className="dashboard-badge-title">{value.name }</p>
+                                                    <div className="dashboard-badge-separator"></div>
                                                     <p className="dashboard-badge-count">{contractHelper.getNb(value.totalSupply, 0)}/{contractHelper.getNb(value.max, 0)}</p>
                                                 </div>
                                             </div>
@@ -204,4 +222,4 @@ class Dashboard extends React.Component
     }
 }
 
-export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);
+export default withRouter(connect(MapStateToProps, mapDispatchToProps)(Dashboard));

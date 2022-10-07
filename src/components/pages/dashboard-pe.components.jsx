@@ -2,6 +2,7 @@ import 'assets/css/animation/keyframes.assets.css'
 import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/profile.assets.css'
+import 'assets/css/globalMobile.assets.css';
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"
@@ -40,6 +41,7 @@ class DashboardGlobal extends React.Component
   
     UNSAFE_componentWillMount() 
     { 
+        
       window.addEventListener('resize', this.handleWindowSizeChange);
       this.state.width = document.documentElement.clientWidth
       if(this.state.width <= 1500) this.state.isMobile = true
@@ -89,6 +91,7 @@ class DashboardGlobal extends React.Component
                 <div className="home home-dashboard-global">
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="dashboard"></NavbarMobile>
+                    <Dashboard width={this.state.width} />
                 </div>
             )
         }

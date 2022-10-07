@@ -2,22 +2,17 @@ import "assets/css/index.assets.css";
 import "assets/css/global.assets.css";
 import "assets/css/pages/dashboard.assets.css"
 import "assets/css/pages/dashboard-pr.assets.css"
+import 'assets/css/blocks/mobile/dashboard-pr.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.block.jsx"
-import Leftbar from "components/blocks/leftbar.block.jsx"
-import Sphere from "assets/img/sphere.svg"
+import ContractHelper from "helpers/contract.helpers";
+import Language from 'assets/data/language.json'
+import PersonnalIcon from 'assets/img/dashboard-personnal.png'
+import GlobalIcon from 'assets/img/dashboard-global.png'
+import Restricted from "components/blocks/restricted.block.jsx"
+import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
-import { connect } from 'react-redux'
-import Address from 'contracts/address.contracts.json'
-import ContractHelper from "helpers/contract.helpers";
-import { BigNumber } from "ethers";
-import Amber from 'assets/img/amber.mp4'
-import Amethyst from 'assets/img/amethyst.mp4'
-import Ruby from 'assets/img/ruby.mp4'
-import Restricted from "components/blocks/restricted.block.jsx"
-import LoadingData from "components/blocks/loading-data.block.jsx"
-import Language from 'assets/data/language.json'
+import { withRouter } from 'react-router' 
 
 const MapStateToProps = (state) => {
     return { 
@@ -56,7 +51,8 @@ class Dashboard extends React.Component
             amountNft: null,
             amountPendingRewards: [],
             amountTotalPendingRewards: null,
-            language: this.props.language
+            language: this.props.language,
+            width : props.width,
         }
     }
 
@@ -144,8 +140,20 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                    <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">{ Language[this.state.language].personnal.protocolTitle }</button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">{ Language[this.state.language].personnal.personalTitle }</button>
+                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">
+                            { 
+                                this.state.width <= 1500 
+                                ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>
+                                : Language[this.state.language].dashboard.protocolTitle
+                            }
+                        </button>
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">
+                            { 
+                                this.state.width <= 1500
+                                ? <img className="dashboard-button-logo" src={PersonnalIcon} alt={PersonnalIcon}></img>
+                                : Language[this.state.language].dashboard.personalTitle
+                            }
+                        </button>
 
                     </div>
                 </div>
@@ -238,4 +246,4 @@ class Dashboard extends React.Component
     }
 }
 
-export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);
+export default withRouter(connect(MapStateToProps, mapDispatchToProps)(Dashboard));

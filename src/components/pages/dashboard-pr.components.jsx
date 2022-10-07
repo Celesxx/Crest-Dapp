@@ -2,12 +2,13 @@ import 'assets/css/animation/keyframes.assets.css'
 import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/profile.assets.css'
+import 'assets/css/globalMobile.assets.css';
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"
-import LoadingData from "components/blocks/loading-data.block.jsx"
 import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
 import Dashboard from 'components/blocks/dashboard-pr.block.jsx'
+import TopBarMobile from "components/blocks/mobile/topbar.mobile.jsx"
 import { connect } from 'react-redux'
 
 const MapStateToProps = (state) => {
@@ -69,16 +70,25 @@ class DashboardGlobal extends React.Component
     render()
     {
         
-        return(
-            <div className="home p1">
-
-                { this.state.isMobile != true ? <Navbar></Navbar> : <NavbarMobile currentPage="dashboard"></NavbarMobile> }
-                { this.state.isMobile != true && <Leftbar></Leftbar> }
-                { this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null && <LoadingData /> }
-                { this.state.isMobile != true && <Dashboard /> }
-
-            </div>
-        );
+        if(this.state.isMobile != true)
+        {
+            return(
+                <div className="home home-dashboard-personnal">
+                    <Navbar></Navbar> 
+                    <Leftbar></Leftbar>
+                    <Dashboard width={this.state.width} />
+                </div>
+            )
+        }else
+        {
+            return(
+                <div className="home home-dashboard-personnal">
+                    <TopBarMobile></TopBarMobile>
+                    <NavbarMobile currentPage="dashboard"></NavbarMobile>
+                    <Dashboard width={this.state.width} />
+                </div>
+            )
+        }
        
     }
 }
