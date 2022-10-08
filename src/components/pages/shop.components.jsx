@@ -9,6 +9,7 @@ import Leftbar from "components/blocks/leftbar.block.jsx"
 import LoadingData from "components/blocks/loading-data.block.jsx"
 import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
 import Shop from 'components/blocks/shop.block.jsx'
+import ShopMobile from 'components/blocks/mobile/shop.mobile.jsx'
 import TopBarMobile from "components/blocks/mobile/topbar.mobile.jsx"
 import { connect } from 'react-redux'
 
@@ -90,6 +91,11 @@ class DashboardGlobal extends React.Component
                 <div className="home home-profile">
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="shop"></NavbarMobile>
+                    {
+                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        && <LoadingData />
+                    }
+                    <ShopMobile />
                 </div>
             )
         }

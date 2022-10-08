@@ -8,6 +8,8 @@
     align-items: center;
     background: black;
     z-index: 900;
+    border-bottom: 1px solid white;
+
 }
 
 .navbar-mobile-wallet-core

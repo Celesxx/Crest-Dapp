@@ -22,6 +22,7 @@
 
 .dashboard-personnal-cards::-webkit-scrollbar { display: none; }
 
+
 .personnal-cards
 {
     position: relative;
@@ -96,3 +97,4 @@
     font-weight: 800;
     font-size: 20px;
 }
+

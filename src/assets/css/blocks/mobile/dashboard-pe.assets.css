@@ -92,7 +92,9 @@
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
+        border: 1px solid white;
     }
+    .dashboard-items { border: 1px solid white;}
     .dashboard-badge-title, .dashboard-badge-count, .dashboard-text-stat
     {
         margin: 0;

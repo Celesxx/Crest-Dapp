@@ -2,14 +2,8 @@ import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/home.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.block.jsx"
-import Leftbar from "components/blocks/leftbar.block.jsx"
 import LoadingData from "components/blocks/loading-data.block.jsx"
-import LoadingAnimation from 'assets/img/crest-loading.mp4'
 import { connect } from 'react-redux'
-import Sphere from "assets/img/sphere.svg"
-import Logo from 'assets/img/crest-icon.png'
-import Language from 'assets/data/language.json'
 import { news } from 'assets/data/news.js'
 
 const MapStateToProps = (state) => {

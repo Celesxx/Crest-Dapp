@@ -91,6 +91,10 @@ class DashboardGlobal extends React.Component
                 <div className="home home-dashboard-global">
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="dashboard"></NavbarMobile>
+                    {
+                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        && <LoadingData />
+                    }
                     <Dashboard width={this.state.width} />
                 </div>
             )

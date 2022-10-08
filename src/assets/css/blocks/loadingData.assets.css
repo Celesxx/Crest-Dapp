@@ -1,10 +1,9 @@
-
-
 .loading-bar-core
 {
   position: absolute;
-  z-index: 50;
+  top: 0;
   height: 100%;
+  z-index: 999;
   width: 100%;
   backdrop-filter: blur(10px);
   -webkit-animation: scale-up-center 0.1s linear; 
@@ -14,30 +13,25 @@
 .loading-bar-base
 {
   position: relative;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
-  z-index: 51;
-  height: 60px;
+  height: 30px;
   width: 570px;
-  padding-left: 5px;
-  padding-right: 5px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: initial;
 }
 
-/* .loading-bar-base > * { flex: 1; } */
-
-.loading-bar
+.loading-bar-inner
 {
-  color: white;
-  height: 35px;
-  width: 35px;
-  background: linear-gradient(137deg, rgba(0,102,255,1) 3%, rgba(255,0,229,1) 100%);
-  border-radius: 25%;
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,26,136,1) 0%, rgba(0,133,255,1) 100%);
+  animation: progres 1s linear; 
+  border-radius: 14px !important;
+  z-index: -1;
+  width: var(--widthMax);
 }
 
-.loading-bar-title
+.loading-bar-inner-end
 {
-  font-size: 35px;
-  font-weight: 900;
-  text-transform: uppercase;
+  width: var(--widthMax);
 }

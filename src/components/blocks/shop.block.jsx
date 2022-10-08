@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-class Dashboard extends React.Component 
+class Shop extends React.Component 
 {
 
     constructor(props) 
@@ -159,4 +159,4 @@ class Dashboard extends React.Component
     }
 }
 
-export default connect(MapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(MapStateToProps, mapDispatchToProps)(Shop);

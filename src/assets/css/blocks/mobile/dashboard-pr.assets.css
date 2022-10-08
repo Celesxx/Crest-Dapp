@@ -32,6 +32,15 @@
         width: 100%;
         overflow-x: scroll;
     }
+    .dashboard-personnal-cards:before {
+        content: "";
+        margin-left: -6em;
+    }
+    .dashboard-personnal-cards:after {
+        content: "";
+        margin-right: -6em;
+    }
+    
     .personnal-cards
     {
         width: 40%;

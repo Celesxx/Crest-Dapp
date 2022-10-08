@@ -1,6 +1,7 @@
 import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/blocks/restricted.assets.css';
+import 'assets/css/blocks/mobile/restricted.assets.css'
 import React from "react";
 import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'

@@ -103,6 +103,7 @@ class Dashboard extends React.Component
         }
     }
 
+
     async reloadDataTimer()
     {
         if(this.state.badges.length !=0 && this.state.address != 0)
