@@ -2,21 +2,18 @@ import 'assets/css/animation/keyframes.assets.css'
 import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/swap.assets.css'
+import 'assets/css/blocks/mobile/swap.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.block.jsx"
-import Leftbar from "components/blocks/leftbar.block.jsx"
-import Sphere from "assets/img/sphere.svg"
-import { LoginActions } from 'store/actions/login.actions.js'
-import { DashboardActions } from 'store/actions/dashboard.actions.js'
-import { connect } from 'react-redux'
 import Address from 'contracts/address.contracts.json'
 import ContractHelper from "helpers/contract.helpers";
 import LogoCrest from "assets/img/logoCrest.svg"
 import ArrowUpDown from "assets/img/arrowUpDown.svg"
 import Restricted from "components/blocks/restricted.block.jsx"
-import LoadingData from "components/blocks/loading-data.block.jsx"
 import Language from "assets/data/language.json"
 import LogoSwap from "assets/img/swap-dev.mp4"
+import { connect } from 'react-redux'
+import { LoginActions } from 'store/actions/login.actions.js'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
 
 
 
@@ -64,6 +61,8 @@ class Dashboard extends React.Component
           loadingOver: this.props.loadingOver,
           amountPrice: null,
           language: this.props.language,
+          width : props.width
+
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -249,13 +248,18 @@ class Dashboard extends React.Component
                 ( <Restricted /> )
             }
 
-            <div className="swap-title-core flex column">
-            <h1 className="swap-title unpadding unmargin">{ Language[this.state.language].swap.title }</h1>
-            <p className="swap-description unpadding unmargin">{ Language[this.state.language].swap.description }</p>
-            </div>
+            {
+              this.state.width > 1500 &&
+              (
+                <div className="swap-title-core flex column">
+                <h1 className="swap-title unpadding unmargin">{ Language[this.state.language].swap.title }</h1>
+                <p className="swap-description unpadding unmargin">{ Language[this.state.language].swap.description }</p>
+                </div>
+              )
+            }
 
             <div className="swap-core-base flex row">
-            <div className="swap-core flex column">
+              <div className="swap-core flex column">
                 <div className="swap-content-core">
 
                 <div className="card-core flex column center">
@@ -320,13 +324,15 @@ class Dashboard extends React.Component
                 }
                 </div>
 
-            </div>
+              </div>
 
-            <div className="swap-design flex row center">
-                <video className="swap-video" autoPlay muted loop>
-                <source src={LogoSwap} type="video/mp4" />
-                </video>
-            </div>
+              
+
+              <div className="swap-design flex row center">
+                  <video className="swap-video" autoPlay muted loop>
+                  <source src={LogoSwap} type="video/mp4" />
+                  </video>
+              </div>
 
 
             </div>

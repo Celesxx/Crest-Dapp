@@ -8,7 +8,7 @@ import Navbar from "components/blocks/navbar.block.jsx"
 import Leftbar from "components/blocks/leftbar.block.jsx"
 import { connect } from 'react-redux'
 import LoadingData from "components/blocks/loading-data.block.jsx"
-import Dashboard from 'components/blocks/profile.block.jsx'
+import Profile from 'components/blocks/profile.block.jsx'
 import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
 import TopBarMobile from "components/blocks/mobile/topbar.mobile.jsx"
 
@@ -81,7 +81,7 @@ class DashboardGlobal extends React.Component
                         this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
                         && <LoadingData />
                     }
-                    <Dashboard width={this.state.width} />
+                    <Profile width={this.state.width} />
                 </div>
             )
         }else
@@ -90,6 +90,11 @@ class DashboardGlobal extends React.Component
                 <div className="home home-profile">
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="profile"></NavbarMobile>
+                    {
+                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        && <LoadingData />
+                    }
+                    <Profile width={this.state.width} />
                 </div>
             )
         }

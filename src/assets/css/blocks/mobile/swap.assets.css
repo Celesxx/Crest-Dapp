@@ -1,0 +1,61 @@
+@media only screen and (max-width: 1500px) 
+{
+    .swap-core-base
+    {
+        width: 95%;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .swap-core
+    {
+        height: 60%;
+        width: 100%;
+    }
+    .swap-design 
+    {
+        height: 25%;
+        order: -1;
+
+    }
+
+    .swap-content-core { height: 100%; }
+    .card-core { height: 40%; width: 70%; }
+    .card-title
+    {
+        font-size: 14px;
+        margin: 0;
+    }
+    .card-balance-text { font-size: 12px; }
+    .card-input-core { height: 65%; }
+    .card-input 
+    { 
+        height: 90%; 
+        border: 1px solid white;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .card-max 
+    {
+        font-size: 14px;
+        top: 75%;
+        right: 75%;
+    }
+    .swap-button
+    {
+        width: 30%;
+        font-size: 14px;
+        border-radius: 8px !important;
+    }
+}
+@media only screen and (max-width: 1500px) and (min-width: 661px) 
+{
+    
+    
+}
+@media only screen and (max-width: 2560px) and (min-width: 1921px)
+{
+    
+}

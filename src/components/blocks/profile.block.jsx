@@ -2,20 +2,17 @@ import 'assets/css/animation/keyframes.assets.css'
 import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/profile.assets.css'
+import 'assets/css/blocks/mobile/profile.assets.css'
 import React from "react";
-import Navbar from "components/blocks/navbar.block.jsx"
-import Leftbar from "components/blocks/leftbar.block.jsx"
-import Sphere from "assets/img/sphere.svg"
+import ContractHelper from "helpers/contract.helpers";
+import Restricted from "components/blocks/restricted.block.jsx"
+import Address from 'contracts/address.contracts.json'
+import Language from 'assets/data/language.json'
 import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
-import ContractHelper from "helpers/contract.helpers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import Restricted from "components/blocks/restricted.block.jsx"
-import LoadingData from "components/blocks/loading-data.block.jsx"
-import Address from 'contracts/address.contracts.json'
-import Language from 'assets/data/language.json'
 
 const MapStateToProps = (state) => {
     return { 
@@ -63,7 +60,8 @@ class Dashboard extends React.Component
             totalReward: [],
             interval : null,
             language : this.props.language,
-            emptyRow : [0,1,2,3]
+            emptyRow : [0,1,2,3],
+            width: props.width
         }
     }
 
@@ -269,12 +267,24 @@ class Dashboard extends React.Component
                         </div>
                     </div>
                     {
-                        Language[this.state.language].profile.tableTitle.map((value, key) => 
-                        {
-                            return(
-                                <p key={`table-${key}`} className="profile-table-title">{value}</p>
-                            )
-                        })
+                        this.state.width > 1500
+                        ?(
+                            Language[this.state.language].profile.tableTitle.map((value, key) => 
+                            {
+                                return( <p key={`table-${key}`} className="profile-table-title">{value}</p> )
+                            })
+                        ):(
+                            Language[this.state.language].profile.tableTitle.map((value, key) => 
+                            {
+                                if(
+                                    parseInt(key) === parseInt(Object.keys(Language[this.state.language].profile.tableTitle)[0])
+                                    ||
+                                    parseInt(key) === parseInt(Object.keys(Language[this.state.language].profile.tableTitle).slice(-2)[0])
+                                    ||
+                                    parseInt(key) === parseInt(Object.keys(Language[this.state.language].profile.tableTitle).slice(-1)[0])
+                                ) return( <p key={`table-${key}`} className="profile-table-title">{value}</p> )
+                            })
+                        )
                     }
                 </div>
 
@@ -294,11 +304,11 @@ class Dashboard extends React.Component
                                         </div>
                                     </div>
                                     <p className="profile-table-desc">{value.nft}</p>
-                                    <p className="profile-table-desc">{value.id}</p>
-                                    <p className="profile-table-desc">{value.date}</p>
-                                    <p className="profile-table-desc">{value.claimDate}</p>
-                                    <p className="profile-table-desc">{value.roi}</p>
-                                    <p className="profile-table-desc">{value.lifetime}</p>
+                                    { this.state.width > 1500 && <p className="profile-table-desc">{value.id}</p> }
+                                    { this.state.width > 1500 && <p className="profile-table-desc">{value.date}</p> }
+                                    { this.state.width > 1500 && <p className="profile-table-desc">{value.claimDate}</p> }
+                                    { this.state.width > 1500 && <p className="profile-table-desc">{value.roi}</p> }
+                                    { this.state.width > 1500 && <p className="profile-table-desc">{value.lifetime}</p> }
                                     <p className="profile-table-desc">{contractHelper.getNb(value.rewards, 6)}</p>
                                     <div className="profile-table-desc profile-table-button-core flex row center">
                                         <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>{ Language[this.state.language].profile.claimBtn }</button>
@@ -319,11 +329,6 @@ class Dashboard extends React.Component
                                         </div>
                                     </div>
                                     <p className="profile-table-desc">xxxxx</p>
-                                    <p className="profile-table-desc">xx</p>
-                                    <p className="profile-table-desc">xx/xx/xxxx</p>
-                                    <p className="profile-table-desc">xx/xx/xxxx</p>
-                                    <p className="profile-table-desc">xx%</p>
-                                    <p className="profile-table-desc">xxx</p>
                                     <p className="profile-table-desc">xxxxxx</p>
                                     <div className="profile-table-desc profile-table-button-core flex row center">
                                         <button className="button profile-table-button">{ Language[this.state.language].profile.claimBtn }</button>
