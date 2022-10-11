@@ -160,6 +160,7 @@ class Dashboard extends React.Component
     {
         let contractHelper = new ContractHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
         await contractHelper.claimBadge(this.state.address, [value.badgeId], [[value.id]], provider)
         await this.reloadDataClaim()
         this.state.allChecked = false
@@ -169,6 +170,7 @@ class Dashboard extends React.Component
     {
         let contractHelper = new ContractHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
         let data = {}
         for(const badge of this.state.claimBadges) 
@@ -196,6 +198,7 @@ class Dashboard extends React.Component
     {
         let contractHelper = new ContractHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
         let newData = []
         for(let i = 0; i < Address.badges.length; i++) 
         { 

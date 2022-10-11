@@ -1,0 +1,62 @@
+@media only screen and (max-width: 1500px) 
+{
+    .home-head-core
+    {
+        height: 10%;
+        justify-content: space-around;
+        width: 60%;
+    }
+
+    .home-head-title
+    {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .home-head-desc
+    {
+        font-size: 14px;
+        margin: 0;
+        text-align: center;
+    }
+
+    .home-cards-core
+    {
+        width: 90%;
+        height: 80%;
+    }
+
+    .home-card
+    {
+        width: 70%;
+        justify-content: center;
+        gap: 1em;
+        border: 1px solid white;
+    }
+
+    .home-card-image-core
+    {
+        width: 30%;
+        height: 50%;
+        border-radius: 22px;
+    }
+
+    .home-card-title 
+    {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .home-card-description 
+    {
+        font-size: 12px;
+        margin: 0;
+    }
+}
+@media only screen and (max-width: 1500px) and (min-width: 661px) 
+{
+    .home-head-title { font-size: 18px; }
+    .home-head-desc, .home-card-title { font-size: 16px; }
+    .home-card-description { font-size: 14px; }
+    
+}

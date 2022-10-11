@@ -2,6 +2,7 @@ import 'assets/css/index.assets.css';
 import 'assets/css/global.assets.css';
 import 'assets/css/pages/home.assets.css'
 import 'assets/css/globalMobile.assets.css';
+import 'assets/css/blocks/mobile/home.assets.css'
 import React from "react";
 import Navbar from "components/blocks/navbar.block.jsx"
 import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
@@ -60,6 +61,8 @@ class Index extends React.Component
           <div className="home">
               <TopBarMobile></TopBarMobile>
               <NavbarMobile currentPage="home"></NavbarMobile>
+              <Home />
+
           </div>
       )
     }

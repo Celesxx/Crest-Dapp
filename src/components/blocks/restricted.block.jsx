@@ -80,7 +80,7 @@ class LoadingData extends React.Component
                 this.state.isLoggedIn = true
                 this.props.loginAction({address: await newProvider.getSigner().getAddress(), action: 'address'})
                 this.props.dashboardAction({loading : {}, action: "startLoading"})
-
+                document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
                 let loadingHelper = new LoadingHelper()
                 await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
 

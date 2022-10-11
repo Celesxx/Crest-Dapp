@@ -71,6 +71,7 @@ class ShopMobile extends React.Component
         {
             let contractHelper = new ContractHelper()
             const provider = await contractHelper.getProvider()
+            document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
             let data = {}
             for(const address of Address.erc20Token)
             {
@@ -96,6 +97,7 @@ class ShopMobile extends React.Component
                 {
                     let contractHelper = new ContractHelper()
                     const provider = await contractHelper.getProvider()
+                    document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
                     let data = {}
                     for(const address of Address.erc20Token)
                     {
@@ -116,6 +118,7 @@ class ShopMobile extends React.Component
     {
         let contractHelper = new ContractHelper()
         let provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
         let data = {}
         data[this.state.tokenChoices] = {allowance : true}
         await contractHelper.setApproveAllowance(this.state.tokenChoices, Address.dispatchManager, provider)
@@ -126,6 +129,7 @@ class ShopMobile extends React.Component
     {
         let contractHelper = new ContractHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
         await contractHelper.createManagedTokens(this.state.tokenChoices, key, this.state.address, this.state.buyNbr[key], '', provider)
 
         const newBalance = await contractHelper.nftSingleBalance(key, this.state.address, provider)

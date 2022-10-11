@@ -58,10 +58,12 @@
         height: 90%;
         flex-wrap: wrap;
         justify-content: space-between;
+        gap: 1em
     }
 
     .dashboard-cards
     {
+        margin: 0;
         height: 15%;
         width: 100%;
     }
@@ -71,7 +73,7 @@
     .dashboard-badge-core 
     { 
         width: 100%; 
-        justify-content: center;
+        justify-content: flex-start;
         margin: 0;
         height: 25%;
     }
@@ -102,15 +104,69 @@
     }
     .dashboard-badge-separator { width: 20%; height: 2px; background: white;}
 }
-@media only screen and (max-width: 1500px) and (min-width: 661px) 
+
+
+
+
+@media only screen and (max-width: 1000px) and (min-width: 660px) 
+{
+    .dashboard-cards:nth-child(1), .dashboard-cards:nth-child(2), .dashboard-cards:nth-child(3) 
+    { width: 25%; }
+    .title-dashboard { font-size: 16px; }
+    .dashboard-text-stat { font-size: 14px; }
+    .dashboard-badge-title, .dashboard-badge-count, .dashboard-text-stat 
+    { font-size: 14px; }
+    .dashboard-core
+    {
+        gap: 2.5em
+    }
+    .button-dash 
+    {
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+    }
+
+    .dashboard-button-logo {
+        height: 50%;
+        width: 50%;
+        object-fit: contain;
+    }
+}
+
+
+
+@media only screen and (max-width: 1500px) and (min-width: 1001px) 
 {
     
     .dashboard-cards:nth-child(1), .dashboard-cards:nth-child(2), .dashboard-cards:nth-child(3) 
     { width: 25%; }
-    .title-dashboard { font-size: 16px; }
+    .title-dashboard { font-size: 20px; }
     .dashboard-text-stat { font-size: 18px; }
     .dashboard-badge-title, .dashboard-badge-count, .dashboard-text-stat 
     { font-size: 18px; }
+    .dashboard-core
+    {
+        gap: 2.5em
+    }
+    .button-dash 
+    {
+        height: 60px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+    }
+
+    .dashboard-button-logo {
+        height: 50%;
+        width: 50%;
+        object-fit: contain;
+    }
     
 }
 @media only screen and (max-width: 2560px) and (min-width: 1921px)

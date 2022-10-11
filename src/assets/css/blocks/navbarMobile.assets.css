@@ -7,7 +7,6 @@
     background: white;
     align-items: center;
     justify-content: space-around;
-    z-index: 999;
 }
 
 .mobile-navbar-svg
@@ -19,26 +18,34 @@
 }
 .mobile-navbar-card
 {
+    position: relative;
     height: 90%;
     width: 20%;
+    overflow: hidden;
+    transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
+    transition-delay: 0.25s;
 }
 
 .mobile-navbar-link
 {
-    height: 100%;
-    width: 100%;
+    height: 60px;
+    width: 60px;
+    background: white;
+    z-index: 10;
+    border-radius: 50%;
 }
 
 .mobile-navbar-icon
 {
     position: relative;
-    height: 40%;
-    width: 40%;
+    height: 70%;
+    width: 50%;
     color: black;
     display: block;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 2;
+    object-fit: contain;
 }
 
 
@@ -46,33 +53,42 @@
 #current
 {
     position: relative;
-    transform: translatey(-55%);
+    transform: translatey(-65%);
     border-radius: 50%;
     z-index: 2;
-    background: black;
+    overflow: visible;
+    animation: translatey 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+    
 }
 
-/* 
-#current:before {
+.mobile-navbar-card-outer
+{
     position: absolute;
-    z-index: -2;
-    content: "";
-    display: block;
-    border-radius: 100%;
-    width: 100%;
-    height: 100%;
-    background: black;
-    right: -5%;
-  }
-  
-  #current:after {
-    position: absolute;
-    z-index: -2;
-    content: "";
-    display: block;
-    border-radius: 100%;
-    width: 100%;
-    height: 100%;
-    background: black;
-    left: -5%;
-  } */
+    animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+    transform: translateX(var(--currentposition)) translatey(-45%);
+    height: auto;
+    width: 20%;
+    bottom: 0;
+    left: 0;
+    transition-delay: 0.25s;
+}
+
+#current-outer
+{
+    visibility: visible;
+    transform: translate();
+    transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
+    animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+}
+
+@keyframes translate 
+{
+    0% { transform: translateX(var(--oldposition)) translatey(-45%); }
+    100% { transform: translateX(var(--currentposition)) translatey(-45%); }
+}
+
+@keyframes translatey 
+{
+    0% { transform: translatey(0); }
+    100% { transform: translatey(-65%); }
+}

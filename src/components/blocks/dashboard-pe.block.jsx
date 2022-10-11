@@ -7,8 +7,8 @@ import React from "react";
 import Restricted from "components/blocks/restricted.block.jsx"
 import ContractHelper from 'helpers/contract.helpers.js'
 import Language from 'assets/data/language.json'
-import PersonnalIcon from 'assets/img/dashboard-personnal.png'
-import GlobalIcon from 'assets/img/dashboard-global.png'
+import PersonnalIcon from 'assets/img/dashboard-personnal.svg'
+import GlobalIcon from 'assets/img/dashboard-global.svg'
 import AmberLogo from 'assets/img/amberMobileLogo.svg'
 import AmethystLogo from 'assets/img/amethystMobileLogo.svg'
 import RubyLogo from 'assets/img/RubyMobileLogo.svg'
@@ -122,7 +122,7 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">
+                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center" id="currentDashboard">
                             { 
                                 this.state.width <= 1500 
                                 ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>

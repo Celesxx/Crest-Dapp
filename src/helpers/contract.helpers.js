@@ -7,6 +7,8 @@ import abiBadgeManager from 'contracts/abis/BadgeManager.sol/BadgeManager.json'
 // import abiErc20 from 'contracts/abis/erc20/ERC20.sol/erc20.json'
 import  {ethers, BigNumber, utils, constants } from "ethers"
 import Web3Modal from 'web3modal'
+import network from 'contracts/network.contracts.js'
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 
 class ContractHelper
@@ -17,10 +19,16 @@ class ContractHelper
     */
     async getProvider()
     {
-        const web3Modal = new Web3Modal({ cacheProvider: true, theme: "dark" });
-        const instance = await web3Modal.connect(); 
-        const provider = await new ethers.providers.Web3Provider(instance);
-
+        let web3Modal = new Web3Modal({ cacheProvider: true });
+        let provider
+        if (web3Modal.cachedProvider) provider = provider = await new ethers.providers.Web3Provider(await web3Modal.connect())
+        else 
+        {
+            const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
+            web3Modal = await new Web3Modal({ cacheProvider: true, providerOptions, disableInjectedProvider: false, theme: "dark" });
+            const instance = await web3Modal.connect(); 
+            provider = await new ethers.providers.Web3Provider(instance);
+        }
         return provider
     }
 

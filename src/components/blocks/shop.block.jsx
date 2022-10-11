@@ -70,6 +70,7 @@ class Shop extends React.Component
         {
             let contractHelper = new ContractHelper()
             const provider = await contractHelper.getProvider()
+            document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
             let data = {}
             for(const address of Address.erc20Token)
             {
@@ -95,6 +96,7 @@ class Shop extends React.Component
                 {
                     let contractHelper = new ContractHelper()
                     const provider = await contractHelper.getProvider()
+                    document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
                     let data = {}
                     for(const address of Address.erc20Token)
                     {

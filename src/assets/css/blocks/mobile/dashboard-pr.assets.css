@@ -7,14 +7,14 @@
         justify-content: center;
     }   
 
-    .button-protocol
+    .button-protocol, .button-personnal
     {
         border: 1px solid white;
         background-image:none;
         background: black;
     }
 
-    .button-personnal
+    #currentDashboard
     {
         border: 0;
         background: rgba(0,0,0,0.0);
@@ -47,6 +47,7 @@
         scroll-snap-align: center;
         flex: none;
         max-width: none;
+        border: 1px solid white;
     }
 
     .dashboard-personnal-info
@@ -70,11 +71,48 @@
         font-size: 14px;
     }
 
-    .info-cards { height: 70%; }
+    .info-cards { height: 70%; border: 1px solid white; }
 }
-@media only screen and (max-width: 1500px) and (min-width: 661px) 
+
+@media only screen and (max-width: 1000px) and (min-width: 660px) 
 {
-    
+    .info-title, .info-text { font-size: 16px; }
+    .button-dash 
+    {
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+    }
+
+    .dashboard-button-logo {
+        height: 50%;
+        width: 50%;
+        object-fit: contain;
+    }
+}
+
+@media only screen and (max-width: 1500px) and (min-width: 1001px) 
+{
+   
+    .info-title, .info-text { font-size: 20px; }
+    .button-dash 
+    {
+        height: 60px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+    }
+
+    .dashboard-button-logo {
+        height: 50%;
+        width: 50%;
+        object-fit: contain;
+    }
     
 }
 @media only screen and (max-width: 2560px) and (min-width: 1921px)

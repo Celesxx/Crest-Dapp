@@ -64,6 +64,7 @@ class Topbar extends React.Component
         let contractHelper = new ContractHelper()
         let loadingHelper = new LoadingHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
         await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
         if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
@@ -126,6 +127,7 @@ class Topbar extends React.Component
   {
     let contractHelper = new ContractHelper()
     const provider = await contractHelper.getProvider()
+    document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
     const { resToken, resStable } = await contractHelper.getReserves(provider)
     const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)

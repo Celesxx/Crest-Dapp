@@ -26,6 +26,7 @@ export const dashboardSlice = createSlice(
       allowanceLm: false,
     },
     erc20DispatchManager: {},
+    navbarPosition: 200,
   },
 
   reducers: 
@@ -80,6 +81,9 @@ export const dashboardSlice = createSlice(
         case 'endLoading': 
           state.startLoading = false
           state.loadingOver = false
+          break
+        case 'navbarPosition': 
+          state.navbarPosition = action.payload.navbarPosition
           break
 
         

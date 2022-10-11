@@ -137,6 +137,7 @@ class Dashboard extends React.Component
     {
       let contractHelper = new ContractHelper()
       let provider = await contractHelper.getProvider()
+      document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
       if(this.state.sellLoader === "token")
       {
@@ -153,6 +154,7 @@ class Dashboard extends React.Component
     {
       let contractHelper = new ContractHelper()
       let provider = await contractHelper.getProvider()
+      document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
       let path, amountIn
 
       if(this.state.sellLoader === "token") path = [Address.token, Address.stable]

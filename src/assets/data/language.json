@@ -27,10 +27,15 @@
         {
             "selectDocs":
             {
-                "chart": "Chart",
-                "doc": "Doc",
-                "disclaimer": "Disclaimer",
-                "team": "Team"
+                "default": "Lien",
+                "website": "Website",
+                "discord": "Discord",
+                "twitter": "Twitter",
+                "doc": "Medium"
+            },
+            "selectLanguage":
+            {
+                "default": "language"
             },
             "buyButton": "Buy/Sell $CREST"
         },
@@ -48,7 +53,7 @@
         {
             "title": "Buy a badge",
             "description": "Collect them all",
-            "badgeDescription": ["The legend says that the sun itself created this badge", "A special stone filled with magic, the main tool of any good magician", "The king of precious stone"],
+            "badgeDescription": ["A stone containing the light of a dying sun", "A stone filled with one of the four primordial elements", "A stone filled of the blood of the ancients ods gods"],
             "badgeBuy": "Buy for"
         },
 
@@ -117,10 +122,15 @@
         {
             "selectDocs":
             {
-                "chart": "Graph",
-                "doc": "Doc",
-                "disclaimer": "Disclaimer",
-                "team": "Équipe"
+                "default": "Lien",
+                "website": "Website",
+                "discord": "Discord",
+                "twitter": "Twitter",
+                "doc": "Medium"
+            },
+            "selectLanguage":
+            {
+                "default": "langue"
             },
             "buyButton": "Achat/Vente $CREST"
         },
@@ -138,7 +148,7 @@
         {
             "title": "Acheter un badge",
             "description": "Collect them all",
-            "badgeDescription": ["The legend says that the sun itself created this badge", "A special stone filled with magic, the main tool of any good magician", "The king of precious stone"],
+            "badgeDescription": ["Une pierre contenant la lumière d'un soleil mourant", "Une pierre remplie d'un des quatre éléments primordiaux", "Une pierre remplie du sang des anciens dieux"],
             "badgeBuy": "Acheter pour"
         },
 

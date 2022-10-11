@@ -6,8 +6,8 @@ import 'assets/css/blocks/mobile/dashboard-pr.assets.css'
 import React from "react";
 import ContractHelper from "helpers/contract.helpers";
 import Language from 'assets/data/language.json'
-import PersonnalIcon from 'assets/img/dashboard-personnal.png'
-import GlobalIcon from 'assets/img/dashboard-global.png'
+import PersonnalIcon from 'assets/img/dashboard-personnal.svg'
+import GlobalIcon from 'assets/img/dashboard-global.svg'
 import Restricted from "components/blocks/restricted.block.jsx"
 import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
@@ -143,12 +143,12 @@ class Dashboard extends React.Component
 
                         <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">
                             { 
-                                this.state.width <= 1500 
+                                this.state.width <= 1500
                                 ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>
                                 : Language[this.state.language].dashboard.protocolTitle
                             }
                         </button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center" id="currentDashboard">
                             { 
                                 this.state.width <= 1500
                                 ? <img className="dashboard-button-logo" src={PersonnalIcon} alt={PersonnalIcon}></img>

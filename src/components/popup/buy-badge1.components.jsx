@@ -83,6 +83,7 @@ class BuyPopup extends React.Component
     {
         let contractHelper = new ContractHelper()
         let provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
         let data = {}
         data[this.state.tokenChoices] = {allowance : true}
         await contractHelper.setApproveAllowance(this.state.tokenChoices, Address.dispatchManager, provider)
@@ -105,6 +106,7 @@ class BuyPopup extends React.Component
     {
         let contractHelper = new ContractHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
         await contractHelper.createManagedTokens(this.state.tokenChoices, this.state.badgesIndex, this.state.address, this.state.buyNbr, '', provider)
 
         const newBalance = await contractHelper.nftSingleBalance(this.state.badgesIndex, this.state.address, provider)

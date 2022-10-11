@@ -80,6 +80,7 @@ class Navbar extends React.Component
         let contractHelper = new ContractHelper()
         let loadingHelper = new LoadingHelper()
         const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
         await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
         if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
@@ -104,31 +105,18 @@ class Navbar extends React.Component
   handleChange(event)
   {
     let target = event.target
-    if(target.name == "french") 
-    {
-      console.log("test french")
-      document.getElementById("french").checked = true;
-      document.getElementById("english").checked = false;
-      document.getElementById("japanese").checked = false;
-      this.props.loginAction({language: "fr", action: "language"})
-    
-    }else if(target.name == "english") 
-    {
-      console.log("test english")
-      document.getElementById("french").checked = false;
-      document.getElementById("english").checked = true;
-      document.getElementById("japanese").checked = false;
-      this.props.loginAction({language: "en", action: "language"})
-    
-    }else if(target.name == "japanese") 
-    {
-      console.log("test japanese")
-      document.getElementById("french").checked = false;
-      document.getElementById("english").checked = false;
-      document.getElementById("japanese").checked = true;
-      this.props.loginAction({language: "jp", action: "language"})
-    
-    }
+    if(target.id == "french") this.props.loginAction({language: "fr", action: "language"})
+    else if(target.id == "english") this.props.loginAction({language: "en", action: "language"})
+    else if(target.id == "default") this.props.loginAction({language: "en", action: "language"})
+  }
+
+  handleChangeLink(event)
+  {
+    let target = event.target
+    if(target.id == "opt2") window.location='https://playcrest.xyz'
+    else if(target.id == "opt3") window.location='https://medium.com/@playCrest'
+    else if(target.id == "opt4") window.location='https://twitter.com/playCrest'
+    else if(target.id == "opt5") window.location='https://discord.com/invite/mUHGNqN8Vj'
   }
 
 
@@ -169,6 +157,7 @@ class Navbar extends React.Component
   {
     let contractHelper = new ContractHelper()
     const provider = await contractHelper.getProvider()
+    document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
     const { resToken, resStable } = await contractHelper.getReserves(provider)
     const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
@@ -206,26 +195,28 @@ class Navbar extends React.Component
             <div className="navbar-core flex row">
 
                 
-                <div className="navbar-select" tabIndex="1">
-                  <input name="english" className="navbar-input" type="radio" id="english" checked onChange={event => {}} onClick={this.handleChange}/>
-                  <label htmlFor="english" className="navbar-option">English</label>
-                  <input name="french" className="navbar-input" type="radio" id="french" onChange={event => {}} onClick={this.handleChange}/>
-                  <label htmlFor="french" className="navbar-option">French</label>
-                  <input name="japanese" className="navbar-input" type="radio" id="japanese" onChange={event => {}} onClick={this.handleChange}/>
-                  <label htmlFor="japanese" className="navbar-option navbar-option-last">Don't click</label>
-                </div>
+              <form className="navbar-select" tabIndex="1" onChange={this.handleChange}>
+                <input name="language-select" className="navbar-input" type="radio" id="default" defaultChecked/>
+                <label htmlFor="default" className="navbar-option">{ Language[this.state.language].navbar.selectLanguage.default }</label>
+                <input name="language-select" className="navbar-input" type="radio" id="english"/>
+                <label htmlFor="english" className="navbar-option">English</label>
+                <input name="language-select" className="navbar-input" type="radio" id="french"/>
+                <label htmlFor="french" className="navbar-option">French</label>
+              </form>
 
 
-                <div className="navbar-select" tabIndex="1">
-                  <input name="Charts" className="navbar-input" type="radio" id="opt1" checked onChange={event => {}}/>
-                  <label htmlFor="opt1" className="navbar-option"> { Language[this.state.language].navbar.selectDocs.chart } </label>
-                  <input name="Documentation" className="navbar-input" type="radio" id="opt2" onChange={event => {}}/>
-                  <label htmlFor="opt2" className="navbar-option">{ Language[this.state.language].navbar.selectDocs.doc }</label>
-                  <input name="Disclaimer" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
-                  <label htmlFor="opt3" className="navbar-option">{ Language[this.state.language].navbar.selectDocs.disclaimer }</label>
-                  <input name="Teams" className="navbar-input" type="radio" id="opt3" onChange={event => {}}/>
-                  <label htmlFor="opt3" className="navbar-option navbar-option-last">{ Language[this.state.language].navbar.selectDocs.team }</label>
-                </div>
+              <form className="navbar-select" tabIndex="1" onChange={this.handleChangeLink}>
+                <input name="doc-select" className="navbar-input" type="radio" id="opt1" defaultChecked/>
+                <label htmlFor="opt1" className="navbar-option"> { Language[this.state.language].navbar.selectDocs.default } </label>
+                <input name="doc-select" className="navbar-input" type="radio" id="opt2"/>
+                <label htmlFor="opt2" className="navbar-option"> {Language[this.state.language].navbar.selectDocs.website } </label>
+                <input name="doc-select" className="navbar-input" type="radio" id="opt3"/>
+                <label htmlFor="opt3" className="navbar-option"> {Language[this.state.language].navbar.selectDocs.doc } </label>
+                <input name="doc-select" className="navbar-input" type="radio" id="opt4"/>
+                <label htmlFor="opt4" className="navbar-option"> {Language[this.state.language].navbar.selectDocs.twitter }</label>
+                <input name="doc-select" className="navbar-input" type="radio" id="opt5"/>
+                <label htmlFor="opt5" className="navbar-option"> {Language[this.state.language].navbar.selectDocs.discord } </label>
+              </form>
                 
             </div>
 

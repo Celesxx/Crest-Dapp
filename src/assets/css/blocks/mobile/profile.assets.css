@@ -62,10 +62,18 @@
         font-size: 12px;
     }
 }
-@media only screen and (max-width: 1500px) and (min-width: 661px) 
+
+@media only screen and (max-width: 1000px) and (min-width: 660px)
 {
-    
-    
+
+    .profile-table-title, .profile-title { font-size: 16px; }
+    .profile-table-desc, .profile-table-button, .profile-score { font-size: 14px; }
+
+}
+@media only screen and (max-width: 1500px) and (min-width: 1001px) 
+{
+    .profile-table-title, .profile-title { font-size: 18px; }
+    .profile-table-desc, .profile-table-button, .profile-score { font-size: 16px; }
 }
 @media only screen and (max-width: 2560px) and (min-width: 1921px)
 {

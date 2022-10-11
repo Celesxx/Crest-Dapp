@@ -22,6 +22,13 @@ export const loginSlice = createSlice(
           case 'language':
               state.language = action.payload.language
               break;
+              
+          case 'provider':
+              state.provider = action.payload.provider
+              break;
+
+          default: 
+            break;
       }
     },
   },

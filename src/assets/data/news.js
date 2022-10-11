@@ -30,6 +30,21 @@ export const news =
             "title": "Le Medium est disponible",
             "desc": "Notre première version du Medium est disponible !",
             "img": require("../img/medium-img.png")
+        },
+        {
+            "title": "Test",
+            "desc": "Notre première version du Medium est disponible !",
+            "img": require("../img/medium-img.png")
+        },
+        {
+            "title": "Test1",
+            "desc": "Notre première version du Medium est disponible !",
+            "img": require("../img/medium-img.png")
+        },
+        {
+            "title": "Test2",
+            "desc": "Notre première version du Medium est disponible !",
+            "img": require("../img/medium-img.png")
         }
     ]
 }

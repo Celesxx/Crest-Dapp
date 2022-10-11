@@ -50,10 +50,16 @@
         border-radius: 8px !important;
     }
 }
-@media only screen and (max-width: 1500px) and (min-width: 661px) 
+@media only screen and (max-width: 1000px) and (min-width: 660px)
 {
-    
-    
+
+    .card-title, .card-input, .card-max, .swap-button { font-size: 16px; }
+    .card-balance-text { font-size: 14px; }
+}
+@media only screen and (max-width: 1500px) and (min-width: 1001px) 
+{
+    .card-title, .card-input, .card-max, .swap-button { font-size: 18px; }
+    .card-balance-text { font-size: 16px; }
 }
 @media only screen and (max-width: 2560px) and (min-width: 1921px)
 {
