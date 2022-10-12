@@ -78,7 +78,7 @@ class DashboardGlobal extends React.Component
                     <Navbar></Navbar> 
                     <Leftbar></Leftbar>
                     {
-                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        this.state.startLoading == true && this.state.loadingOver == false
                         && <LoadingData />
                     }
                     <Profile width={this.state.width} />
@@ -91,7 +91,7 @@ class DashboardGlobal extends React.Component
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="profile"></NavbarMobile>
                     {
-                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        this.state.startLoading == true && this.state.loadingOver == false
                         && <LoadingData />
                     }
                     <Profile width={this.state.width} />

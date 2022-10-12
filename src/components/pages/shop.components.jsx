@@ -79,7 +79,7 @@ class DashboardGlobal extends React.Component
                     <Navbar></Navbar> 
                     <Leftbar></Leftbar>
                     {
-                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        this.state.startLoading == true && this.state.loadingOver == false
                         && <LoadingData />
                     }
                     <Shop />
@@ -92,7 +92,7 @@ class DashboardGlobal extends React.Component
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="shop"></NavbarMobile>
                     {
-                        this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null 
+                        this.state.startLoading == true && this.state.loadingOver == false
                         && <LoadingData />
                     }
                     <ShopMobile />

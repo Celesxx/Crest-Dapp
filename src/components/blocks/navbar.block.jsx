@@ -35,6 +35,7 @@ const MapStateToProps = (state) => {
     erc20DispatchManager: state.dashboard.erc20DispatchManager,
     videoSrc: state.dashboard.videoSrc,
     language: state.login.language,
+    activateListener: state.login.activateListener
   }; 
 };
 
@@ -64,6 +65,9 @@ class Navbar extends React.Component
         loadingOver: this.props.loadingOver,
         interval: null,
         language: this.props.language,
+        provider: null,
+        listening: false,
+        activateListener: this.props.activateListener
       };
 
       this.handleChange = this.handleChange.bind(this)
@@ -79,8 +83,10 @@ class Navbar extends React.Component
         this.state.isLoggedIn = true 
         let contractHelper = new ContractHelper()
         let loadingHelper = new LoadingHelper()
-        const provider = await contractHelper.getProvider()
+        const {instance, provider} = await contractHelper.getInstance()
         document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+
+        if(this.state.listening !== true) this.addListeners(instance, provider)
 
         await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
         if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
@@ -88,7 +94,7 @@ class Navbar extends React.Component
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) 
+  async componentDidUpdate(prevProps, prevState, snapshot) 
   {
       for(const [key, value] of Object.entries(this.state))
       {
@@ -96,18 +102,47 @@ class Navbar extends React.Component
           {  
             this.state[key] = this.props[key]
             if(this.state.address != "" && key == "badges" && this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+            if(key === "activateListener" && this.state[key] === true)
+            {
+              let contractHelper = new ContractHelper()
+              const {instance, provider} = await contractHelper.getInstance()
+              document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+              if(this.state.listening !== true) this.addListeners(instance, provider)
+            }
             this.forceUpdate();
           }
       }
   }
 
+  async addListeners(instance, provider) 
+  {
+    this.state.listening = true
+    instance.on('accountsChanged', async (accounts) => 
+    {
+      this.props.loginAction({address: accounts[0], action: 'address'})
+      await this.props.dashboardAction({data : {}, action: "reset"})
+      this.props.dashboardAction({loading : {}, action: "startLoading"})
+      let loadingHelper = new LoadingHelper()
+      await loadingHelper.loadAllContractFunction(accounts[0], provider, this.props)
+      this.props.dashboardAction({loading : {}, action: "endLoading"})  
+    })
+    
+    instance.on('chainChanged', (networkId) => {
+      window.location.reload();
+    })
+
+    instance.on("disconnect",() => {
+      instance.close();
+      instance.clearCachedProvider();
+      window.location.reload();
+    });
+  }
 
   handleChange(event)
   {
     let target = event.target
     if(target.id == "french") this.props.loginAction({language: "fr", action: "language"})
     else if(target.id == "english") this.props.loginAction({language: "en", action: "language"})
-    else if(target.id == "default") this.props.loginAction({language: "en", action: "language"})
   }
 
   handleChangeLink(event)
@@ -132,6 +167,7 @@ class Navbar extends React.Component
         const instance = await web3Modal.connect()
         const newProvider = new ethers.providers.Web3Provider(instance);
         const chainId = (await newProvider.getNetwork()).chainId
+        this.state.provider = newProvider
 
         if (chainId == network.chainId) 
         {
@@ -141,7 +177,8 @@ class Navbar extends React.Component
 
           let loadingHelper = new LoadingHelper()
           await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
-          this.props.dashboardAction({loading : {}, action: "endLoading"})
+          this.props.dashboardAction({loading : {}, action: "endLoading"})     
+          if(this.state.listening !== true) this.addListeners(instance, newProvider)
 
         }else 
         {
@@ -196,9 +233,7 @@ class Navbar extends React.Component
 
                 
               <form className="navbar-select" tabIndex="1" onChange={this.handleChange}>
-                <input name="language-select" className="navbar-input" type="radio" id="default" defaultChecked/>
-                <label htmlFor="default" className="navbar-option">{ Language[this.state.language].navbar.selectLanguage.default }</label>
-                <input name="language-select" className="navbar-input" type="radio" id="english"/>
+                <input name="language-select" className="navbar-input" type="radio" id="english" defaultChecked/>
                 <label htmlFor="english" className="navbar-option">English</label>
                 <input name="language-select" className="navbar-input" type="radio" id="french"/>
                 <label htmlFor="french" className="navbar-option">French</label>

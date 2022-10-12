@@ -21,7 +21,7 @@ class ContractHelper
     {
         let web3Modal = new Web3Modal({ cacheProvider: true });
         let provider
-        if (web3Modal.cachedProvider) provider = provider = await new ethers.providers.Web3Provider(await web3Modal.connect())
+        if (web3Modal.cachedProvider) provider = await new ethers.providers.Web3Provider(await web3Modal.connect())
         else 
         {
             const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
@@ -30,6 +30,25 @@ class ContractHelper
             provider = await new ethers.providers.Web3Provider(instance);
         }
         return provider
+    }
+
+    async getInstance()
+    {
+        let web3Modal = new Web3Modal({ cacheProvider: true });
+        let provider, instance
+        if (web3Modal.cachedProvider) 
+        {
+            instance = await web3Modal.connect()
+            provider = await new ethers.providers.Web3Provider(instance); 
+        }
+        else 
+        {
+            const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
+            web3Modal = await new Web3Modal({ cacheProvider: true, providerOptions, disableInjectedProvider: false, theme: "dark" });
+            instance = await web3Modal.connect();
+            provider = await new ethers.providers.Web3Provider(instance); 
+        }
+        return {instance, provider}
     }
 
     

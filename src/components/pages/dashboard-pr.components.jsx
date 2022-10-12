@@ -9,6 +9,7 @@ import Leftbar from "components/blocks/leftbar.block.jsx"
 import NavbarMobile from "components/blocks/mobile/navbar.mobile.jsx"
 import Dashboard from 'components/blocks/dashboard-pr.block.jsx'
 import TopBarMobile from "components/blocks/mobile/topbar.mobile.jsx"
+import LoadingData from "components/blocks/loading-data.block.jsx"
 import { connect } from 'react-redux'
 
 const MapStateToProps = (state) => {
@@ -76,6 +77,10 @@ class DashboardGlobal extends React.Component
                 <div className="home home-dashboard-personnal">
                     <Navbar></Navbar> 
                     <Leftbar></Leftbar>
+                    {
+                        this.state.startLoading == true && this.state.loadingOver == false
+                        && <LoadingData />
+                    }
                     <Dashboard width={this.state.width} />
                 </div>
             )
@@ -85,6 +90,10 @@ class DashboardGlobal extends React.Component
                 <div className="home home-dashboard-personnal">
                     <TopBarMobile></TopBarMobile>
                     <NavbarMobile currentPage="dashboard"></NavbarMobile>
+                    {
+                        this.state.startLoading == true && this.state.loadingOver == false
+                        && <LoadingData />
+                    }
                     <Dashboard width={this.state.width} />
                 </div>
             )

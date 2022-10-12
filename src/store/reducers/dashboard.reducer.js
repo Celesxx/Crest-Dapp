@@ -1,5 +1,31 @@
 import { createSlice, isPlainObject } from '@reduxjs/toolkit'
 
+const initialState= 
+{
+  videoSrc: [],
+  startLoading: false,
+  loading: 0,
+  loadingMax: 12,
+  loadingOver: false,
+  resToken: null, 
+  resStable: null, 
+  totalSupply: null,
+  totalBurn: null,
+  badges: [],
+  tokenUser: 
+  {
+    balance: null,
+    allowanceLm: false,
+  },
+  stableUser: 
+  {
+    balance: null,
+    allowanceLm: false,
+  },
+  erc20DispatchManager: {},
+  navbarPosition: 200,
+}
+
 export const dashboardSlice = createSlice(
 {
   name: 'dashboard',
@@ -76,17 +102,24 @@ export const dashboardSlice = createSlice(
 
         case 'startLoading': 
           state.startLoading = true
+          state.loading = 0
           break
 
         case 'endLoading': 
           state.startLoading = false
           state.loadingOver = false
           break
+
         case 'navbarPosition': 
           state.navbarPosition = action.payload.navbarPosition
           break
-
         
+
+        case 'reset': 
+          // state = initialState
+          for(const [key, value] of Object.entries(initialState)) { state[key] = value }
+          break
+
 
         default :
             break

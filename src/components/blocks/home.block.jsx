@@ -95,7 +95,7 @@ class Home extends React.Component
             <div className="home-body flex column">
             
                 {
-                    this.state.startLoading == true && this.state.loadingOver == false && this.state.address !== null &&
+                    this.state.startLoading == true && this.state.loadingOver == false&&
                     (
                         <LoadingData />
                     )

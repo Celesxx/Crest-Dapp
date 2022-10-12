@@ -145,7 +145,7 @@ class Dashboard extends React.Component
         this.props.dashboardAction({data: {tokenUser: {allowanceLm : true}}, action: "saveData"})
       }else if(this.state.sellLoader === "usdt")
       {
-        await contractHelper.setApproveAllowance(Address.token, Address.lm, provider)
+        await contractHelper.setApproveAllowance(Address.stable, Address.lm, provider)
         this.props.dashboardAction({data: {stableUser: {allowanceLm : true}}, action: "saveData"})
       }
     }

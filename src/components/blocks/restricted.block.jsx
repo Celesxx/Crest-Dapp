@@ -17,6 +17,7 @@ import LoadingHelper from 'helpers/loadingData.helpers.js'
 const MapStateToProps = (state) => {
   return { 
     address: state.login.address,
+    activateListener: state.login.activateListener,
   }; 
 };
 
@@ -80,14 +81,14 @@ class LoadingData extends React.Component
                 this.state.isLoggedIn = true
                 this.props.loginAction({address: await newProvider.getSigner().getAddress(), action: 'address'})
                 this.props.dashboardAction({loading : {}, action: "startLoading"})
+                this.props.loginAction({activateListener: true, action: 'activateListener'})
                 document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
                 let loadingHelper = new LoadingHelper()
                 await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
-
             }else 
             {
-            Notiflix.Notify.failure(
-            "Required Network - " + network.chainName, { timeout: 2500, width: '300px', position: 'right-top' });
+                Notiflix.Notify.failure(
+                "Required Network - " + network.chainName, { timeout: 2500, width: '300px', position: 'right-top' });
             }
 
         }else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)

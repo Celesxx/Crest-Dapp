@@ -93,6 +93,19 @@
     justify-content: space-evenly;
 }
 
+.home-card-title
+{
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.home-card-description
+{
+    font-size: 16px;
+    margin: 0;
+}
+
 
 
 #item-1:checked ~ .home-cards-content #card-3,

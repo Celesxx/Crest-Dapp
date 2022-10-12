@@ -80,6 +80,7 @@
     align-items: center;
     justify-content: flex-start;
     align-items: flex-start;
+    gap: 1em;
 }
 
 .info-cards
@@ -93,8 +94,9 @@
 
 .info-title, .info-text
 {
+    font-size: 15px;
     font-style: normal;
     font-weight: 800;
-    font-size: 20px;
+    margin: 0;
 }
 

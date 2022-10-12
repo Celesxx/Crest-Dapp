@@ -5,7 +5,7 @@ export const loginSlice = createSlice(
   name: 'loginMetamask',
   initialState: {
     address: "",
-    provider: "",
+    activateListener: false,
     language: "en",
   },
 
@@ -23,8 +23,8 @@ export const loginSlice = createSlice(
               state.language = action.payload.language
               break;
               
-          case 'provider':
-              state.provider = action.payload.provider
+          case 'activateListener':
+              state.activateListener = action.payload.activateListener
               break;
 
           default: 
