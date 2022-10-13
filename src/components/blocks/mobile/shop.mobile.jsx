@@ -135,7 +135,7 @@ class ShopMobile extends React.Component
         const newBalance = await contractHelper.nftSingleBalance(key, this.state.address, provider)
         const newTotalSupply = await contractHelper.nftSingleTotalsupply(key, provider)
         const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-        const formatUnit = await contractHelper.setFormatUnits({totalBurn : totalBurn, totalSupply: totalSupply}, 6)
+        const formatUnit = await contractHelper.setFormatUnits({totalBurn : totalBurn, totalSupply: totalSupply}, 18)
         const getAllUserBadges = await contractHelper.getNftsDatasAtIndex(key, this.state.address, newBalance, provider)
 
         let badge = {}
@@ -196,14 +196,14 @@ class ShopMobile extends React.Component
                                         </div>
 
                                         <div className="shop-info-desc flex column">
-                                            <p className="shop-text-desc">{contractHelper.setFormatUnit(value.price * this.state.buyNbr[key], 6)} $CREST</p>
+                                            <p className="shop-text-desc">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key] } $CREST</p>
                                             <p className="shop-text-desc">{Language[this.state.language].shopPop.lifetimeValue }</p>
-                                            <p className="shop-text-desc">{contractHelper.setFormatUnit(value.rewardAmount, 6)} $CREST</p>
+                                            <p className="shop-text-desc">{contractHelper.setFormatUnit(value.rewardAmount, 18)} $CREST</p>
                                             <p className="shop-text-desc">
                                                 {
-                                                    parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 6))
+                                                    parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 18))
                                                     / 
-                                                    parseFloat  (contractHelper.setFormatUnit(value.price, 6))
+                                                    parseFloat  (contractHelper.setFormatUnit(value.price, 18))
                                                     * 100
                                                 } %
                                             </p>
@@ -222,7 +222,7 @@ class ShopMobile extends React.Component
                                             ?(
                                                 <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
                                                     <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
-                                                    <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 6)}$CREST</p>
+                                                    <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18)}$CREST</p>
                                                 </button>
                                             ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                         )

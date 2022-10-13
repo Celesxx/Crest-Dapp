@@ -57,6 +57,8 @@
     font-size: 16px;
 }
 
+.profile-table-core::-webkit-scrollbar { width: 0 !important }
+
 .profile-table-core
 {
     height: 60%;

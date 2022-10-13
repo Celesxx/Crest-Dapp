@@ -49,6 +49,7 @@ class Topbar extends React.Component
         isMetamaskSupported: false,
         isLoggedIn: false,
         interval: null,
+        activateListener: this.props.activateListener
       };
 
   }
@@ -63,8 +64,9 @@ class Topbar extends React.Component
         this.state.isLoggedIn = true 
         let contractHelper = new ContractHelper()
         let loadingHelper = new LoadingHelper()
-        const provider = await contractHelper.getProvider()
+        const {instance, provider} = await contractHelper.getInstance()
         document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+        if(this.state.listening !== true) this.addListeners(instance, provider)
 
         await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
         if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
@@ -78,7 +80,7 @@ class Topbar extends React.Component
       this.state.interval = null
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) 
+  async componentDidUpdate(prevProps, prevState, snapshot) 
   {
       for(const [key, value] of Object.entries(this.state))
       {
@@ -86,9 +88,40 @@ class Topbar extends React.Component
           {  
             this.state[key] = this.props[key]
             if(this.state.address != "" && key == "badges" && this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+            if(key === "activateListener" && this.state[key] === true)
+            {
+              let contractHelper = new ContractHelper()
+              const {instance, provider} = await contractHelper.getInstance()
+              document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+              if(this.state.listening !== true) this.addListeners(instance, provider)
+            }
             this.forceUpdate();
           }
       }
+  }
+
+  async addListeners(instance, provider) 
+  {
+    this.state.listening = true
+    instance.on('accountsChanged', async (accounts) => 
+    {
+      this.props.loginAction({address: accounts[0], action: 'address'})
+      await this.props.dashboardAction({data : {}, action: "reset"})
+      this.props.dashboardAction({loading : {}, action: "startLoading"})
+      let loadingHelper = new LoadingHelper()
+      await loadingHelper.loadAllContractFunction(accounts[0], provider, this.props)
+      this.props.dashboardAction({loading : {}, action: "endLoading"})  
+    })
+    
+    instance.on('chainChanged', (networkId) => {
+      window.location.reload();
+    })
+
+    instance.on("disconnect",() => {
+      instance.close();
+      instance.clearCachedProvider();
+      window.location.reload();
+    });
   }
 
   connectWallet = async () => 
@@ -113,6 +146,8 @@ class Topbar extends React.Component
           await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
           this.props.dashboardAction({loading : {}, action: "endLoading"})
 
+          if(this.state.listening !== true) this.addListeners(instance, newProvider)
+
         }else 
         {
           Notiflix.Notify.warning(
@@ -131,7 +166,7 @@ class Topbar extends React.Component
 
     const { resToken, resStable } = await contractHelper.getReserves(provider)
     const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-    const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
+    const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 18)
 
 
     let data = 

@@ -141,7 +141,7 @@ class Shop extends React.Component
 
                             <h3 className="shop-items-title">{value.name} </h3>
                             <div className="shop-items">
-                                <video className="shop-video" autoPlay muted loop>
+                                <video className="shop-video" playsInline autoPlay muted loop>
                                     <source src={this.state.videoSrc[key]} type="video/mp4" />
                                 </video>
                             </div>

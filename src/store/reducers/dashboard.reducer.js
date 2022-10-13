@@ -117,7 +117,7 @@ export const dashboardSlice = createSlice(
 
         case 'reset': 
           // state = initialState
-          for(const [key, value] of Object.entries(initialState)) { state[key] = value }
+          for(const [key, value] of Object.entries(initialState)) { if(key !== "navbarPosition") state[key] = value }
           break
 
 

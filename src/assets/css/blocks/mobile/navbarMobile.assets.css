@@ -94,7 +94,7 @@
 
 @media only screen and (max-width: 1500px) and (min-width: 1001px)
 {
-    .mobile-navbar-card-outer { transform: translateX(var(--currentposition)) translatey(-20%); }
+    .mobile-navbar-card-outer { transform: translateX(var(--currentposition)) translatey(-35%); }
     #current { transform: translatey(-55%); }
     .mobile-navbar-link 
     {
@@ -104,8 +104,8 @@
 
     @keyframes translate 
     {
-        0% { transform: translateX(var(--oldposition)) translatey(-20%); }
-        100% { transform: translateX(var(--currentposition)) translatey(-20%); }
+        0% { transform: translateX(var(--oldposition)) translatey(-35%); }
+        100% { transform: translateX(var(--currentposition)) translatey(-35%); }
     }
 
     @keyframes translatey 

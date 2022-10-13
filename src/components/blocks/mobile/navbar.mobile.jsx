@@ -15,6 +15,7 @@ import { DashboardActions } from 'store/actions/dashboard.actions.js'
 const MapStateToProps = (state) => {
   return { 
     navbarPosition: state.dashboard.navbarPosition,
+    address: state.login.address,
   }; 
 }; 
 
@@ -33,6 +34,7 @@ class NavbarMobile extends React.Component
 
       this.state = 
       {
+        address: this.props.address,
         currentPage: props.currentPage,
         nav: ["", "", "", "", ""],
         navbarPosition: this.props.navbarPosition,
@@ -48,6 +50,7 @@ class NavbarMobile extends React.Component
       if (prevProps[key] !== this.props[key] && this.state[key] != undefined)
       {   
         this.state[key] = this.props[key]
+        if(key === "address") document.getElementById("navbar-mobile").style.zIndex="unset";
         this.forceUpdate();
       }
     }
@@ -81,12 +84,14 @@ class NavbarMobile extends React.Component
       this.state.nav[4] = "current" 
       this.props.dashboardAction({navbarPosition : 400, action: "navbarPosition"})
     }
-
   }
+
+  componentDidMount() { if(this.state.address !== "") document.getElementById("navbar-mobile").style.zIndex="unset"; }
+
   render()
     {
       return(
-          <div className="mobile-navbar-base flex row">
+          <div className="mobile-navbar-base flex row" id="navbar-mobile">
 
               <svg className="mobile-navbar-card-outer" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} viewBox="0 0 350 480" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="176" cy="241" fill="#000000" id="svg_7" rx="170.5" ry="234" stroke="#000000" strokeOpacity="0.01"/>

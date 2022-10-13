@@ -53,7 +53,7 @@ class Dashboard extends React.Component
           resStable: this.props.resStable,
           address: this.props.address,
           dataIn: { name: "$CREST", balance: null, logo: LogoCrest },
-          dataOut: { name: "$USDC", balance: null, logo: LogoCrest },
+          dataOut: { name: "$BUSD", balance: null, logo: LogoCrest },
           sellLoader: "token",
           startLoading: this.props.startLoading,
           loading: this.props.loading,
@@ -118,15 +118,15 @@ class Dashboard extends React.Component
 
       if(this.state.sellLoader == "token" && target.value != "") 
       {
-        let value = contractHelper.setBignumberUnit(target.value, 6)
+        let value = contractHelper.setBignumberUnit(target.value, 18)
         let amountOut = contractHelper.getAmountOut(value, this.state.resToken, this.state.resStable, false)
-        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
+        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 18)
       }
       else if(this.state.sellLoader == "usdt" && target.value != "") 
       {
-        let value = contractHelper.setBignumberUnit(target.value, 6)
+        let value = contractHelper.setBignumberUnit(target.value, 18)
         let amountOut = contractHelper.getAmountOut(value, this.state.resStable, this.state.resToken, true)
-        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
+        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 18)
       
       }else if(target.value == "") this.state.amountPrice = null
       this.forceUpdate()
@@ -160,7 +160,7 @@ class Dashboard extends React.Component
       if(this.state.sellLoader === "token") path = [Address.token, Address.stable]
       else if(this.state.sellLoader === "usdt") path = [Address.stable, Address.token] 
       
-      amountIn = await contractHelper.setBignumberUnit(document.getElementById("balanceIn").value, 6)
+      amountIn = await contractHelper.setBignumberUnit(document.getElementById("balanceIn").value, 18)
       
       const deadline = Math.floor((new Date()).getTime() / 1000) + 600
       await contractHelper.swapToken(this.state.address, amountIn, 0, path, deadline, provider)
@@ -169,7 +169,7 @@ class Dashboard extends React.Component
       const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
       const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
       const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
-      const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn, userCrestBalance: userCrestBalance, userStableBalance: userStableBalance }, 6)
+      const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn, userCrestBalance: userCrestBalance, userStableBalance: userStableBalance }, 18)
       
       let data = 
       {
@@ -196,7 +196,7 @@ class Dashboard extends React.Component
       {
         this.state.sellLoader = "usdt"
         this.state.dataIn.balance = this.props.stableUser.balance;
-        this.state.dataIn.name = "$USDC"
+        this.state.dataIn.name = "$BUSD"
         this.state.dataIn.logo = LogoCrest
         this.state.dataOut.balance = this.props.tokenUser.balance;
         this.state.dataOut.name = "$CREST";
@@ -206,7 +206,7 @@ class Dashboard extends React.Component
       {
         this.state.sellLoader = "token"
         this.state.dataOut.balance = this.props.stableUser.balance;
-        this.state.dataOut.name = "$USDC"
+        this.state.dataOut.name = "$BUSD"
         this.state.dataOut.logo = LogoCrest
         this.state.dataIn.balance = this.props.tokenUser.balance;
         this.state.dataIn.name = "$CREST";
@@ -331,7 +331,7 @@ class Dashboard extends React.Component
               
 
               <div className="swap-design flex row center">
-                  <video className="swap-video" autoPlay muted loop>
+                  <video className="swap-video" playsInline autoPlay muted loop>
                   <source src={LogoSwap} type="video/mp4" />
                   </video>
               </div>

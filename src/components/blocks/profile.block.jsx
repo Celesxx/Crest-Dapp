@@ -53,6 +53,8 @@ class Dashboard extends React.Component
             address: this.props.address,
             allChecked: false,
             nbrCheck: 0,
+            checked: [],
+            firstLoad: true,
             startLoading: this.props.startLoading,
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
@@ -114,44 +116,44 @@ class Dashboard extends React.Component
                     roi: null, 
                     lifetime: null, 
                     rewards: null,
-                    checked: false, 
                 }
-
+                
+                if(this.state.firstLoad) this.state.checked.push(false)
                 dataClaim.date = contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
                 dataClaim.claimDate = contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
 
-                let [ formatPrice, formatRewardAmount ] = [ contractHelper.setFormatUnit(value.price, 6), contractHelper.setFormatUnit(value.rewardAmount, 6) ]
+                let [ formatPrice, formatRewardAmount ] = [ contractHelper.setFormatUnit(value.price, 18), contractHelper.setFormatUnit(value.rewardAmount, 18) ]
                 let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
 
                 dataClaim.roi = contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
                 dataClaim.lifetime = contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
                 let formatRewards = contractHelper.getPendingRewards(valueNft, value.rewardAmount)
-                dataClaim.rewards = contractHelper.setFormatUnit(formatRewards.toString(), 6)
+                dataClaim.rewards = contractHelper.setFormatUnit(formatRewards.toString(), 18)
                 amountReward += parseFloat(dataClaim.rewards)
 
                 this.state.claimBadges.push(dataClaim)
             }
             this.state.totalReward.push(amountReward)
         }
+        this.state.firstLoad = false
         this.forceUpdate()
     }
 
 
     multipleSelect(key, value)
     {
-        let claimBadges = JSON.parse(JSON.stringify(this.state.claimBadges))
-        claimBadges[key].checked = !claimBadges[key].checked
-        this.state.claimBadges = claimBadges
-        claimBadges[key].checked === true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1
+        this.state.checked[key] = !this.state.checked[key]
+        this.state.checked[key] === true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1
         this.forceUpdate();
     }
 
     allSelect()
     {
-        let claimBadges = JSON.parse(JSON.stringify(this.state.claimBadges))
-        claimBadges.map(badge => {badge.checked = !badge.checked})
-        claimBadges.map(badge => {badge.checked == true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1})
-        this.state.claimBadges = claimBadges
+        this.state.checked.map((value, key) => 
+        {
+            this.state.checked[key] = !value
+            this.state.checked[key] === true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1
+        })
         this.state.allChecked = !this.state.allChecked
         this.forceUpdate();
     }
@@ -216,7 +218,7 @@ class Dashboard extends React.Component
 
         const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
         const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-        const formatUnit = await contractHelper.setFormatUnits({userCrestBalance : userCrestBalance, totalSupply: totalSupply}, 6)
+        const formatUnit = await contractHelper.setFormatUnits({userCrestBalance : userCrestBalance, totalSupply: totalSupply}, 18)
         this.props.dashboardAction({data : {tokenUser: {balance : formatUnit.userCrestBalance}, totalSupply : formatUnit.totalSupply}, action : 'saveData'})
         
     }
@@ -292,8 +294,8 @@ class Dashboard extends React.Component
                 </div>
 
                 {
-                    this.state.claimBadges.length != 0 
-                    ?(
+                    this.state.claimBadges.length != 0 &&
+                    (
                         this.state.claimBadges.map((value, key) => 
                         {
                             return (
@@ -301,8 +303,8 @@ class Dashboard extends React.Component
                                     <div className="profile-table-radio profile-table-title flex row center" >
                                         <div className="profile-table-radio-core flex row center">
                                             <div className="profile-table-input flex row center">
-                                                <input type="checkbox" checked={this.state.claimBadges[key].checked} className="profile-radio-input" id={`radio-${key}`} name={`radio-${key}`} onChange={() => this.multipleSelect(key, value)} />
-                                                { this.state.claimBadges[key].checked != false && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
+                                                <input type="checkbox" checked={this.state.checked[key]} className="profile-radio-input" id={`radio-${key}`} name={`radio-${key}`} onChange={() => this.multipleSelect(key, value)} />
+                                                { this.state.checked[key] != false && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
                                             </div>
                                         </div>
                                     </div>
@@ -315,26 +317,6 @@ class Dashboard extends React.Component
                                     <p className="profile-table-desc">{contractHelper.getNb(value.rewards, 6)}</p>
                                     <div className="profile-table-desc profile-table-button-core flex row center">
                                         <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>{ Language[this.state.language].profile.claimBtn }</button>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    ): this.state.claimBadges.length != 0 && (
-                        this.state.emptyRow.map(value => 
-                        {
-                            return(
-                                <div key={`emptyRow-${value}`} className="profile-table-data flex row">
-                                    <div className="profile-table-radio profile-table-title flex row center" >
-                                        <div className="profile-table-radio-core flex row center">
-                                            <div className="profile-table-input flex row center">
-                                                <input type="checkbox" className="profile-radio-input" id={`radio-${value}`} name={`radio-${value}`} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p className="profile-table-desc">xxxxx</p>
-                                    <p className="profile-table-desc">xxxxxx</p>
-                                    <div className="profile-table-desc profile-table-button-core flex row center">
-                                        <button className="button profile-table-button">{ Language[this.state.language].profile.claimBtn }</button>
                                     </div>
                                 </div>
                             )

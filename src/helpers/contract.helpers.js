@@ -556,9 +556,9 @@ class ContractHelper
     **/
     getAmountOutUniV2(amountIn, reserveIn, reserveOut) 
     {
-        const amountInWithFee = ethers.BigNumber.from(amountIn).mul(997)
+        const amountInWithFee = ethers.BigNumber.from(amountIn).mul(9975)
         const numerator = amountInWithFee.mul(reserveOut)
-        const denominator = ethers.BigNumber.from(reserveIn).mul(1000).add(amountInWithFee)
+        const denominator = ethers.BigNumber.from(reserveIn).mul(10000).add(amountInWithFee)
         return numerator.div(denominator)
     }
     
