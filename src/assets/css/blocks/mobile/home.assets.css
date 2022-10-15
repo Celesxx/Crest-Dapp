@@ -1,4 +1,4 @@
-@media only screen and (max-width: 1500px) 
+@media only screen and (max-width: 1500px), only screen and (max-width: 1500px) and (max-height: 1500px) and (orientation: landscape)  
 {
     .home-head-core
     {
@@ -53,7 +53,7 @@
         margin: 0;
     }
 }
-@media only screen and (max-width: 1500px) and (min-width: 661px) 
+@media only screen and (max-width: 1500px) and (min-width: 661px), only screen and (max-width: 1500px) and (min-width: 661px) and (max-height: 1500px) and (min-height: 66px) and (orientation: landscape) 
 {
     .home-head-title { font-size: 18px; }
     .home-head-desc, .home-card-title { font-size: 16px; }

@@ -9,7 +9,6 @@ import MobileLeftRight from 'assets/img/mobile/mobile-left-right.svg'
 import MobileStack from 'assets/img/mobile/mobile-stack.svg'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux'
-import { LoginActions } from 'store/actions/login.actions.js'
 import { DashboardActions } from 'store/actions/dashboard.actions.js'
 
 const MapStateToProps = (state) => {
@@ -91,7 +90,7 @@ class NavbarMobile extends React.Component
   render()
     {
       return(
-          <div className="mobile-navbar-base flex row" id="navbar-mobile">
+          <div className="mobile-navbar-base-core flex row" id="navbar-mobile">
 
               <svg className="mobile-navbar-card-outer" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} viewBox="0 0 350 480" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="176" cy="241" fill="#000000" id="svg_7" rx="170.5" ry="234" stroke="#000000" strokeOpacity="0.01"/>

@@ -22,7 +22,8 @@ const MapStateToProps = (state) => {
   return { 
     address: state.login.address,
     language: state.login.language,
-    badges: state.dashboard.badges
+    badges: state.dashboard.badges,
+    activateListener: state.login.activateListener
   }; 
 };
 
@@ -49,7 +50,8 @@ class Topbar extends React.Component
         isMetamaskSupported: false,
         isLoggedIn: false,
         interval: null,
-        activateListener: this.props.activateListener
+        listening : false,
+        activateListener: this.props.activateListener,
       };
 
   }
@@ -69,6 +71,7 @@ class Topbar extends React.Component
         if(this.state.listening !== true) this.addListeners(instance, provider)
 
         await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
+        
         if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
       }
     }
@@ -76,52 +79,28 @@ class Topbar extends React.Component
 
   componentWillUnmount()
   {
-      clearInterval(this.state.interval)
-      this.state.interval = null
+    clearInterval(this.state.interval)
+    this.state.interval = null
   }
 
   async componentDidUpdate(prevProps, prevState, snapshot) 
   {
-      for(const [key, value] of Object.entries(this.state))
-      {
-          if (prevProps[key] !== this.props[key])
-          {  
-            this.state[key] = this.props[key]
-            if(this.state.address != "" && key == "badges" && this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
-            if(key === "activateListener" && this.state[key] === true)
-            {
-              let contractHelper = new ContractHelper()
-              const {instance, provider} = await contractHelper.getInstance()
-              document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
-              if(this.state.listening !== true) this.addListeners(instance, provider)
-            }
-            this.forceUpdate();
-          }
-      }
-  }
-
-  async addListeners(instance, provider) 
-  {
-    this.state.listening = true
-    instance.on('accountsChanged', async (accounts) => 
+    for(const [key, value] of Object.entries(this.state))
     {
-      this.props.loginAction({address: accounts[0], action: 'address'})
-      await this.props.dashboardAction({data : {}, action: "reset"})
-      this.props.dashboardAction({loading : {}, action: "startLoading"})
-      let loadingHelper = new LoadingHelper()
-      await loadingHelper.loadAllContractFunction(accounts[0], provider, this.props)
-      this.props.dashboardAction({loading : {}, action: "endLoading"})  
-    })
-    
-    instance.on('chainChanged', (networkId) => {
-      window.location.reload();
-    })
-
-    instance.on("disconnect",() => {
-      instance.close();
-      instance.clearCachedProvider();
-      window.location.reload();
-    });
+      if (prevProps[key] !== this.props[key])
+      {  
+        this.state[key] = this.props[key]
+        if(this.state.address != "" && key == "badges" && this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+        if(key === "activateListener" && this.state[key] === true)
+        {
+          let contractHelper = new ContractHelper()
+          const {instance, provider} = await contractHelper.getInstance()
+          document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+          if(this.state.listening !== true) this.addListeners(instance, provider)
+        }
+        this.forceUpdate();
+      }
+    }
   }
 
   connectWallet = async () => 
@@ -156,6 +135,33 @@ class Topbar extends React.Component
 
       }else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)
       else window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+  }
+
+  async addListeners(instance, provider) 
+  {
+    this.state.listening = true
+    instance.on('accountsChanged', async (accounts) => 
+    {
+      if(this.state.address != "")
+      {
+        let account = accounts[0] !== null && accounts[0] !== undefined ? accounts[0] : ""
+        let loadingHelper = new LoadingHelper()
+        this.props.loginAction({address: account, action: 'address'})
+        await this.props.dashboardAction({data : {}, action: "reset"})
+        if(account != "")
+        {
+          this.props.dashboardAction({loading : {}, action: "start-loading"})
+          await loadingHelper.loadAllContractFunction(accounts[0], provider, this.props)
+        }
+      }
+    })
+    
+    instance.on("disconnect",() => 
+    {
+      instance.close();
+      instance.clearCachedProvider();
+      this.props.loginAction({address: "", action: 'address'})
+    });
   }
 
   async loadAllContractFunction()

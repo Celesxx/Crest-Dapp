@@ -186,6 +186,12 @@
   width: 50%;
 }
 
+.market-navbar-link
+{
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .dapp-button
 {
   font-size: 18px;

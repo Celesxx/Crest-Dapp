@@ -17,7 +17,6 @@ import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router' 
 
-
 const MapStateToProps = (state) => {
     return { 
         address: state.login.address,

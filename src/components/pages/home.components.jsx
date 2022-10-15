@@ -26,23 +26,69 @@ class Index extends React.Component
       this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this)
   }
 
-  UNSAFE_componentWillMount() 
-  { 
-    window.addEventListener('resize', this.handleWindowSizeChange);
+  UNSAFE_componentWillMount() { window.addEventListener('resize', this.handleWindowSizeChange); }
+  componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
+  componentDidMount()
+  {
     this.state.width = document.documentElement.clientWidth
-    if(this.state.width <= 1500) this.state.isMobile = true
-    else this.state.isMobile = false
+    let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile && this.state.width <= 1500) 
+    {
+      this.state.isMobile = true
+      const root = document.getElementById('root');
+      const home = document.querySelector('.home');
+      if (window.matchMedia("(orientation: landscape)").matches) 
+      {
+        root.style["height"] = "100vw"
+        home.style["height"] = "100vw"
+      }
+      else 
+      {
+        root.style["height"] = "100vh"
+        home.style["height"] = null
+      }
+    }else
+    {
+      this.state.isMobile = false
+      const root = document.getElementById('root');
+      const home = document.querySelector('.home');
+      root.style["height"] = "100vh"
+      home.style["height"] = null
+    }
     this.forceUpdate()
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.handleWindowSizeChange); }
+
   handleWindowSizeChange(event) 
   { 
-    console.log("test")
     this.state.width = document.documentElement.clientWidth
-    if(this.state.width <= 1500) this.state.isMobile = true
-    else this.state.isMobile = false
+    let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    console.log("is mobile : ", isMobile)
+    if (isMobile && this.state.width <= 1500) 
+    {
+      this.state.isMobile = true
+      const root = document.getElementById('root');
+      const home = document.querySelector('.home');
+      if (window.matchMedia("(orientation: landscape)").matches) 
+      {
+        root.style["height"] = "150vw"
+        home.style["height"] = "150vw"
+      }
+      else 
+      {
+        root.style["height"] = "100vh"
+        home.style["height"] = null
+      }
+    }else 
+    {
+      this.state.isMobile = false
+      const root = document.getElementById('root');
+      const home = document.querySelector('.home');
+      root.style["height"] = "100vh"
+      home.style["height"] = null
+    }
     this.forceUpdate()
   }
+  
 
   render()
   {
@@ -52,7 +98,7 @@ class Index extends React.Component
           <div className="home">
               <Navbar></Navbar> 
               <Leftbar></Leftbar>
-              <Home />
+              <Home isMobile={this.state.isMobile}/>
           </div>
       )
     }else
@@ -61,7 +107,7 @@ class Index extends React.Component
           <div className="home">
               <TopBarMobile></TopBarMobile>
               <NavbarMobile currentPage="home"></NavbarMobile>
-              <Home />
+              <Home isMobile={this.state.isMobile}/>
 
           </div>
       )

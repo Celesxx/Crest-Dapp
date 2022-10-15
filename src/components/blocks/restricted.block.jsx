@@ -82,7 +82,6 @@ class LoadingData extends React.Component
                 this.props.loginAction({address: await newProvider.getSigner().getAddress(), action: 'address'})
                 this.props.dashboardAction({loading : {}, action: "startLoading"})
                 this.props.loginAction({activateListener: true, action: 'activateListener'})
-                document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
                 let loadingHelper = new LoadingHelper()
                 await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
             }else 
@@ -100,7 +99,7 @@ class LoadingData extends React.Component
         return(
             <div className="restricted-core flex column center">
                 <div className="restricted-card flex column">
-                    <h1 className="restricted-title">Connect your wallet to unlock this panel !</h1>
+                    <h1 className="restricted-title">Connect your wallet to unlock this panel!</h1>
                     <button className="button restricted-button flex row center border-gradient-bluePink" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
                 </div>
                 

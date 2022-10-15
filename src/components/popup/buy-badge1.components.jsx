@@ -126,7 +126,7 @@ class BuyPopup extends React.Component
     {
         let contractHelper = new ContractHelper()
         return(
-            <Popup trigger={<button className="button shop-items-button">{ Language[this.state.language].shop.badgeBuy } {contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18)}$CREST</button>} modal nested>
+            <Popup trigger={<button className="button shop-items-button">{ Language[this.state.language].shop.badgeBuy } { contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18)}$CREST</button>} modal nested>
             {
                 close => (
                     <div className="shop-popup-base flex row">

@@ -36,6 +36,7 @@ class Home extends React.Component
         language: this.props.language,
         interval: null,
         firstLoad: false,
+        isMobile: props.isMobile,
       };
 
       this.handleChange = this.handleChange.bind(this)
@@ -90,62 +91,58 @@ class Home extends React.Component
 
     render()
     {
-        return (
+      return (
 
-            <div className="home-body flex column">
-            
+        <div className="home-body flex column">
+        
+          {
+              this.state.startLoading == true && this.state.loadingOver == false&&
+              (
+                  <LoadingData />
+              )
+          }
+
+          <div className ="home-head-core flex column">
+              <h1 className="home-head-title">News and Update</h1>
+              <p className="home-head-desc">here you will find all the news and updates of the dApp</p>
+          </div>
+
+
+          <div className="home-cards-core flex column center">
+
+            <div className="home-cards-container">
+              {
+                news[this.state.language].map((value, key) => 
                 {
-                    this.state.startLoading == true && this.state.loadingOver == false&&
-                    (
-                        <LoadingData />
-                    )
-                }
+                    if(key == 0) { return( <input className="home-cards-input" key={`input-${key + 1}`} type="radio" name={`item-input`} id={`item-${key+1}`} onChange={event => {}} onClick={this.handleChange} defaultChecked/> ) }
+                    else return( <input className="home-cards-input" key={`input-${key + 1}`} type="radio" name={`item-input`} id={`item-${key+1}`} onChange={event => {}} onClick={this.handleChange} /> )
+                })
+              }
+              <div className="home-cards-content flex row center">
 
-                <div className ="home-head-core flex column">
-                    <h1 className="home-head-title">News and Update</h1>
-                    <p className="home-head-desc">here you will find all the news and updates of the dApp</p>
-                </div>
-
-
-                <div className="home-cards-core flex column center">
-
-                <div className="home-cards-container">
+                  {
+                    news[this.state.language].map((value, key) => 
                     {
-                      news[this.state.language].map((value, key) => 
-                      {
-                          if(key == 0) { return( <input className="home-cards-input" key={`input-${key + 1}`} type="radio" name={`item-input`} id={`item-${key+1}`} onChange={event => {}} onClick={this.handleChange} defaultChecked/> ) }
-                          else return( <input className="home-cards-input" key={`input-${key + 1}`} type="radio" name={`item-input`} id={`item-${key+1}`} onChange={event => {}} onClick={this.handleChange} /> )
-                      })
-                    }
-                    <div className="home-cards-content flex row center">
+                        return(
+                        <label className="home-card flex row" key={`label-${key}`}  htmlFor={`item-${key+1}`} id={`card-${key+1}`}>
+                        <div className="home-card-image-core flex center">
+                            <img className="home-card-image" src={value.img} alt="" /> 
+                        </div>
 
-                        {
-                          news[this.state.language].map((value, key) => 
-                          {
-                              return(
-                              <label className="home-card flex row" key={`label-${key}`}  htmlFor={`item-${key+1}`} id={`card-${key+1}`}>
-                              <div className="home-card-image-core flex center">
-                                  <img className="home-card-image" src={value.img} alt="" /> 
-                              </div>
-
-                              <div className="home-card-description-core flex column">
-                                  <h1 className="home-card-title">{ value.title }</h1>
-                                  <p className="home-card-description">{ value.desc }</p>
-                              </div>
-                              </label>
-                          )})
-                        }
-                        
-                    </div>
-                </div>
-
-                </div>
-
+                        <div className="home-card-description-core flex column">
+                            <h1 className="home-card-title">{ value.title }</h1>
+                            <p className="home-card-description">{ value.desc }</p>
+                        </div>
+                        </label>
+                    )})
+                  }
+                  
+              </div>
             </div>
-          
-
-        );
-    }
+          </div>
+        </div>
+      );
+  }
 }
 
 export default connect(MapStateToProps)(Home);

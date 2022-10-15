@@ -3,11 +3,7 @@ import 'assets/css/blocks/navbar.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
 import LogoName from 'assets/img/crest-name.png'
-import { connect } from 'react-redux'
-import { LoginActions } from 'store/actions/login.actions.js'
-import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import Web3 from 'web3'
-import { ethers, providers } from 'ethers'
 import Notiflix from 'notiflix';
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from "@walletconnect/web3-provider";
@@ -16,9 +12,15 @@ import LoadingHelper from 'helpers/loadingData.helpers.js'
 import ContractHelper from "helpers/contract.helpers";
 import Address from 'contracts/address.contracts.json'
 import Language from 'assets/data/language.json'
+import { DashboardActions } from 'store/actions/dashboard.actions.js'
+import { LoginActions } from 'store/actions/login.actions.js'
+import { Link } from "react-router-dom";
+import { connect } from 'react-redux'
+import { ethers } from 'ethers'
 
 
-const MapStateToProps = (state) => {
+const MapStateToProps = (state) => 
+{
   return { 
     address: state.login.address,
     resToken: state.dashboard.resToken,
@@ -85,10 +87,10 @@ class Navbar extends React.Component
         let loadingHelper = new LoadingHelper()
         const {instance, provider} = await contractHelper.getInstance()
         document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
-
         if(this.state.listening !== true) this.addListeners(instance, provider)
 
         await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
+        
         if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
       }
     }
@@ -114,27 +116,64 @@ class Navbar extends React.Component
       }
   }
 
+  connectWallet = async () => 
+  {
+    if (this.state.isMetamaskSupported) 
+    {
+
+      const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
+      let web3Modal = new Web3Modal( { cacheProvider: true, providerOptions, disableInjectedProvider: false, theme: "dark" })
+
+      const instance = await web3Modal.connect()
+      const newProvider = new ethers.providers.Web3Provider(instance);
+      const chainId = (await newProvider.getNetwork()).chainId
+      this.state.provider = newProvider
+
+      if (chainId == network.chainId) 
+      {
+        this.state.isLoggedIn = true
+        this.props.loginAction({address: await newProvider.getSigner().getAddress(), action: 'address'})
+        this.props.dashboardAction({loading : {}, action: "startLoading"})
+
+        let loadingHelper = new LoadingHelper()
+        await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
+        this.props.dashboardAction({loading : {}, action: "endLoading"})     
+        if(this.state.listening !== true) this.addListeners(instance, newProvider)
+
+      }else 
+      {
+        Notiflix.Notify.warning(
+        "Required Network - " + network.chainName, { timeout: 1500, width: '500px', position: 'center-top', fontSize: '22px' });
+      }
+
+    }else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)
+    else window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+  }
+
   async addListeners(instance, provider) 
   {
     this.state.listening = true
     instance.on('accountsChanged', async (accounts) => 
     {
-      this.props.loginAction({address: accounts[0], action: 'address'})
-      await this.props.dashboardAction({data : {}, action: "reset"})
-      this.props.dashboardAction({loading : {}, action: "startLoading"})
-      let loadingHelper = new LoadingHelper()
-      await loadingHelper.loadAllContractFunction(accounts[0], provider, this.props)
-      this.props.dashboardAction({loading : {}, action: "endLoading"})  
+      if(this.state.address )
+      {
+        let account = accounts[0] !== null && accounts[0] !== undefined ? accounts[0] : ""
+        let loadingHelper = new LoadingHelper()
+        this.props.loginAction({address: account, action: 'address'})
+        await this.props.dashboardAction({data : {}, action: "reset"})
+        if(account != "")
+        {
+          this.props.dashboardAction({loading : {}, action: "start-loading"})
+          await loadingHelper.loadAllContractFunction(accounts[0], provider, this.props)
+        }
+      }
     })
     
-    instance.on('chainChanged', (networkId) => {
-      window.location.reload();
-    })
-
-    instance.on("disconnect",() => {
+    instance.on("disconnect",() => 
+    {
       instance.close();
       instance.clearCachedProvider();
-      window.location.reload();
+      this.props.loginAction({address: "", action: 'address'})
     });
   }
 
@@ -154,41 +193,6 @@ class Navbar extends React.Component
     else if(target.id == "opt5") window.location='https://discord.com/invite/mUHGNqN8Vj'
   }
 
-
-  
-  connectWallet = async () => 
-  {
-      if (this.state.isMetamaskSupported) 
-      {
-
-        const providerOptions = { walletconnect: { package: WalletConnectProvider, options: { rpc: { [network.chainId]: network.rpcUrls[0] } } } }
-        let web3Modal = new Web3Modal( { cacheProvider: true, providerOptions, disableInjectedProvider: false, theme: "dark" })
-
-        const instance = await web3Modal.connect()
-        const newProvider = new ethers.providers.Web3Provider(instance);
-        const chainId = (await newProvider.getNetwork()).chainId
-        this.state.provider = newProvider
-
-        if (chainId == network.chainId) 
-        {
-          this.state.isLoggedIn = true
-          this.props.loginAction({address: await newProvider.getSigner().getAddress(), action: 'address'})
-          this.props.dashboardAction({loading : {}, action: "startLoading"})
-
-          let loadingHelper = new LoadingHelper()
-          await loadingHelper.loadAllContractFunction(await newProvider.getSigner().getAddress(), newProvider, this.props)
-          this.props.dashboardAction({loading : {}, action: "endLoading"})     
-          if(this.state.listening !== true) this.addListeners(instance, newProvider)
-
-        }else 
-        {
-          Notiflix.Notify.warning(
-          "Required Network - " + network.chainName, { timeout: 1500, width: '500px', position: 'center-top', fontSize: '22px' });
-        }
-
-      }else if (window.web3) window.web3 = new Web3(window.web3.currentProvider)
-      else window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-  }
 
   async loadAllContractFunction()
   {
@@ -260,7 +264,11 @@ class Navbar extends React.Component
             </div>
             <div className="navbar-button flex row">
               <div className="navbar-button-core flex row">
-                <button className="button market-button flex row center"> <p>{ Language[this.state.language].navbar.buyButton }</p> </button>
+                
+                  <button className="button market-button flex row center"> 
+                    <Link to="/shop" className="market-navbar-link flex row center"><p>{ Language[this.state.language].navbar.buyButton }</p></Link>
+                  </button>
+                
                 {
                   this.state.address !== "" 
                   ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{ this.state.address.substr(0, 6) + '...' +  this.state.address.substr( this.state.address.length - 6,  this.state.address.length)  }</p></div>
