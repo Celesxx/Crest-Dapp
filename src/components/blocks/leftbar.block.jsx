@@ -1,14 +1,12 @@
 import 'assets/css/blocks/leftbar.assets.css';
 import 'assets/css/global.assets.css';
 import React from "react";
-import Twitter from 'assets/img/twitter.png'
-import Medium from 'assets/img/medium.png'
-import Discord from 'assets/img/discord.png'
-import Telegram from 'assets/img/telegram.png'
+import Twitter from 'assets/img/twitter.svg'
+import Medium from 'assets/img/medium.svg'
+import Discord from 'assets/img/discord.svg'
 import { Link } from "react-router-dom";
 import { connect } from 'react-redux'
 import { LoginActions } from 'store/actions/login.actions.js'
-import { DashboardActions } from 'store/actions/dashboard.actions.js'
 import Language from 'assets/data/language.json'
 
 

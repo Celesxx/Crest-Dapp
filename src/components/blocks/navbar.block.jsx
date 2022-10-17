@@ -2,7 +2,7 @@ import 'assets/css/global.assets.css';
 import 'assets/css/blocks/navbar.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
-import LogoName from 'assets/img/crest-name.png'
+import LogoName from 'assets/img/crest-name.svg'
 import Web3 from 'web3'
 import Notiflix from 'notiflix';
 import Web3Modal from 'web3modal'
@@ -266,7 +266,7 @@ class Navbar extends React.Component
               <div className="navbar-button-core flex row">
                 
                   <button className="button market-button flex row center"> 
-                    <Link to="/shop" className="market-navbar-link flex row center"><p>{ Language[this.state.language].navbar.buyButton }</p></Link>
+                    <Link to="/swap" className="market-navbar-link flex row center"><p>{ Language[this.state.language].navbar.buyButton }</p></Link>
                   </button>
                 
                 {

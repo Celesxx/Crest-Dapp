@@ -149,12 +149,15 @@ class Dashboard extends React.Component
 
     allSelect()
     {
+        this.state.allChecked = !this.state.allChecked
+
         this.state.checked.map((value, key) => 
         {
-            this.state.checked[key] = !value
-            this.state.checked[key] === true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1
+            this.state.checked[key] = this.state.allChecked
+            // this.state.checked[key] === true ? this.state.nbrCheck += 1 : this.state.nbrCheck -= 1
         })
-        this.state.allChecked = !this.state.allChecked
+        if(this.state.allChecked) this.state.nbrCheck = this.state.claimBadges.length 
+        else this.state.nbrCheck = 0
         this.forceUpdate();
     }
 
@@ -175,17 +178,19 @@ class Dashboard extends React.Component
         document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
         let data = {}
-        for(const badge of this.state.claimBadges) 
+        for(const [key, value] of Object.entries(this.state.checked)) 
         {
-            if(badge.checked)
+            console.log(value)
+            if(value)
             {
-                if(data[badge.badgeId] === undefined) data[badge.badgeId] = [badge.id] 
-                else data[badge.badgeId].push(badge.id)
+                if(data[this.state.claimBadges[key].badgeId] === undefined) data[this.state.claimBadges[key].badgeId] = [this.state.claimBadges[key].id] 
+                else data[this.state.claimBadges[key].badgeId].push(this.state.claimBadges[key].id)
             }
         }
         let tokenIds = []
         let badgeIndex = []
 
+        console.log(data)
         Object.keys(data).map((key) => {badgeIndex.push(parseInt(key))})
         Object.values(data).map((value) => {tokenIds.push(value)})
 

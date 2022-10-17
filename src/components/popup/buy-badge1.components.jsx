@@ -152,29 +152,30 @@ class BuyPopup extends React.Component
 
                                 <div className="shop-popup-info-title flex column">
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.price }</p>
+                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.remaining }</p>
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.lifetime }</p>
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.dailyReward }</p>
                                     <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.dailyRoi }</p>
-                                    <p className="shop-popup-text-title">{ Language[this.state.language].shopPop.remaining }</p>
                                 </div>
 
                                 <div className="shop-popup-info-desc flex column">
-                                    <p className="shop-popup-text-desc">{contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price * this.state.buyNbr, 18)} $CREST</p>
-                                    <p className="shop-popup-text-desc">{ Language[this.state.language].shopPop.lifetimeValue }</p>
-                                    <p className="shop-popup-text-desc">{contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].rewardAmount, 18)} $CREST</p>
-                                    <p className="shop-popup-text-desc">
-                                        {
-                                        parseFloat(contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].rewardAmount, 18))
-                                        / 
-                                        parseFloat  (contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18))
-                                        * 100
-                                        } %
-                                    </p>
+                                    <p className="shop-popup-text-desc">{ contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18) * this.state.buyNbr } $CREST</p>
                                     <p className="shop-popup-text-desc">
                                         {
                                             contractHelper.getNb(parseInt(this.state.badges[this.state.badgesIndex].max) - parseInt(this.state.badges[this.state.badgesIndex].totalSupply), 0) 
                                         }
                                     </p>
+                                    <p className="shop-popup-text-desc">{ Language[this.state.language].shopPop.lifetimeValue }</p>
+                                    <p className="shop-popup-text-desc">{contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].rewardAmount, 18)} $CREST</p>
+                                    <p className="shop-popup-text-desc">
+                                        {
+                                            parseFloat(contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].rewardAmount, 18))
+                                            / 
+                                            parseFloat  (contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18))
+                                            * 100
+                                        } %
+                                    </p>
+                                    
                                 </div>
 
                             </div>

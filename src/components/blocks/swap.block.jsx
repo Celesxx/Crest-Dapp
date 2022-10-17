@@ -306,7 +306,7 @@ class Dashboard extends React.Component
                     </div>
 
                     <div className="card-input-core">
-                    <div className="card-input flex row center" type="text" name="crest">{this.state.amountPrice}</div>
+                      <div className="card-input flex row center" type="text" name="crest">{this.state.amountPrice != null ? contractHelper.getNb(this.state.amountPrice, 6) : this.state.amountPrice}</div>
                     </div>
 
                 </div>

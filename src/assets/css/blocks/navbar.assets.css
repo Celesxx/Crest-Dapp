@@ -32,6 +32,12 @@
   height: 70%; 
 }
 
+.logo-crest
+{
+  height: 90%;
+  width: auto;
+}
+
 /* navbar */
 
 .navbar-select 
@@ -149,6 +155,13 @@
 .navbar-title
 {
   width: 33.3%;
+  height: 100%;
+}
+
+.title-crest
+{
+  width: 33.3%;
+  height: 60%;
 }
 
 .navbar-button 

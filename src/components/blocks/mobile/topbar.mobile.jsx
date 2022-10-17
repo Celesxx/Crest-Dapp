@@ -2,7 +2,7 @@ import 'assets/css/animation/keyframes.assets.css'
 import 'assets/css/global.assets.css';
 import 'assets/css/blocks/mobile/topbar.mobile.css';
 import React from "react";
-import walletImg from "assets/img/wallet-mobile.png"
+import walletImg from "assets/img/wallet-mobile.svg"
 import buyImg from "assets/img/buy.svg"
 import Web3 from 'web3'
 import Notiflix from 'notiflix'

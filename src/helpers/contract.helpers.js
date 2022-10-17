@@ -9,7 +9,19 @@ import  {ethers, BigNumber, utils, constants } from "ethers"
 import Web3Modal from 'web3modal'
 import network from 'contracts/network.contracts.js'
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import Notiflix from 'notiflix'
 
+function displayError(str) {
+	Notiflix.Notify.warning(
+		str,
+		{
+			timeout: 1500,
+			width: '500px',
+			position: 'center-top',
+			fontSize: '22px'
+		}
+	)
+}
 
 class ContractHelper
 {
@@ -315,8 +327,14 @@ class ContractHelper
     **/
     async setApproveAllowance(erc20Address, targetAddress, provider) 
     {
-        const erc20 = new ethers.Contract(erc20Address, AbiToken, provider)
-        return (await erc20.connect(provider.getSigner()).approve(targetAddress, ethers.constants.MaxUint256)).wait()
+		try {
+			const erc20 = new ethers.Contract(erc20Address, AbiToken, provider)
+			return (await erc20.connect(provider.getSigner()).approve(targetAddress, ethers.constants.MaxUint256)).wait()
+		} catch(e) {
+			if (e.reason != undefined)
+				displayError(e.reason)
+			throw "Error"
+		}
     }
 
 
@@ -479,9 +497,14 @@ class ContractHelper
     **/
     async claimBadge(address, badgeIndex, tokenIds, provider)
     {
-        const badgeManager = new ethers.Contract(Address.badgeManager, abiBadgeManager, provider)
-        await(await badgeManager.connect(provider.getSigner()).claim(address, badgeIndex, tokenIds)).wait()
-        // await(await badgeManager.connect(provider.getSigner()).claim(address, [0,1,2], [[0,1], [1], [0]])).wait()
+		try {
+			const badgeManager = new ethers.Contract(Address.badgeManager, abiBadgeManager, provider)
+			await(await badgeManager.connect(provider.getSigner()).claim(address, badgeIndex, tokenIds)).wait()
+		} catch(e) {
+			if (e.reason != undefined)
+				displayError(e.reason)
+			throw "Error"
+		}
     }
 
 
@@ -499,9 +522,15 @@ class ContractHelper
     * @param {Structure} provider
     **/
     async swapToken(address, amountIn, amountOutMin, path, deadline,  provider)
-    {
-        const token = new ethers.Contract(Address.token, AbiToken, provider)
-        await(await token.connect(provider.getSigner()).swapExactTokensForTokens(amountIn, amountOutMin, path, address, deadline)).wait()
+	{
+		try {
+			const token = new ethers.Contract(Address.token, AbiToken, provider)
+			await(await token.connect(provider.getSigner()).swapExactTokensForTokens(amountIn, amountOutMin, path, address, deadline)).wait()
+		} catch(e) {
+			if (e.reason != undefined)
+				displayError(e.reason)
+			throw "Error"
+		}
     }
 
 
@@ -520,9 +549,15 @@ class ContractHelper
     * @param {Structure} provider
     **/
     async createManagedTokens(erc20Addr, i, to, amount, influId, provider) 
-    {
-        const badgeManager = new ethers.Contract(Address.badgeManager, abiBadgeManager, provider)
-        await (await badgeManager.connect(provider.getSigner()).createManagedTokens(erc20Addr, i, to, amount, influId)).wait()
+	{
+		try {
+			const badgeManager = new ethers.Contract(Address.badgeManager, abiBadgeManager, provider)
+			await (await badgeManager.connect(provider.getSigner()).createManagedTokens(erc20Addr, i, to, amount, influId)).wait()
+		} catch(e) {
+			if (e.reason != undefined)
+				displayError(e.reason)
+			throw "Error"
+		}
     }
 
 
