@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 #root
 {
   height: 100vh;
@@ -10,10 +17,17 @@
 .home 
 {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: flex-end;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
   height: 100vh;
   width: 100%;
   top: 0;
@@ -26,8 +40,12 @@
   z-index: 9;
   height: 90%;
   width: 100%;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-animation: scale-up-center  0.25s cubic-bezier(0.390, 0.575, 1, 1.000) both;
     animation: scale-up-center  0.25s cubic-bezier(0.390, 0.575, 1, 1.000) both;
 }
@@ -41,10 +59,19 @@
 
 .home-title
 {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   font-weight: 900 !important;
   text-transform: uppercase;
   text-align: center;
@@ -57,6 +84,7 @@
 .button-input
 {
   width: 20%;
+  background: -o-linear-gradient(225deg, #18C8FF 14.89%, #933FFE 85.85%);
   background: linear-gradient(225deg, #18C8FF 14.89%, #933FFE 85.85%);
   border-radius: 10px !important;
 }
@@ -75,7 +103,9 @@
 {
   border: 1px solid rgba(125, 125, 125, 0.25);
   border-radius: 50%;
-  transform: rotate(14.21deg);
+  -webkit-transform: rotate(14.21deg);
+      -ms-transform: rotate(14.21deg);
+          transform: rotate(14.21deg);
   margin-right: 8%;
   margin-bottom: 5%;
 }

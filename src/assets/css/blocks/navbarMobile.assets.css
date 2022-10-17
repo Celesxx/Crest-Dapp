@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .mobile-navbar-base-core
 {
     position: absolute;
@@ -5,8 +12,11 @@
     height: 10%;
     width: 100%;
     background: white;
-    align-items: center;
-    justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
     z-index: 999;
 }
 
@@ -15,7 +25,8 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
 }
 .mobile-navbar-card
 {
@@ -23,8 +34,12 @@
     height: 90%;
     width: 20%;
     overflow: hidden;
+    -webkit-transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
+    -o-transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
     transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
-    transition-delay: 0.25s;
+    -webkit-transition-delay: 0.25s;
+         -o-transition-delay: 0.25s;
+            transition-delay: 0.25s;
 }
 
 .mobile-navbar-link
@@ -46,7 +61,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 2;
-    object-fit: contain;
+    -o-object-fit: contain;
+       object-fit: contain;
 }
 
 
@@ -54,42 +70,67 @@
 #current
 {
     position: relative;
-    transform: translatey(-65%);
+    -webkit-transform: translatey(-65%);
+        -ms-transform: translatey(-65%);
+            transform: translatey(-65%);
     border-radius: 50%;
     z-index: 2;
     overflow: visible;
-    animation: translatey 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+    -webkit-animation: translatey 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+            animation: translatey 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
     
 }
 
 .mobile-navbar-card-outer
 {
     position: absolute;
-    animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
-    transform: translateX(var(--currentposition)) translatey(-45%);
+    -webkit-animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+            animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+    -webkit-transform: translateX(var(--currentposition)) translatey(-45%);
+        -ms-transform: translateX(var(--currentposition)) translatey(-45%);
+            transform: translateX(var(--currentposition)) translatey(-45%);
     height: auto;
     width: 20%;
     bottom: 0;
     left: 0;
-    transition-delay: 0.25s;
+    -webkit-transition-delay: 0.25s;
+         -o-transition-delay: 0.25s;
+            transition-delay: 0.25s;
 }
 
 #current-outer
 {
     visibility: visible;
-    transform: translate();
+    -webkit-transform: translate();
+        -ms-transform: translate();
+            transform: translate();
+    -webkit-transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
+    -o-transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
     transition: 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12) all;
-    animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+    -webkit-animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+            animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
+}
+
+@-webkit-keyframes translate 
+{
+    0% { -webkit-transform: translateX(var(--oldposition)) translatey(-45%); transform: translateX(var(--oldposition)) translatey(-45%); }
+    100% { -webkit-transform: translateX(var(--currentposition)) translatey(-45%); transform: translateX(var(--currentposition)) translatey(-45%); }
 }
 
 @keyframes translate 
 {
-    0% { transform: translateX(var(--oldposition)) translatey(-45%); }
-    100% { transform: translateX(var(--currentposition)) translatey(-45%); }
+    0% { -webkit-transform: translateX(var(--oldposition)) translatey(-45%); transform: translateX(var(--oldposition)) translatey(-45%); }
+    100% { -webkit-transform: translateX(var(--currentposition)) translatey(-45%); transform: translateX(var(--currentposition)) translatey(-45%); }
+}
+
+@-webkit-keyframes translatey 
+{
+    0% { -webkit-transform: translatey(0); transform: translatey(0); }
+    100% { -webkit-transform: translatey(-65%); transform: translatey(-65%); }
 }
 
 @keyframes translatey 
 {
-    0% { transform: translatey(0); }
-    100% { transform: translatey(-65%); }
+    0% { -webkit-transform: translatey(0); transform: translatey(0); }
+    100% { -webkit-transform: translatey(-65%); transform: translatey(-65%); }
 }

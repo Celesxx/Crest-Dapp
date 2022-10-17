@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .popup-overlay 
 {
     -webkit-backdrop-filter: blur(10px);
@@ -8,14 +15,25 @@
 {
     width: 40%;
     height: 45%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     background: black !important;
     border: 0;
     border-right: 3px solid rgb(0, 133, 255) !important;
     border-left: 3px solid rgba(255, 26, 136, 0.8) !important;
+    background-image: -webkit-gradient(linear, left top, right top, from(rgb(255, 26, 136)), to(#0085FF)),-webkit-gradient(linear, left top, right top, from(rgb(255, 26, 136)), to(#00FBBF)) !important;
+    background-image: -o-linear-gradient(left, rgb(255, 26, 136), #0085FF),-o-linear-gradient(left, rgb(255, 26, 136), #00FBBF) !important;
     background-image: linear-gradient(90deg, rgb(255, 26, 136), #0085FF),linear-gradient(90deg, rgb(255, 26, 136), #00FBBF) !important;
     background-size: 100% 2px !important;
     background-position: 0 0, 0 100% !important;
@@ -32,8 +50,11 @@
 {
     height: 100%;
     width: 100%;
-    justify-content: space-around;
-    align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .shop-popup-close
@@ -59,8 +80,12 @@
 {
     width: 43%;
     height: 80%;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     gap: 1em;
 }
 
@@ -85,6 +110,8 @@
     border: 0;
     border-right: 1px solid rgb(0, 133, 255) !important;
     border-left: 1px solid rgba(255, 26, 136, 0.8) !important;
+    background-image: -webkit-gradient(linear, left top, right top, from(rgb(255, 26, 136)), to(#0085FF)),-webkit-gradient(linear, left top, right top, from(rgb(255, 26, 136)), to(#00FBBF)) !important;
+    background-image: -o-linear-gradient(left, rgb(255, 26, 136), #0085FF),-o-linear-gradient(left, rgb(255, 26, 136), #00FBBF) !important;
     background-image: linear-gradient(90deg, rgb(255, 26, 136), #0085FF),linear-gradient(90deg, rgb(255, 26, 136), #00FBBF) !important;
     background-size: 100% 0px !important;
     background-position: 0 0, 0 100% !important;
@@ -94,7 +121,9 @@
 
 .shop-popup-info-core
 {
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     width: 60%;
     height: 100%;
 }
@@ -103,7 +132,8 @@
 {
     text-align: start;
     font-weight: 500;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
 }
 
 .shop-popup-info-desc
@@ -111,7 +141,8 @@
     text-align: end;
     font-size: 17px;
     font-weight: 500;
-    justify-content: space-around;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
 }
 
 .shop-popup-text-title, .shop-popup-text-desc
@@ -128,6 +159,8 @@
     background: rgba(0,0,0,0.0);
     border-left: 2px solid rgba(255,26,136,.8);
     border-right: 2px solid #0085ff;
+    background-image: -webkit-gradient(linear,left top, right top,from(#ff1a88),to(#0085ff)),-webkit-gradient(linear,left top, right top,from(#ff1a88),to(#0085ff));
+    background-image: -o-linear-gradient(left,#ff1a88,#0085ff),-o-linear-gradient(left,#ff1a88,#0085ff);
     background-image: linear-gradient(90deg,#ff1a88,#0085ff),linear-gradient(90deg,#ff1a88,#0085ff);
     background-size: 100% 2px;
     background-position: 0 0, 0 100%;

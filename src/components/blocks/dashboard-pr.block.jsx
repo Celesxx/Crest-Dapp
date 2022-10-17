@@ -143,14 +143,14 @@ class Dashboard extends React.Component
 
                         <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">
                             { 
-                                this.state.width <= 1500
+                                this.state.width <= 1200
                                 ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>
                                 : Language[this.state.language].dashboard.protocolTitle
                             }
                         </button>
                         <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center" id="currentDashboard">
                             { 
-                                this.state.width <= 1500
+                                this.state.width <= 1200
                                 ? <img className="dashboard-button-logo" src={PersonnalIcon} alt={PersonnalIcon}></img>
                                 : Language[this.state.language].dashboard.personalTitle
                             }

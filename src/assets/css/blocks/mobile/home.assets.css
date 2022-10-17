@@ -1,9 +1,17 @@
-@media only screen and (max-width: 1500px), only screen and (max-width: 1500px) and (max-height: 1500px) and (orientation: landscape)  
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+@media only screen and (max-width: 1200px), only screen and (max-width: 1200px) and (max-height: 1200px) and (orientation: landscape)  
 {
     .home-head-core
     {
         height: 10%;
-        justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
         width: 60%;
     }
 
@@ -29,7 +37,9 @@
     .home-card
     {
         width: 70%;
-        justify-content: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
         gap: 1em;
         border: 1px solid white;
     }
@@ -53,7 +63,7 @@
         margin: 0;
     }
 }
-@media only screen and (max-width: 1500px) and (min-width: 661px), only screen and (max-width: 1500px) and (min-width: 661px) and (max-height: 1500px) and (min-height: 66px) and (orientation: landscape) 
+@media only screen and (max-width: 1200px) and (min-width: 661px), only screen and (max-width: 1200px) and (min-width: 661px) and (max-height: 1200px) and (min-height: 66px) and (orientation: landscape) 
 {
     .home-head-title { font-size: 18px; }
     .home-head-desc, .home-card-title { font-size: 16px; }

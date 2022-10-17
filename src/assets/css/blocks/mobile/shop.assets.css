@@ -1,4 +1,11 @@
-@media only screen and (max-width: 1500px), only screen and (max-width: 1500px) and (max-height: 1500px) and (orientation: landscape)  
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+@media only screen and (max-width: 1200px), only screen and (max-width: 1200px) and (max-height: 1200px) and (orientation: landscape)  
 {
     .home-shop .restricted-core 
     {
@@ -10,7 +17,9 @@
     {
         width: 95%;
         height: 100%;
-        justify-content: flex-start;
+        -webkit-box-pack: start;
+            -ms-flex-pack: start;
+                justify-content: flex-start;
         gap: 2.3em;
     }
 
@@ -19,20 +28,36 @@
         height: 25%;
         width: 100%;
         max-width: none;
-        flex-direction: row;
-        justify-content: space-around;
-        flex: none;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+        -webkit-box-flex: 0;
+            -ms-flex: none;
+                flex: none;
     }
     .shop-items-cards:nth-child(1) { margin-top: 1em; }
     .shop-item-head-core 
     {
         height: 100%;
         width: 50%;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: column;
-        align-content: center;
-        justify-content: space-between;
-        align-items: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -ms-flex-line-pack: center;
+            align-content: center;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
     }
 
     .shop-items-title
@@ -51,20 +76,37 @@
 
     .shop-items-data-core 
     {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-content: center;
-        align-items: center;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        -ms-flex-line-pack: center;
+            align-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
         width: 80%;
     }
 
     .shop-info-title, .shop-info-desc
     {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        align-content: center;
-        justify-content: center;
-        align-items: center;
+        -ms-flex-line-pack: center;
+            align-content: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
         height: 100%;
         width: 45%;
     }
@@ -95,6 +137,8 @@
         border-left: 1px solid rgba(255,26,136,0.8);
         border-right: 1px solid #0085ff;
         background-image: none;
+        background-image: -webkit-gradient(linear,left top, right top,from(#ff1a88),to(#0085ff)),-webkit-gradient(linear,left top, right top,from(#ff1a88),to(#0085ff));
+        background-image: -o-linear-gradient(left,#ff1a88,#0085ff),-o-linear-gradient(left,#ff1a88,#0085ff);
         background-image: linear-gradient(90deg,#ff1a88,#0085ff),linear-gradient(90deg,#ff1a88,#0085ff);
         background-size: 0;
         background-position: 0;
@@ -119,10 +163,15 @@
     {
         border-left: 1px solid rgba(255,26,136,0.8);
         border-right: 1px solid #0085ff;
+        background-image: -webkit-gradient(linear,left top, right top,from(#ff1a88),to(#0085ff)),-webkit-gradient(linear,left top, right top,from(#ff1a88),to(#0085ff));
+        background-image: -o-linear-gradient(left,#ff1a88,#0085ff),-o-linear-gradient(left,#ff1a88,#0085ff);
         background-image: linear-gradient(90deg,#ff1a88,#0085ff),linear-gradient(90deg,#ff1a88,#0085ff);
         background-size: 100% 1px;
-        justify-content: space-around;
-        align-items: center;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
         height: 30px;
         width: 100px;
         border-radius: 8px;
@@ -143,7 +192,7 @@
 @media only screen and (max-height: 700px) and (max-width: 661px)
 {
     .shop-items-cards:nth-child(1) { margin-top: 0.2em; }
-    .shop-items-core { justify-content: flex-start; gap: 1em; }
+    .shop-items-core { -webkit-box-pack: start; -ms-flex-pack: start; justify-content: flex-start; gap: 1em; }
     .shop-items-cards { height: 30%;}
     .shop-items-button-text, .shop-count-text, .shop-text-desc, .shop-text-desc  { font-size: 10px; }
     .shop-items-button
@@ -154,7 +203,9 @@
     }
     .shop-item-head-core 
     {
-        justify-content: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
         gap: 0.3em;
     }
     .shop-text-title { font-size: 10px; }
@@ -185,7 +236,7 @@
         width: 175px;
     }
 }
-@media only screen and (max-width: 1500px) and (min-width: 1001px) , only screen and (max-width: 1500px) and (min-width: 1001px) and (max-height: 1500px) and (min-height: 1001px) and (orientation: landscape) 
+@media only screen and (max-width: 1200px) and (min-width: 1001px) , only screen and (max-width: 1200px) and (min-width: 1001px) and (max-height: 1200px) and (min-height: 1001px) and (orientation: landscape) 
 {
     .shop-info-title, .shop-info-desc { gap: 0.3em; }
     .shop-items-button-text, .shop-count-text, .shop-text-desc, .shop-text-desc  { font-size: 16px; }
@@ -209,8 +260,4 @@
         height: 200px;
         width: 200px;
     }
-}
-@media only screen and (max-width: 2560px) and (min-width: 1921px)
-{
-    
 }

@@ -1,16 +1,32 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .swap-core-base
 {
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 70%;
     width: 70%;
 }
 
 .swap-title-core
 {
-    justify-content: center;
-    align-content: center;
-    align-items: flex-start;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
     height: 10%;
     width: 70%;
 }
@@ -36,20 +52,34 @@
 {
     height: 100%;
     width: 40%;
-    align-items: center;
-    justify-content: space-evenly;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
 }
 
 .swap-content-core
 {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     height: 80%;
     width: 100%;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .card-core
@@ -63,13 +93,19 @@
 {
     height: 30%;
     width: 100%;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 
 .card-title-core
 {
-    justify-content: flex-start;
-    align-items: center;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 25%;
     height: 100%;
     margin-left: 3%;
@@ -91,7 +127,9 @@
 {
     height: 100%;
     width: 60%;
-    justify-content: flex-end;
+    -webkit-box-pack: end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
 }
 
 .card-balance-text
@@ -101,7 +139,9 @@
     color: #ababab;
     margin-right: 10%;
     text-align: center;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     font-size: 20px;
     font-weight: 400;
 }
@@ -134,9 +174,11 @@
 {
     position: absolute;
     top: 80%;
-    right: 80%;
+    right: 75%;
     font-weight: 800;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     border: 0;
     font-size: 20px;
     background: -webkit-linear-gradient(45deg, #3300FF, #00C2FF);
@@ -150,7 +192,9 @@
     position: absolute;
     top: 55%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     height: 10%;
     width: 80%;
 }
@@ -182,6 +226,12 @@
     border: 0;
     border-right: 2px solid rgb(0, 133, 255) !important;
     border-left: 2px solid rgba(255, 26, 136, 0.8) !important;
+    background-image: 
+    -webkit-gradient(linear, left top, right top, from(#ff1a88), to(#0085FF)),
+    -webkit-gradient(linear, left top, right top, from(#ff1a88), to(#0085FF)) !important;
+    background-image: 
+    -o-linear-gradient(left, #ff1a88, #0085FF),
+    -o-linear-gradient(left, #ff1a88, #0085FF) !important;
     background-image: 
     linear-gradient(90deg, #ff1a88, #0085FF),
     linear-gradient(90deg, #ff1a88, #0085FF) !important;

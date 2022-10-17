@@ -27,7 +27,7 @@
         {
             "selectDocs":
             {
-                "default": "Lien",
+                "default": "Link",
                 "website": "Website",
                 "discord": "Discord",
                 "twitter": "Twitter",

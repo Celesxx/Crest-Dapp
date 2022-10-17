@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .loading-home
 {
     width: 100%;
@@ -10,7 +17,8 @@
     top: 40%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%) rotate(45deg) scale(1);
-    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    -ms-transform: translate(-50%, -50%) rotate(45deg) scale(1);
+        transform: translate(-50%, -50%) rotate(45deg) scale(1);
 }
 
 .stroke-still { stroke: #232323; }
@@ -30,7 +38,8 @@
     -webkit-animation-play-state: running;
     animation-play-state: running;
     -webkit-transform-origin: center center;
-    transform-origin: center center;
+    -ms-transform-origin: center center;
+        transform-origin: center center;
 }
 
 

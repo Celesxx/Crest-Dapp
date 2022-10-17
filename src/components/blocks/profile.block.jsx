@@ -180,7 +180,6 @@ class Dashboard extends React.Component
         let data = {}
         for(const [key, value] of Object.entries(this.state.checked)) 
         {
-            console.log(value)
             if(value)
             {
                 if(data[this.state.claimBadges[key].badgeId] === undefined) data[this.state.claimBadges[key].badgeId] = [this.state.claimBadges[key].id] 
@@ -190,7 +189,6 @@ class Dashboard extends React.Component
         let tokenIds = []
         let badgeIndex = []
 
-        console.log(data)
         Object.keys(data).map((key) => {badgeIndex.push(parseInt(key))})
         Object.values(data).map((value) => {tokenIds.push(value)})
 

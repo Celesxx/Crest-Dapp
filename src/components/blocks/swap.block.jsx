@@ -54,7 +54,7 @@ class Dashboard extends React.Component
           address: this.props.address,
           dataIn: { name: "$CREST", balance: null, logo: LogoCrest },
           dataOut: { name: "$BUSD", balance: null, logo: LogoCrest },
-          sellLoader: "token",
+          sellLoader: "stable",
           startLoading: this.props.startLoading,
           loading: this.props.loading,
           loadingMax: this.props.loadingMax,

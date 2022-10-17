@@ -53,8 +53,6 @@ class ProfileHelper
             }
             totalReward.push(amountReward)
         }
-        console.log(claimBadges)
-        console.log(totalReward)
         return {totalReward: totalReward, claimBadges: claimBadges}
     }
 

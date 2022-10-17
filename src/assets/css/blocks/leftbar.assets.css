@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .leftbar
 {
     position: absolute;
@@ -5,8 +12,11 @@
     width: 10%;
     top: 0;
     left: 0;
-    align-items: center;
-    justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
     background: black;
     z-index: 10;
     border-right: 1px solid white;
@@ -17,15 +27,22 @@
 .leftbar-core
 {
     height: 91%;
-    justify-content: space-evenly;
-    align-items: center;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 .leftbar-link
 {
     height: 10%;
-    justify-content: space-around;
-    align-items: center;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 .link
 {
@@ -44,12 +61,15 @@
 .link:hover + .link-bar
 { 
     width: 30px; 
-    animation: link-groth 0.25s linear;
+    -webkit-animation: link-groth 0.25s linear; 
+            animation: link-groth 0.25s linear;
 }
 
 .social-link
 {
     width: 40%;
     height: 20%;
-    justify-content: space-evenly;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
 }
