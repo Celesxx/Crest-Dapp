@@ -68,11 +68,20 @@ class Topbar extends React.Component
         let loadingHelper = new LoadingHelper()
         const {instance, provider} = await contractHelper.getInstance()
         document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
-        if(this.state.listening !== true) this.addListeners(instance, provider)
 
-        await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
-        
-        if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+
+        const chainId = (await provider.getNetwork()).chainId
+        if (chainId == network.chainId) 
+        {
+          if(this.state.listening !== true) this.addListeners(instance, provider)
+          await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
+          if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+        }else
+        {
+          this.props.loginAction({address: "", action: 'address'})
+          Notiflix.Notify.warning(
+          "Required Network - " + network.chainName, { timeout: 1500, width: '500px', position: 'center-top', fontSize: '22px' });
+        }
       }
     }
   }

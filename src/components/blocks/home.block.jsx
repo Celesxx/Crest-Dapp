@@ -4,6 +4,7 @@ import 'assets/css/pages/home.assets.css'
 import 'assets/css/blocks/mobile/home.assets.css'
 import React from "react";
 import LoadingData from "components/blocks/loading-data.block.jsx"
+import Language from 'assets/data/language.json'
 import { connect } from 'react-redux'
 import { news } from 'assets/data/news.js'
 
@@ -103,8 +104,8 @@ class Home extends React.Component
           }
 
           <div className ="home-head-core flex column">
-              <h1 className="home-head-title">News and Update</h1>
-              <p className="home-head-desc">here you will find all the news and updates of the dApp</p>
+              <h1 className="home-head-title">{Language[this.state.language].home.title}</h1>
+              <p className="home-head-desc">{Language[this.state.language].home.description}</p>
           </div>
 
 
@@ -125,14 +126,21 @@ class Home extends React.Component
                     {
                         return(
                         <label className="home-card flex row" key={`label-${key}`}  htmlFor={`item-${key+1}`} id={`card-${key+1}`}>
-                        <div className="home-card-image-core flex center">
-                            <img className="home-card-image" src={value.img} alt="" /> 
-                        </div>
+                          <div className="home-card-image-core flex center">
+                              <img className="home-card-image" src={value.img} alt="" /> 
+                          </div>
 
-                        <div className="home-card-description-core flex column">
-                            <h1 className="home-card-title">{ value.title }</h1>
-                            <p className="home-card-description">{ value.desc }</p>
-                        </div>
+                          <div className="home-card-description-core flex column">
+                              <h1 className="home-card-title">{ value.title }</h1>
+                              <p className="home-card-description">{ value.desc }</p>
+                              {value.url != "" && <a target="_blank" className="home-card-link" href={value.url} >{ Language[this.state.language].home.link }</a> }
+                          </div>
+                          {
+                            !value.visible && 
+                            <div className="home-card-locked flex center">
+                              <p className="home-card-title">{ Language[this.state.language].home.coming }</p>
+                            </div>
+                          }
                         </label>
                     )})
                   }

@@ -307,7 +307,7 @@ class Dashboard extends React.Component
                                         <div className="profile-table-radio-core flex row center">
                                             <div className="profile-table-input flex row center">
                                                 <input type="checkbox" checked={this.state.checked[key]} className="profile-radio-input" id={`radio-${key}`} name={`radio-${key}`} onChange={() => this.multipleSelect(key, value)} />
-                                                { this.state.checked[key] != false && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
+                                                { this.state.checked[key] !== false && this.state.checked[key] !== undefined && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
                                             </div>
                                         </div>
                                     </div>

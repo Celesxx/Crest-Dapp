@@ -109,11 +109,12 @@
     width: 25%;
     height: 100%;
     margin-left: 3%;
+    gap: 0.5em
 }
 
 .card-logo
 {
-    height: 34%;
+    height: 50%;
     width: auto;
 }
 

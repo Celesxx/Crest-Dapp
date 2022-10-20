@@ -7,6 +7,7 @@ import React from "react";
 import Address from 'contracts/address.contracts.json'
 import ContractHelper from "helpers/contract.helpers";
 import LogoCrest from "assets/img/logoCrest.svg"
+import LogoBusd from "assets/img/logoBusd.svg"
 import ArrowUpDown from "assets/img/arrowUpDown.svg"
 import Restricted from "components/blocks/restricted.block.jsx"
 import Language from "assets/data/language.json"
@@ -52,9 +53,9 @@ class Dashboard extends React.Component
           resToken: this.props.resToken,
           resStable: this.props.resStable,
           address: this.props.address,
-          dataIn: { name: "$CREST", balance: null, logo: LogoCrest },
-          dataOut: { name: "$BUSD", balance: null, logo: LogoCrest },
-          sellLoader: "stable",
+          dataIn: { name: "$BUSD", balance: null, logo: LogoBusd },
+          dataOut: { name: "$CREST", balance: null, logo: LogoCrest },
+          sellLoader: "usdt",
           startLoading: this.props.startLoading,
           loading: this.props.loading,
           loadingMax: this.props.loadingMax,

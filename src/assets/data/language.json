@@ -1,6 +1,13 @@
 {
     "en":
     {
+        "home": 
+        {
+            "title": "News and Update",
+            "description": "here you will find all the news and updates of the dApp",
+            "link": "link",
+            "coming": "Coming soon !!"
+        },
         "dashboard":
         {
             "protocolTitle": "Protocol",
@@ -96,6 +103,13 @@
 
     "fr":
     {
+        "home": 
+        {
+            "title": "Actualités",
+            "description": "Ici vous trouverez les dernières news concernant le projet !",
+            "link": "lien",
+            "coming": "Arrive prochainement !!"
+        },
         "dashboard":
         {
             "protocolTitle": "Protocole",

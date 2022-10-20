@@ -132,10 +132,27 @@
     margin: 0;
 }
 
-.home-card-description
+.home-card-description, .home-card-link
 {
     font-size: 16px;
     margin: 0;
+}
+
+.home-card-link:link 
+{ 
+    background: -webkit-linear-gradient(45deg, #FA00FF, #0047FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.home-card-locked
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+    border-radius: 22px;
 }
 
 
