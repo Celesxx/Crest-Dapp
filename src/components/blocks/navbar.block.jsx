@@ -89,16 +89,26 @@ class Navbar extends React.Component
         document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
 
         const chainId = (await provider.getNetwork()).chainId
-        if (chainId == network.chainId) 
+        if (chainId == network.chainId && this.props.address === await provider.getSigner().getAddress()) 
         {
           if(this.state.listening !== true) this.addListeners(instance, provider)
           await loadingHelper.loadAllContractFunction(this.state.address, provider, this.props)
           if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+
+        }else if(chainId == network.chainId && this.props.address !== await provider.getSigner().getAddress())
+        {
+          let loadingHelper = new LoadingHelper()
+          this.props.loginAction({address: await provider.getSigner().getAddress(), action: 'address'})
+          await this.props.dashboardAction({data : {}, action: "reset"})
+          this.props.dashboardAction({loading : {}, action: "start-loading"})
+          await loadingHelper.loadAllContractFunction(this.props.address, provider, this.props)
+          if(this.state.listening !== true) this.addListeners(instance, provider)
+          if(this.state.interval == null) this.state.interval = setInterval(() => this.loadAllContractFunction(), 10000)
+        
         }else
         {
           this.props.loginAction({address: "", action: 'address'})
-          Notiflix.Notify.warning(
-          "Required Network - " + network.chainName, { timeout: 1500, width: '500px', position: 'center-top', fontSize: '22px' });
+          Notiflix.Notify.warning( "Required Network - " + network.chainName, { timeout: 1500, width: '500px', position: 'center-top', fontSize: '22px' });
         }
       }
     }
