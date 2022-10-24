@@ -198,7 +198,7 @@ class Dashboard extends React.Component
         this.state.sellLoader = "usdt"
         this.state.dataIn.balance = this.props.stableUser.balance;
         this.state.dataIn.name = "$BUSD"
-        this.state.dataIn.logo = LogoCrest
+        this.state.dataIn.logo = LogoBusd
         this.state.dataOut.balance = this.props.tokenUser.balance;
         this.state.dataOut.name = "$CREST";
         this.state.dataOut.logo = LogoCrest
@@ -208,7 +208,7 @@ class Dashboard extends React.Component
         this.state.sellLoader = "token"
         this.state.dataOut.balance = this.props.stableUser.balance;
         this.state.dataOut.name = "$BUSD"
-        this.state.dataOut.logo = LogoCrest
+        this.state.dataOut.logo = LogoBusd
         this.state.dataIn.balance = this.props.tokenUser.balance;
         this.state.dataIn.name = "$CREST";
         this.state.dataIn.logo = LogoCrest
