@@ -99,7 +99,7 @@ class Dashboard extends React.Component
                   this.state.dataIn.balance = this.props.tokenUser.balance;
                   this.state.dataOut.balance = this.props.stableUser.balance;
                 
-                }else if(this.state.sellLoader == "usdt" && this.props.address != "" && key == "tokenUser") 
+                }else if(this.state.sellLoader == "usdt" && this.props.address != "" && key == "stableUser") 
                 {
                   this.state.dataIn.balance = this.props.stableUser.balance
                   this.state.dataOut.balance = this.props.tokenUser.balance;
@@ -185,6 +185,18 @@ class Dashboard extends React.Component
 
     }
 
+    async mintToken()
+    {
+      let contractHelper = new ContractHelper()
+      let provider = await contractHelper.getProvider()
+      document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+      await contractHelper.mintStable(provider)
+      const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
+      const formatUnit = await contractHelper.setFormatUnit(userStableBalance, 18)
+      let data = { stableUser: {balance: formatUnit} }
+      this.props.dashboardAction({data: data, action: "saveData"})
+    }
+
     setMaxValue()
     {
       document.getElementById("balanceIn").value = (this.state.dataIn.balance)
@@ -198,7 +210,7 @@ class Dashboard extends React.Component
         this.state.sellLoader = "usdt"
         this.state.dataIn.balance = this.props.stableUser.balance;
         this.state.dataIn.name = "$BUSD"
-        this.state.dataIn.logo = LogoCrest
+        this.state.dataIn.logo = LogoBusd
         this.state.dataOut.balance = this.props.tokenUser.balance;
         this.state.dataOut.name = "$CREST";
         this.state.dataOut.logo = LogoCrest
@@ -208,7 +220,7 @@ class Dashboard extends React.Component
         this.state.sellLoader = "token"
         this.state.dataOut.balance = this.props.stableUser.balance;
         this.state.dataOut.name = "$BUSD"
-        this.state.dataOut.logo = LogoCrest
+        this.state.dataOut.logo = LogoBusd
         this.state.dataIn.balance = this.props.tokenUser.balance;
         this.state.dataIn.name = "$CREST";
         this.state.dataIn.logo = LogoCrest
@@ -265,6 +277,8 @@ class Dashboard extends React.Component
               <div className="swap-core flex column">
                 <div className="swap-content-core">
 
+                <button className="swap-button-mint button" onClick={() => this.mintToken()}>Mint $BUSD</button>
+
                 <div className="card-core flex column center">
                 
                     <div className="card-content flex row">
@@ -315,16 +329,17 @@ class Dashboard extends React.Component
                 </div>
                 
 
-                <div className="swap-button-core flex row center">
-                {
+                <div className="swap-button-core flex column center">
+                
+                  {
                     this.state.sellLoader === "token" && this.state.tokenUser.allowanceLm 
                     ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
-
+                    
                     : this.state.sellLoader === "usdt" && this.state.stableUser.allowanceLm 
                     ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
                     
                     :( <button className="swap-button button" name="submit" onClick={() => this.setAllowance()}>{ Language[this.state.language].swap.approveBtn }</button> )
-                }
+                  }
                 </div>
 
               </div>
