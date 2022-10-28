@@ -4,7 +4,7 @@
         "home": 
         {
             "title": "News and Update",
-            "description": "here you will find all the news and updates of the dApp",
+            "description": "Here you will find all the news and updates of the dApp",
             "link": "link",
             "coming": "Coming soon !!"
         },
@@ -35,7 +35,7 @@
             "selectDocs":
             {
                 "default": "Link",
-                "website": "Website",
+                "website": "Docs",
                 "discord": "Discord",
                 "twitter": "Twitter",
                 "doc": "Medium"
@@ -60,7 +60,7 @@
         {
             "title": "Buy a badge",
             "description": "Collect them all",
-            "badgeDescription": ["A stone containing the light of a dying sun", "A stone filled with one of the four primordial elements", "A stone filled with the blood of the ancient gods"],
+            "badgeDescription": ["A stone containing the light of a dying sun", "A stone filled with one of the four primordial elements", "A stone filled of the blood of the ancients ods gods"],
             "badgeBuy": "Buy for"
         },
 
@@ -73,7 +73,8 @@
             "dailyRoi": "Daily ROI",
             "remaining": "Remaining",
             "approveBtn": "Approve",
-            "buyBtn": "BUY"
+            "buyBtn": "BUY",
+            "soldout": "Soldout"
         },
 
         "profile": 
@@ -93,22 +94,15 @@
             "maxBtn": "MAX"
         }
     },
-    
-    
-
-
-
-
-
 
     "fr":
     {
         "home": 
         {
-            "title": "Actualités",
-            "description": "Ici vous trouverez les dernières news concernant le projet !",
+            "title": "News and Update",
+            "description": "Vous trouverez ici toutes les nouvelles et les mises à jour de la dApp",
             "link": "lien",
-            "coming": "Arrive prochainement !!"
+            "coming": "Coming soon !!"
         },
         "dashboard":
         {
@@ -137,7 +131,7 @@
             "selectDocs":
             {
                 "default": "Lien",
-                "website": "Website",
+                "website": "Docs",
                 "discord": "Discord",
                 "twitter": "Twitter",
                 "doc": "Medium"
@@ -175,7 +169,8 @@
             "dailyRoi": "Daily ROI",
             "remaining": "Remaining",
             "approveBtn": "Approuver",
-            "buyBtn": "Acheter"
+            "buyBtn": "Acheter",
+            "soldout": "Soldout"
         },
 
         "profile": 
@@ -194,5 +189,202 @@
             "approveBtn": "Approuver",
             "maxBtn": "MAX"
         }
+    },
+
+
+    "sp":
+    {
+        "home": 
+        {
+            "title": "Noticias y novedades",
+            "description": "Aquí encontrarás todas las noticias y actualizaciones de la dApp",
+            "link": "Link",
+            "coming": "¡¡Pronto!!"
+        },
+        "dashboard":
+        {
+            "protocolTitle": "Protocolo",
+            "personalTitle": "Personal",
+            "crestPrice": "Precio de $CREST",
+            "marketcap": "Cap. de Mercado",
+            "totalNft": "NFT's totales",
+            "totalSupply": "Acciones máximas",
+            "totalBurn": "Quema total de token"
+        },
+
+        "personnal":
+        {
+            "protocolTitle": "Protocolo",
+            "personalTitle": "Personal",
+            "myNft": "Mis NFT's",
+            "crestBalance": "Mi $CREST Libra",
+            "dailyReward": "Mis recompensas diarias",
+            "pendingReward": "Mis recompensas pendientes",
+            "lockedTitle": "Bloqueado"
+        },
+
+        "navbar":
+        {
+            "selectDocs":
+            {
+                "default": "Link",
+                "website": "Docs",
+                "discord": "Discord",
+                "twitter": "Twitter",
+                "doc": "Medium"
+            },
+            "selectLanguage":
+            {
+                "default": "lengua"
+            },
+            "buyButton": "Comprar/Vender $CREST"
+        },
+
+        "leftbar":
+        {
+            "homeTitle": "Inicio",
+            "dashboard": "Tablero de mandos",
+            "shop": "Tienda",
+            "myNft": "Mis NFT's",
+            "swap": "Swap"
+        },
+
+        "shop":
+        {
+            "title": "Comprar una insignia",
+            "description": "Recójalos todos",
+            "badgeDescription": ["Una piedra que contiene la luz de un sol moribundo", "Una piedra llena de uno de los cuatro elementos primordiales", "Una piedra llena de la sangre de los antiguos dioses"],
+            "badgeBuy": "Comprar para"
+        },
+
+        "shopPop": 
+        {
+            "price": "Precio",
+            "lifetime": "De por vida",
+            "lifetimeValue": "365 días",
+            "dailyReward": "Recompensas diarias",
+            "dailyRoi": "Rendimiento diario de la inversión",
+            "remaining": "Resto",
+            "approveBtn": "Aprobar",
+            "buyBtn": "Comprar",
+            "soldout": "Soldout"
+        },
+
+        "profile": 
+        {
+            "claimAllBtn": "Claim el NFTS seleccionado",
+            "tableTitle": ["NFT", "ID", "Fecha", "Claim Fecha", "ROI Fecha", "Lifetime", "Recompensas", ""],
+            "claimBtn": "Claim"
+        },
+
+        "swap":
+        {
+            "title": "SWAP",
+            "description": "Cambia tus tokens en un instante",
+            "balance": "Balanza",
+            "swapBtn": "Swap",
+            "approveBtn": "Aprobar",
+            "maxBtn": "MAX"
+        }
+
+    },
+
+
+    "jp":
+    {
+        "home": 
+        {
+            "title": "News and Update",
+            "description": "Here you will find all the news and updates of the dApp",
+            "link": "link",
+            "coming": "Coming soon!!"
+        },
+        "dashboard":
+        {
+            "protocolTitle": "プロトコル",
+            "personalTitle": "スタッフ",
+            "crestPrice": "CRESTの価格",
+            "marketcap": "時価総額",
+            "totalNft": "NFTの合計",
+            "totalSupply": "最大供給",
+            "totalBurn": "トークン消費量"
+        },
+
+        "personnal":
+        {
+            "protocolTitle": "プロトコル",
+            "personalTitle": "スタッフ",
+            "myNft": "私のNFTの",
+            "crestBalance": "私の$CREST残高",
+            "dailyReward": "マイ・デイリー・リワード",
+            "pendingReward": "マイ・ペンディング・リワード",
+            "lockedTitle": "ロックされた"
+        },
+
+        "navbar":
+        {
+            "selectDocs":
+            {
+                "default": "リンク",
+                "website": "Docs",
+                "discord": "Discord",
+                "twitter": "Twitter",
+                "doc": "Medium"
+            },
+            "selectLanguage":
+            {
+                "default": "言語"
+            },
+            "buyButton": "買い/売り $CREST"
+        },
+
+        "leftbar":
+        {
+            "homeTitle": "ホーム",
+            "dashboard": "ダッシュボード",
+            "shop": "ショップ",
+            "myNft": "私のNFTの",
+            "swap": "スワップ"
+        },
+
+        "shop":
+        {
+            "title": "バッジを購入する",
+            "description": "全部集める",
+            "badgeDescription": ["死にゆく太陽の光を閉じ込めた石", "四大元素のひとつを封じ込めた石", "古代の神々の血で満たされた石"],
+            "badgeBuy": "購入する"
+        },
+
+        "shopPop": 
+        {
+            "price": "受賞歴",
+            "lifetime": "ライフタイム",
+            "lifetimeValue": "365日",
+            "dailyReward": "デイリーリワード",
+            "dailyRoi": "日次の投資収益率",
+            "remaining": "残量",
+            "approveBtn": "承認",
+            "buyBtn": "購入",
+            "soldout": "Soldout"
+        },
+
+        "profile": 
+        {
+            "claimAllBtn": "選択したNFTSを請求する",
+            "tableTitle": ["NFT", "ID", "日付", "請求 日付", "ROIの日付", "ライフタイム", "報酬", ""],
+            "claimBtn": "請求"
+        },
+
+        "swap":
+        {
+            "title": "スワップ",
+            "description": "トークンを瞬時に交換",
+            "balance": "バランス",
+            "swapBtn": "スワップ",
+            "approveBtn": "承認",
+            "maxBtn": "マックス"
+        }
+
+
     }
-}
+} 

@@ -59,27 +59,27 @@ class Leftbar extends React.Component
             <div className="leftbar-core flex column">
 
                 <div className="leftbar-link flex column">
-                    <Link to="/home" className="link"><p>{ Language[this.state.language].leftbar.homeTitle }</p></Link>
+                    <Link to="/home" className="link"><p className="link-description">{ Language[this.state.language].leftbar.homeTitle }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/dashboard" className="link"><p>{ Language[this.state.language].leftbar.dashboard }</p></Link>
+                    <Link to="/dashboard" className="link"><p className="link-description">{ Language[this.state.language].leftbar.dashboard }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/shop" className="link"><p>{ Language[this.state.language].leftbar.shop }</p></Link>
+                    <Link to="/shop" className="link"><p className="link-description">{ Language[this.state.language].leftbar.shop }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/profile" className="link"><p>{ Language[this.state.language].leftbar.myNft }</p></Link>
+                    <Link to="/profile" className="link"><p className="link-description">{ Language[this.state.language].leftbar.myNft }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 
                 <div className="leftbar-link flex column">
-                    <Link to="/swap" className="link"><p>{ Language[this.state.language].leftbar.swap }</p></Link>
+                    <Link to="/swap" className="link"><p className="link-description">{ Language[this.state.language].leftbar.swap }</p></Link>
                     <div className="link-bar"></div>
                 </div>
 

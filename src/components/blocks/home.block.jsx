@@ -133,7 +133,7 @@ class Home extends React.Component
                           <div className="home-card-description-core flex column">
                               <h1 className="home-card-title">{ value.title }</h1>
                               <p className="home-card-description">{ value.desc }</p>
-                              {value.url != "" && <a target="_blank" className="home-card-link" href={value.url} >{ Language[this.state.language].home.link }</a> }
+                              {value.url != "" && <a target="_blank" rel="noopener noreferrer" className="home-card-link" href={value.url} >{ Language[this.state.language].home.link }</a> }
                           </div>
                           {
                             !value.visible && 

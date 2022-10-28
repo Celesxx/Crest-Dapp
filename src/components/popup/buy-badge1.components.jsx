@@ -126,7 +126,7 @@ class BuyPopup extends React.Component
     {
         let contractHelper = new ContractHelper()
         return(
-            <Popup trigger={<button className="button shop-items-button">{ Language[this.state.language].shop.badgeBuy } { contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18)}$CREST</button>} modal nested>
+            <Popup trigger= { <button className="button shop-items-button"> { Language[this.state.language].shop.badgeBuy } { contractHelper.setFormatUnit(this.state.badges[this.state.badgesIndex].price, 18) }$CREST </button> } modal nested>
             {
                 close => (
                     <div className="shop-popup-base flex row">
@@ -181,12 +181,15 @@ class BuyPopup extends React.Component
                             </div>
                                         
                             {
-                                this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
-                                (
-                                    this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
-                                    ? <button className="button shop-popup-button" onClick={() => this.buyBadges()}>{ Language[this.state.language].shopPop.buyBtn }</button>
-                                    : <button className="button shop-popup-button" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
-                                )
+                                parseInt(this.state.badges[this.state.badgesIndex].totalSupply) < parseInt(this.state.badges[this.state.badgesIndex].max)
+                                ? (
+                                    this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
+                                    (
+                                        this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
+                                        ? <button className="button shop-popup-button" onClick={() => this.buyBadges()}>{ Language[this.state.language].shopPop.buyBtn }</button>
+                                        : <button className="button shop-popup-button" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
+                                    )
+                                ) : <div className="shop-popup-button">{ Language[this.state.language].shopPop.soldout }</div>
                             }
                             
                             
