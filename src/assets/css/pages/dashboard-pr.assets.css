@@ -7,8 +7,9 @@
 
 .dashboard-personnal-card-core
 {
-    width: 70%;
+    width: 80%;
     height: 80%;
+    margin-left: 15%;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -127,6 +128,7 @@
 .info-title, .info-text
 {
     font-size: 15px;
+    height: 2em;
     font-style: normal;
     font-weight: 800;
     margin: 0;

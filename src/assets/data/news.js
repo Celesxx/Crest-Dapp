@@ -4,7 +4,7 @@ export const news =
     [
         {
             "title": "CREST — Collect them all! 🎖",
-            "desc": "The new kingdom of #Optimism is available, checkout our amazing nft's stones and get them all !!",
+            "desc": "Check our amazing FNT stones and collect them all",
             "visible": true,
             "url": "",
             "img": require("../img/medium-img.png")
@@ -36,7 +36,7 @@ export const news =
     [
         {
             "title": "CREST — Collect them all! 🎖",
-            "desc": "Le nouveau royaume de #Optimism est disponible, consultez nos incroyables joyaux et obtenez-les toutes !",
+            "desc": "Consultez nos incroyables joyaux et obtenez-les toutes !",
             "visible": true,
             "url": "",
             "img": require("../img/medium-img.png")
@@ -68,7 +68,7 @@ export const news =
     [
         {
             "title": "CREST — Collect them all! 🎖",
-            "desc": "The new kingdom of #Optimism is available, checkout our amazing nft's stones and get them all !!",
+            "desc": "Check our our amazing FNT stones and collect them all",
             "visible": true,
             "url": "",
             "img": require("../img/medium-img.png")
@@ -100,7 +100,7 @@ export const news =
     [
         {
             "title": "CREST — Collect them all! 🎖",
-            "desc": "The new kingdom of #Optimism is available, checkout our amazing nft's stones and get them all !!",
+            "desc": "The new kingdom of #Optimism is available, Check our our amazing FNT stones and collect them all",
             "visible": true,
             "url": "",
             "img": require("../img/medium-img.png")

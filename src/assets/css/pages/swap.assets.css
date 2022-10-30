@@ -180,7 +180,7 @@
 {
     position: absolute;
     top: 80%;
-    right: 75%;
+    margin-left: 15%;
     font-weight: 800;
     -webkit-transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);

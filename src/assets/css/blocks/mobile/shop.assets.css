@@ -7,6 +7,12 @@
 
 @media only screen and (max-width: 1200px), only screen and (max-width: 1200px) and (max-height: 1200px) and (orientation: landscape)  
 {
+    .home-shop
+    {
+        height: 70%;
+        bottom: 15%;
+        overflow-y: scroll;
+    }
     .home-shop .restricted-core 
     {
         -webkit-backdrop-filter: none;
@@ -25,7 +31,7 @@
 
     .shop-items-cards
     {
-        height: 25%;
+        height: 35%;
         width: 100%;
         max-width: none;
         -webkit-box-orient: horizontal;
@@ -46,18 +52,17 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        -ms-flex-line-pack: center;
-            align-content: center;
-        -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
-                justify-content: space-between;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                        flex-direction: column;
+            -ms-flex-line-pack: center;
+                align-content: center;
+                -ms-flex-pack: distribute;
+                    justify-content: space-around;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
     }
 
     .shop-items-title
@@ -91,7 +96,7 @@
         -webkit-box-align: center;
             -ms-flex-align: center;
                 align-items: center;
-        width: 80%;
+        width: 100%;
     }
 
     .shop-info-title, .shop-info-desc
@@ -108,14 +113,15 @@
             -ms-flex-align: center;
                 align-items: center;
         height: 100%;
-        width: 45%;
+        width: auto;
+        gap: 2px
     }
 
     .shop-text-title 
     {
         width: 100%;
         margin: 0;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 900;
         text-align: start;
     }
@@ -124,7 +130,7 @@
     {
         width: 100%;
         margin: 0;
-        font-size: 12px;
+        font-size: 10px;
         text-align: end;
     }
 
@@ -189,11 +195,15 @@
     }
 }
 
+@media only screen and (max-width: 1200px) and (max-height: 1200px) and (orientation: landscape)
+{
+    .shop-items-cards{ height: 30%; }
+}
+
 @media only screen and (max-height: 700px) and (max-width: 661px)
 {
     .shop-items-cards:nth-child(1) { margin-top: 0.2em; }
     .shop-items-core { -webkit-box-pack: start; -ms-flex-pack: start; justify-content: flex-start; gap: 1em; }
-    .shop-items-cards { height: 30%;}
     .shop-items-button-text, .shop-count-text, .shop-text-desc, .shop-text-desc  { font-size: 10px; }
     .shop-items-button
     {
@@ -214,13 +224,14 @@
 @media only screen and (max-width: 1000px) and (min-width: 660px), only screen and (max-width: 1000px) and (min-width: 660px) and (max-height: 1000px) and (min-height: 660px) and (orientation: landscape)
 {
     .shop-info-title, .shop-info-desc { gap: 0.25em; }
-    .shop-items-button-text, .shop-count-text, .shop-text-desc, .shop-text-desc  { font-size: 14px; }
-    .shop-text-title { font-size: 14px; }
-    .shop-items-title { font-size: 16px; }
+    .shop-items-button-text, .shop-count-text, .shop-text-desc, .shop-text-desc  { font-size: 12px; }
+    .shop-text-title { font-size: 12px; }
+    .shop-items-title { font-size: 14px; }
+    .shop-items-data-core { width: 80%;}
     .shop-min, .shop-max 
     {
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         font-size: 14px;
     }
     .shop-items-button 
@@ -232,8 +243,8 @@
 
     .shop-items 
     {
-        height: 175px;
-        width: 175px;
+        height: 150px;
+        width: 150px;
     }
 }
 @media only screen and (max-width: 1200px) and (min-width: 1001px) , only screen and (max-width: 1200px) and (min-width: 1001px) and (max-height: 1200px) and (min-height: 1001px) and (orientation: landscape) 

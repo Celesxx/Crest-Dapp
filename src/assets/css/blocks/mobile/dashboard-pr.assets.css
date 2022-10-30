@@ -11,6 +11,7 @@
     {
         height: 90%;
         width: 100%;
+        margin: 0;
         -webkit-box-pack: center;
             -ms-flex-pack: center;
                 justify-content: center;
@@ -84,6 +85,7 @@
     }
     .info-title, .info-text
     {
+        height: 20%;
         margin: 0;
         margin-left: 0.5em;
         font-size: 14px;

@@ -3,8 +3,8 @@
     {
         "home": 
         {
-            "title": "News and Update",
-            "description": "Here you will find all the news and updates of the dApp",
+            "title": "News and Updates",
+            "description": "Get the latest news and updates coming to the dApp",
             "link": "link",
             "coming": "Coming soon !!"
         },
@@ -14,16 +14,16 @@
             "personalTitle": "Personal",
             "crestPrice": "$CREST Price",
             "marketcap": "Market Cap",
-            "totalNft": "Total NFT's",
+            "totalNft": "Total NFTs",
             "totalSupply": "Total Supply",
-            "totalBurn": "Total Token Burn"
+            "totalBurn": "Total Tokens Burned"
         },
 
         "personnal":
         {
             "protocolTitle": "Protocol",
             "personalTitle": "Personal",
-            "myNft": "My NFT's",
+            "myNft": "NFTs",
             "crestBalance": "My $CREST Balance",
             "dailyReward": "My Daily Rewards",
             "pendingReward": "My Pending Rewards",
@@ -34,7 +34,7 @@
         {
             "selectDocs":
             {
-                "default": "Link",
+                "default": "Links",
                 "website": "Docs",
                 "discord": "Discord",
                 "twitter": "Twitter",
@@ -52,7 +52,7 @@
             "homeTitle": "Home",
             "dashboard": "Dashboard",
             "shop": "Shop",
-            "myNft": "My NFT's",
+            "myNft": "NFTs",
             "swap": "Swap"
         },
 
@@ -79,15 +79,15 @@
 
         "profile": 
         {
-            "claimAllBtn": "Claim selected NFT's",
-            "tableTitle": ["NFT's", "ID", "Date", "Claim Date", "ROI Date", "Lifetime", "Rewards", ""],
+            "claimAllBtn": "Claim selected NFTs",
+            "tableTitle": ["NFTs", "ID", "Date", "Claim Date", "ROI Date", "Lifetime", "Rewards", ""],
             "claimBtn": "Claim"
         },
 
         "swap":
         {
             "title": "SWAP",
-            "description": "Trade token in an instant",
+            "description": "Trade tokens in an instant",
             "balance": "Balance",
             "swapBtn": "Swap",
             "approveBtn": "Approve",
@@ -110,16 +110,16 @@
             "personalTitle": "Personnel",
             "crestPrice": "Prix du $CREST",
             "marketcap": "Market Cap",
-            "totalNft": "Total NFT's",
+            "totalNft": "Total NFTs",
             "totalSupply": "Total Supply",
-            "totalBurn": "Total Token Burn"
+            "totalBurn": "Total Tokens Burned"
         },
 
         "personnal":
         {
             "protocolTitle": "Protocole",
             "personalTitle": "Personnel",
-            "myNft": "Mes NFT's",
+            "myNft": "Mes NFTs",
             "crestBalance": "Mon $CREST Balance",
             "dailyReward": "Mes Récompenses Journalières",
             "pendingReward": "Mes Récompenses en attente",
@@ -148,7 +148,7 @@
             "homeTitle": "Accueil",
             "dashboard": "Dashboard",
             "shop": "Boutique",
-            "myNft": "Mes NFT's",
+            "myNft": "Mes NFTs",
             "swap": "Swap"
         },
 
@@ -198,7 +198,7 @@
         {
             "title": "Noticias y novedades",
             "description": "Aquí encontrarás todas las noticias y actualizaciones de la dApp",
-            "link": "Link",
+            "link": "Links",
             "coming": "¡¡Pronto!!"
         },
         "dashboard":
@@ -207,7 +207,7 @@
             "personalTitle": "Personal",
             "crestPrice": "Precio de $CREST",
             "marketcap": "Cap. de Mercado",
-            "totalNft": "NFT's totales",
+            "totalNft": "NFTs totales",
             "totalSupply": "Acciones máximas",
             "totalBurn": "Quema total de token"
         },
@@ -216,7 +216,7 @@
         {
             "protocolTitle": "Protocolo",
             "personalTitle": "Personal",
-            "myNft": "Mis NFT's",
+            "myNft": "Mis NFTs",
             "crestBalance": "Mi $CREST Libra",
             "dailyReward": "Mis recompensas diarias",
             "pendingReward": "Mis recompensas pendientes",
@@ -227,7 +227,7 @@
         {
             "selectDocs":
             {
-                "default": "Link",
+                "default": "Links",
                 "website": "Docs",
                 "discord": "Discord",
                 "twitter": "Twitter",
@@ -245,7 +245,7 @@
             "homeTitle": "Inicio",
             "dashboard": "Tablero de mandos",
             "shop": "Tienda",
-            "myNft": "Mis NFT's",
+            "myNft": "Mis NFTs",
             "swap": "Swap"
         },
 
@@ -262,8 +262,8 @@
             "price": "Precio",
             "lifetime": "De por vida",
             "lifetimeValue": "365 días",
-            "dailyReward": "Recompensas diarias",
-            "dailyRoi": "Rendimiento diario de la inversión",
+            "dailyReward": "premios diarios",
+            "dailyRoi": "ROI diaras",
             "remaining": "Resto",
             "approveBtn": "Aprobar",
             "buyBtn": "Comprar",

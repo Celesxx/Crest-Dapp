@@ -79,8 +79,8 @@
 {
     position: relative;
     z-index: 15;
-    height: 35%;
-    width: 75%;
+    height: auto;
+    width: 80%;
     background: black;
     border: 2px solid white;
     border-radius: 22px;
