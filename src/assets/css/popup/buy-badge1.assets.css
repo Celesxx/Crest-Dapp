@@ -71,8 +71,9 @@
 .shop-popup-items
 {
     height: auto;
+    max-height: 80%;
     width: 40%;
-    border: 1px solid white;
+    border: 1.5px solid white;
     border-radius: 22px;
 }
 

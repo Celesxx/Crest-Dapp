@@ -128,8 +128,9 @@
 .info-title, .info-text
 {
     font-size: 15px;
-    height: 2em;
     font-style: normal;
     font-weight: 800;
     margin: 0;
 }
+
+.info-title { height: 2em; }

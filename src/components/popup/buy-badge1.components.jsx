@@ -132,11 +132,10 @@ class BuyPopup extends React.Component
                     <div className="shop-popup-base flex row">
                         
                         <button className="shop-popup-close button" onClick={close}> &times; </button>
-                        <div className="shop-popup-items">  
-                            <video className="shop-video" autoPlay muted loop>
-                                <source src={this.state.videoSrc[this.state.badgesIndex]} type="video/mp4" />
-                            </video>
-                        </div>
+                        
+                        <video className="shop-popup-items" autoPlay muted loop>
+                            <source src={this.state.videoSrc[this.state.badgesIndex]} type="video/mp4" />
+                        </video>
 
                         <div className="shop-popup-cards flex column">
 
@@ -189,7 +188,7 @@ class BuyPopup extends React.Component
                                         ? <button className="button shop-popup-button" onClick={() => this.buyBadges()}>{ Language[this.state.language].shopPop.buyBtn }</button>
                                         : <button className="button shop-popup-button" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                     )
-                                ) : <div className="shop-popup-button">{ Language[this.state.language].shopPop.soldout }</div>
+                                ) : <div className="shop-popup-button flex center">{ Language[this.state.language].shopPop.soldout }</div>
                             }
                             
                             

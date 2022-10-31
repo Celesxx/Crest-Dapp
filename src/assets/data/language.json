@@ -60,7 +60,7 @@
         {
             "title": "Buy a badge",
             "description": "Collect them all",
-            "badgeDescription": ["A stone containing the light of a dying sun", "A stone filled with one of the four primordial elements", "A stone filled of the blood of the ancients ods gods"],
+            "badgeDescription": ["A stone containing the light of a dying sun", "A stone filled with one of the four primordial elements", "A stone filled with the blood of the ancient gods"],
             "badgeBuy": "Buy for"
         },
 
@@ -262,7 +262,7 @@
             "price": "Precio",
             "lifetime": "De por vida",
             "lifetimeValue": "365 días",
-            "dailyReward": "premios diarios",
+            "dailyReward": "Premios diarios",
             "dailyRoi": "ROI diaras",
             "remaining": "Resto",
             "approveBtn": "Aprobar",
