@@ -215,7 +215,7 @@ class ShopMobile extends React.Component
                                         </div>
                                     </div>
                                     
-                                    {
+                                    {/* {
                                         this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
                                         (
                                             this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
@@ -226,7 +226,23 @@ class ShopMobile extends React.Component
                                                 </button>
                                             ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                         )
-                                    }
+                                    } */}
+
+                                {
+                                parseInt(value.totalSupply) < parseInt(value.max)
+                                ? (
+                                    this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
+                                    (
+                                        this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
+                                        ?(
+                                            <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
+                                                <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
+                                                <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18)}$CREST</p>
+                                            </button>
+                                        ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
+                                    )
+                                ) : <div className="shop-popup-button">{ Language[this.state.language].shopPop.soldout }</div>
+                            }
                                     
                                 </div>
 

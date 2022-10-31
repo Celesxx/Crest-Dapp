@@ -7,8 +7,9 @@
 
 .dashboard-personnal-card-core
 {
-    width: 70%;
+    width: 80%;
     height: 80%;
+    margin-left: 15%;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
@@ -131,3 +132,5 @@
     font-weight: 800;
     margin: 0;
 }
+
+.info-title { height: 2em; }

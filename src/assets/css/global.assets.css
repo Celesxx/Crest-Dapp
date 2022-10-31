@@ -68,7 +68,7 @@ button
 
 .web3modal-modal-card
 {
-  height: 40% !important;
+  height: auto !important;
   width: 40% !important;
   max-width: 40% !important;
   background: black !important;

@@ -200,15 +200,17 @@ class Navbar extends React.Component
     let target = event.target
     if(target.id == "french") this.props.loginAction({language: "fr", action: "language"})
     else if(target.id == "english") this.props.loginAction({language: "en", action: "language"})
+    else if(target.id == "japanese") this.props.loginAction({language: "jp", action: "language"})
+    else if(target.id == "spanish") this.props.loginAction({language: "sp", action: "language"})
   }
 
   handleChangeLink(event)
   {
     let target = event.target
-    if(target.id == "opt2") window.location='https://playcrest.xyz'
-    else if(target.id == "opt3") window.location='https://medium.com/@playCrest'
-    else if(target.id == "opt4") window.location='https://twitter.com/playCrest'
-    else if(target.id == "opt5") window.location='https://discord.com/invite/mUHGNqN8Vj'
+    if(target.id == "opt2") window.open('https://playcrest.gitbook.io/documentation/', "_blank")
+    else if(target.id == "opt3") window.open('https://medium.com/@playCrest', "_blank")
+    else if(target.id == "opt4") window.open('https://twitter.com/playCrest', "_blank")
+    else if(target.id == "opt5") window.open('https://discord.com/invite/mUHGNqN8Vj', "_blank")
   }
 
 
@@ -255,10 +257,14 @@ class Navbar extends React.Component
 
                 
               <form className="navbar-select" tabIndex="1" onChange={this.handleChange}>
-                <input name="language-select" className="navbar-input" type="radio" id="english" defaultChecked/>
+                <input name="language-select" className="navbar-input" type="radio" id="english" defaultChecked={ this.state.language == "en" ? true : false }/>
                 <label htmlFor="english" className="navbar-option">English</label>
-                <input name="language-select" className="navbar-input" type="radio" id="french"/>
+                <input name="language-select" className="navbar-input" type="radio" id="spanish" defaultChecked={ this.state.language == "sp" ? true : false }/>
+                <label htmlFor="spanish" className="navbar-option">Spanish</label>
+                <input name="language-select" className="navbar-input" type="radio" id="french" defaultChecked={ this.state.language == "fr" ? true : false }/>
                 <label htmlFor="french" className="navbar-option">French</label>
+                <input name="language-select" className="navbar-input" type="radio" id="japanese" defaultChecked={ this.state.language == "jp" ? true : false }/>
+                <label htmlFor="japanese" className="navbar-option">Japanese</label>
               </form>
 
 

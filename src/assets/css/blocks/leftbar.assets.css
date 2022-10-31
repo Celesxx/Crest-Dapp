@@ -27,6 +27,7 @@
 .leftbar-core
 {
     height: 91%;
+    width: 60%;
     -webkit-box-pack: space-evenly;
         -ms-flex-pack: space-evenly;
             justify-content: space-evenly;
@@ -49,6 +50,12 @@
     font-style: normal;
     font-weight: 800;
     font-size: 20px;
+}
+
+.link-description
+{
+    overflow-wrap: break-word;
+    text-align: center;
 }
 
 .link-bar

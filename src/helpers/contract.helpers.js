@@ -1,6 +1,7 @@
 import Address from 'contracts/address.contracts.json'
 import AbiUniswap from 'contracts/abis/router/UniswapV2Pair.sol/UniswapV2Pair.json'
 import AbiToken from 'contracts/abis/Token.sol/Token.json'
+import AbiStable from 'contracts/abis/mock/MockERC20.sol/MockERC20.json'
 import abiBadges from 'contracts/abis/Badge.sol/Badge.json'
 import abiSplitter from 'contracts/abis/splitter/Splitter.sol/Splitter.json'
 import abiBadgeManager from 'contracts/abis/BadgeManager.sol/BadgeManager.json'
@@ -642,6 +643,25 @@ class ContractHelper
             lastClaim: data[1].toNumber(),
             boostId: data[2].toNumber(),
             boostRate: data[3].toNumber(),
+        }
+    }
+
+
+
+    /*------------------------------  ------------------------------*/
+    /** 
+    * @param {Strucuture} provider
+    **/ 
+    async mintStable(provider) 
+    {
+        try 
+        {
+            const stable = new ethers.Contract(Address.stable, AbiStable, provider)
+            await (await stable.connect(provider.getSigner()).mintStable()).wait()
+        } catch(e) 
+        {
+            if (e.reason != undefined) displayError(e.reason)
+            throw "Error"
         }
     }
 

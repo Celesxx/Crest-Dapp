@@ -7,8 +7,9 @@
 
 .dashboard-button
 {
-    width: 70%;
+    width: 80%;
     height: 20%;
+    margin-left: 15%;
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;

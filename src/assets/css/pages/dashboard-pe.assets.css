@@ -7,11 +7,12 @@
 
 .dashboard-core
 {
-    width: 70%;
+    width: 80%;
     height: 80%;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    margin-left: 15%;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
@@ -26,7 +27,7 @@
 {
     margin-top: 5%;
     height: 30%;
-    width: 30%;
+    width: 25%;
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;
@@ -59,7 +60,7 @@
 {
     margin-top: 5%;
     height: 30%;
-    width: 30%;
+    width: 25%;
     -webkit-box-pack: end;
         -ms-flex-pack: end;
             justify-content: flex-end;
