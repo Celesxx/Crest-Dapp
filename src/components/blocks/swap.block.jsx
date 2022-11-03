@@ -185,17 +185,6 @@ class Dashboard extends React.Component
 
     }
 
-    async mintToken()
-    {
-      let contractHelper = new ContractHelper()
-      let provider = await contractHelper.getProvider()
-      document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
-      await contractHelper.mintStable(provider)
-      const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
-      const formatUnit = await contractHelper.setFormatUnit(userStableBalance, 18)
-      let data = { stableUser: {balance: formatUnit} }
-      this.props.dashboardAction({data: data, action: "saveData"})
-    }
 
     setMaxValue()
     {
@@ -276,8 +265,6 @@ class Dashboard extends React.Component
             <div className="swap-core-base flex row">
               <div className="swap-core flex column">
                 <div className="swap-content-core">
-
-                <button className="swap-button-mint button" onClick={() => this.mintToken()}>Mint $BUSD</button>
 
                 <div className="card-core flex column center">
                 
