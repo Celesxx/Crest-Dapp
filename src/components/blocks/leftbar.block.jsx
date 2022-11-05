@@ -84,7 +84,7 @@ class Leftbar extends React.Component
                 </div>
 
                 <div className="social-link flex column">
-                    <a href="https://twitter.com/playCrest" className="link"><img src={Twitter} alt={Twitter} /> </a>
+                    <a href="https://twitter.com/playCrestXYZ" className="link"><img src={Twitter} alt={Twitter} /> </a>
                     <a href="https://medium.com/@playCrest" className="link"><img src={Medium} alt={Medium} /></a>
                     <a href="https://discord.com/invite/mUHGNqN8Vj" className="link"><img src={Discord} alt={Discord} /></a>
                 </div>
