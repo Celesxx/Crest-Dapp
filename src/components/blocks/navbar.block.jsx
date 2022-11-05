@@ -209,7 +209,7 @@ class Navbar extends React.Component
     let target = event.target
     if(target.id == "opt2") window.open('https://playcrest.gitbook.io/documentation/', "_blank")
     else if(target.id == "opt3") window.open('https://medium.com/@playCrest', "_blank")
-    else if(target.id == "opt4") window.open('https://twitter.com/playCrest', "_blank")
+    else if(target.id == "opt4") window.open('https://twitter.com/playCrestXYZ', "_blank")
     else if(target.id == "opt5") window.open('https://discord.com/invite/mUHGNqN8Vj', "_blank")
   }
 

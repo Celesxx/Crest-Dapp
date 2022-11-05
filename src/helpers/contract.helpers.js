@@ -5,6 +5,7 @@ import AbiStable from 'contracts/abis/mock/MockERC20.sol/MockERC20.json'
 import abiBadges from 'contracts/abis/Badge.sol/Badge.json'
 import abiSplitter from 'contracts/abis/splitter/Splitter.sol/Splitter.json'
 import abiBadgeManager from 'contracts/abis/BadgeManager.sol/BadgeManager.json'
+import abiLedgers from 'contracts/abis/Ledger.sol/Ledger.json'
 // import abiErc20 from 'contracts/abis/erc20/ERC20.sol/erc20.json'
 import  {ethers, BigNumber, utils, constants } from "ethers"
 import Web3Modal from 'web3modal'
@@ -665,6 +666,53 @@ class ContractHelper
         }
     }
 
+
+
+    /** 
+    *  @param {String} ledgerAddr
+    *  @param {String} user
+    * @param {Strucuture} provider
+    **/ 
+    async ledgerCanMint(ledgerAddr, user, provider) 
+    {
+        const ledger = new ethers.Contract(ledgerAddr, abiLedgers, provider)
+        return await ledger.canMint(user)
+    }
+ 
+
+
+
+
+    /** 
+ * @param {String} ledgerAddr
+ * @param {String} user
+ * @param {Strucuture} provider
+ **/ 
+    async hasLedger(ledgerAddr, user, provider) 
+    {
+        const ledger = new ethers.Contract(ledgerAddr, abiLedgers, provider)
+        return (await ledger.balanceOf(user)).gt("0")
+    }	
+ 
+
+
+
+    /** 
+    * @param {String} ledgerAddr
+    * @param {Strucuture} provider
+    **/ 
+    async mintLedger(ledgerAddr, provider) 
+    {
+        try 
+        {
+            const ledger = new ethers.Contract(ledgerAddr, abiLedgers, provider)
+            await (await ledger.connect(provider.getSigner()).mint()).wait()
+        } catch(e) 
+        {
+            if (e.reason != undefined) displayError(e.reason)
+            throw "Error"
+        }
+    }
 
 }
 

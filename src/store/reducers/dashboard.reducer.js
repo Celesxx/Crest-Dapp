@@ -12,6 +12,8 @@ const initialState=
   totalSupply: null,
   totalBurn: null,
   badges: [],
+  ledgers: [],
+  ledgersIndex: null,
   tokenUser: 
   {
     balance: null,
@@ -41,6 +43,8 @@ export const dashboardSlice = createSlice(
     totalSupply: null,
     totalBurn: null,
     badges: [],
+    ledgers: [],
+    ledgersIndex: null,
     tokenUser: 
     {
       balance: null,

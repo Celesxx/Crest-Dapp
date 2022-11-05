@@ -26,7 +26,8 @@ const MapStateToProps = (state) => {
         loading: state.dashboard.loading,
         loadingMax: state.dashboard.loadingMax,
         loadingOver: state.dashboard.loadingOver,
-        language: state.login.language
+        language: state.login.language,
+        ledgers: state.dashboard.ledgers,
     }; 
 };
 
@@ -59,6 +60,7 @@ class Dashboard extends React.Component
             loading: this.props.loading,
             loadingMax: this.props.loadingMax,
             loadingOver: this.props.loadingOver,
+            ledgers: this.props.ledgers,
             totalReward: [],
             interval : null,
             language : this.props.language,
@@ -68,9 +70,25 @@ class Dashboard extends React.Component
     }
 
     
-    UNSAFE_componentWillMount()
+    async UNSAFE_componentWillMount()
     {
+        let ledgers = []
         if(this.state.interval == null) { this.state.interval = setInterval(() => this.loadClaimDatas(), 1000) }
+        if(this.state.ledgers.length === 0 || this.state.ledgers === null || this.state.ledgers === undefined )
+        {
+            const contractHelper = new ContractHelper()
+            const provider = await contractHelper.getProvider()
+            document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+            for(const address of Address.ledgers)
+            {
+                ledgers.push(
+                {
+                    "canMint": await contractHelper.ledgerCanMint(address, this.state.address, provider),
+                    "hasLedger": await contractHelper.hasLedger(address, this.state.address, provider)
+                })
+            }
+            this.props.dashboardAction({data: {ledgers : ledgers} , action : 'saveData'})
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) 
@@ -225,12 +243,30 @@ class Dashboard extends React.Component
         this.props.dashboardAction({data : {tokenUser: {balance : formatUnit.userCrestBalance}, totalSupply : formatUnit.totalSupply}, action : 'saveData'})
         
     }
+
+    async claimLedgers(index)
+    {
+        let contractHelper = new ContractHelper()
+        const provider = await contractHelper.getProvider()
+        document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
+        // await contractHelper.mintLedger(Address.ledgers[index], provider)
+        let ledgers = this.state.ledgers
+        ledgers[index] = { "canMint": false, "hasLedger": true }
+        this.props.dashboardAction({data: {ledgers : ledgers} , action : 'saveData'})
+    }
+
+    selectLedger(event, index)
+    {
+
+    }
     
     
 
     render()
     {
+        
         let contractHelper = new ContractHelper()
+        console.log('ledgers : ', this.state.ledgers)
       return(
         
         <div className="home-body flex column">
@@ -262,6 +298,32 @@ class Dashboard extends React.Component
                 <button className="claim-all-button button" onClick={() => this.claimAllBadges()}>{ Language[this.state.language].profile.claimAllBtn } ({this.state.nbrCheck}/{this.state.claimBadges.length})</button>
 
             </div>
+
+            
+            {
+                
+                this.state.ledgers.length !== 0 && 
+                (
+                    <div className='profile-table-ledger'>
+                    {
+                        this.state.ledgers.map((value, index) => 
+                        {
+                            return(
+                                <div className='profile-table-ledger-core'>
+                                    <div className="profile-table-ledger-card" />
+                                    {
+                                        value.hasLedger 
+                                        ? <div className="select-ledgers" onClick={(event) => this.selectLedger(event, index)}>Select from numa </div>
+                                        : value.canMint ? <button className='profile-table-ledger-button' onClick={()=> this.claimLedgers(index)} />
+                                        : <div className='profile-table-ledger-desc'>Cannot Mint</div>
+                                    }
+                                </div>
+                            )
+                        })
+                    }
+                    </div>
+                )
+            }
 
             <div className="profile-table-core flex column">
                 

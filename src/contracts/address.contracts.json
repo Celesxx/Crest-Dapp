@@ -5,6 +5,9 @@
         "0xcE101B5A56D3D5D1829dA0F1b636b4DB25dC9f77",
         "0xBEf5286d43053e01bDEb8Ab70a83AEF7b513EC63"
     ],
+    "ledgers": [
+        "0xcE2f8815f794863af92C11d752443170CFEE6425"
+    ],
     "splitter" : "0x53Bb54B90E945848156d44A51C16767BB74581d3",
     "erc20Token" :
     [
