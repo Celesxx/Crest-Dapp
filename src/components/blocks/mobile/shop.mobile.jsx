@@ -237,7 +237,7 @@ class ShopMobile extends React.Component
                                         ?(
                                             <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
                                                 <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
-                                                <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18)}$CREST</p>
+                                                <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key]}$CREST</p>
                                             </button>
                                         ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                     )
