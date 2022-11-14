@@ -172,90 +172,94 @@ class ShopMobile extends React.Component
 
                 <div className="shop-items-core flex column">
                     {
-                        this.state.badges.map((value, key) =>
-                        {
-                            return(
-                            <div key={`shop-${key}`} className="shop-items-cards flex column">
-                                
-                                <div className="shop-item-head-core">
-                                    
-                                    <h3 className="shop-items-title">{value.name} </h3>
-                                    <div className="shop-count-core flex row center">
-                                        <button className="button shop-min" onClick={() => this.removeBadges(key)}>-</button>
-                                        <h1 className="shop-count-text">{this.state.buyNbr[key]}</h1>
-                                        <button className="button shop-max" onClick={() => this.addBadges(key)}>+</button>
-                                    </div>
-                                    <div className="shop-items-data-core">
-                                    
-                                        <div className="shop-info-title flex column">
-                                            <p className="shop-text-title">{ Language[this.state.language].shopPop.price }</p>
-                                            <p className="shop-text-title">{ Language[this.state.language].shopPop.lifetime }</p>
-                                            <p className="shop-text-title">{ Language[this.state.language].shopPop.dailyReward }</p>
-                                            <p className="shop-text-title">{ Language[this.state.language].shopPop.dailyRoi }</p>
-                                            <p className="shop-text-title">{ Language[this.state.language].shopPop.remaining }</p>
-                                        </div>
+                        this.state.address !== "" &&
+                        (
 
-                                        <div className="shop-info-desc flex column">
-                                            <p className="shop-text-desc">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key] } $CREST</p>
-                                            <p className="shop-text-desc">{Language[this.state.language].shopPop.lifetimeValue }</p>
-                                            <p className="shop-text-desc">{contractHelper.setFormatUnit(value.rewardAmount, 18)} $CREST</p>
-                                            <p className="shop-text-desc">
-                                                {
-                                                    parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 18))
-                                                    / 
-                                                    parseFloat  (contractHelper.setFormatUnit(value.price, 18))
-                                                    * 100
-                                                } %
-                                            </p>
-                                            <p className="shop-text-desc">
-                                                {
-                                                    contractHelper.getNb(parseInt(value.max) - parseInt(value.totalSupply), 0) 
-                                                }
-                                            </p>
-                                        </div>
-                                    </div>
+                            this.state.badges.map((value, key) =>
+                            {
+                                return(
+                                <div key={`shop-${key}`} className="shop-items-cards flex column">
                                     
-                                    {/* {
+                                    <div className="shop-item-head-core">
+                                        
+                                        <h3 className="shop-items-title">{value.name} </h3>
+                                        <div className="shop-count-core flex row center">
+                                            <button className="button shop-min" onClick={() => this.removeBadges(key)}>-</button>
+                                            <h1 className="shop-count-text">{this.state.buyNbr[key]}</h1>
+                                            <button className="button shop-max" onClick={() => this.addBadges(key)}>+</button>
+                                        </div>
+                                        <div className="shop-items-data-core">
+                                        
+                                            <div className="shop-info-title flex column">
+                                                <p className="shop-text-title">{ Language[this.state.language].shopPop.price }</p>
+                                                <p className="shop-text-title">{ Language[this.state.language].shopPop.lifetime }</p>
+                                                <p className="shop-text-title">{ Language[this.state.language].shopPop.dailyReward }</p>
+                                                <p className="shop-text-title">{ Language[this.state.language].shopPop.dailyRoi }</p>
+                                                <p className="shop-text-title">{ Language[this.state.language].shopPop.remaining }</p>
+                                            </div>
+
+                                            <div className="shop-info-desc flex column">
+                                                <p className="shop-text-desc">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key] } $CREST</p>
+                                                <p className="shop-text-desc">{Language[this.state.language].shopPop.lifetimeValue }</p>
+                                                <p className="shop-text-desc">{contractHelper.setFormatUnit(value.rewardAmount, 18)} $CREST</p>
+                                                <p className="shop-text-desc">
+                                                    {
+                                                        parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 18))
+                                                        / 
+                                                        parseFloat  (contractHelper.setFormatUnit(value.price, 18))
+                                                        * 100
+                                                    } %
+                                                </p>
+                                                <p className="shop-text-desc">
+                                                    {
+                                                        contractHelper.getNb(parseInt(value.max) - parseInt(value.totalSupply), 0) 
+                                                    }
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* {
+                                            this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
+                                            (
+                                                this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
+                                                ?(
+                                                    <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
+                                                        <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
+                                                        <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18)}$CREST</p>
+                                                    </button>
+                                                ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
+                                            )
+                                        } */}
+
+                                    {
+                                    parseInt(value.totalSupply) < parseInt(value.max)
+                                    ? (
                                         this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
                                         (
                                             this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
                                             ?(
                                                 <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
                                                     <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
-                                                    <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18)}$CREST</p>
+                                                    <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key]}$CREST</p>
                                                 </button>
                                             ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                         )
-                                    } */}
+                                    ) : <div className="shop-popup-button">{ Language[this.state.language].shopPop.soldout }</div>
+                                }
+                                        
+                                    </div>
 
-                                {
-                                parseInt(value.totalSupply) < parseInt(value.max)
-                                ? (
-                                    this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
-                                    (
-                                        this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
-                                        ?(
-                                            <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
-                                                <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
-                                                <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18)}$CREST</p>
-                                            </button>
-                                        ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
-                                    )
-                                ) : <div className="shop-popup-button">{ Language[this.state.language].shopPop.soldout }</div>
-                            }
-                                    
+
+                                    <div className="shop-items">
+                                        <video className="shop-video" autoPlay muted loop>
+                                            <source src={this.state.videoSrc[key]} type="video/mp4" />
+                                        </video>
+                                    </div>
+
                                 </div>
-
-
-                                <div className="shop-items">
-                                    <video className="shop-video" autoPlay muted loop>
-                                        <source src={this.state.videoSrc[key]} type="video/mp4" />
-                                    </video>
-                                </div>
-
-                            </div>
-                            )
-                        })
+                                )
+                            })
+                        )
                         
                     }
                 </div>

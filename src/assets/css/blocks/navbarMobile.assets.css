@@ -44,8 +44,8 @@
 
 .mobile-navbar-link
 {
-    height: 60px;
-    width: 60px;
+    height: calc(100vw / 11);
+    width: calc(100vw / 11);
     background: white;
     z-index: 10;
     border-radius: 50%;
@@ -86,12 +86,12 @@
     position: absolute;
     -webkit-animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
             animation: translate 0.25s cubic-bezier(0.2, 0.64, 0.48, 1.12);
-    -webkit-transform: translateX(var(--currentposition)) translatey(-45%);
-        -ms-transform: translateX(var(--currentposition)) translatey(-45%);
-            transform: translateX(var(--currentposition)) translatey(-45%);
+    -webkit-transform: translateX(var(--currentposition));
+        -ms-transform: translateX(var(--currentposition));
+            transform: translateX(var(--currentposition));
     height: auto;
-    width: 20%;
-    bottom: 0;
+    width: 25%;
+    top: -1px;
     left: 0;
     -webkit-transition-delay: 0.25s;
          -o-transition-delay: 0.25s;

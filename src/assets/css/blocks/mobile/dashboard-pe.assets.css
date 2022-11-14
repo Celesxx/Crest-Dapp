@@ -125,7 +125,7 @@
                 align-items: center;
     }
 
-    .dashboard-badge-items-core { height: 100%; width: 25%; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; }
+    .dashboard-badge-items-core { height: 100%; width: 30%; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; }
     .dashboard-badge-img-core { height: 20%; width: 100%; }
     .dashboard-badge-img { height: 100%; width: 100%; }
     .dashboard-badge-items
@@ -146,7 +146,7 @@
     .dashboard-badge-title, .dashboard-badge-count, .dashboard-text-stat
     {
         margin: 0;
-        font-size: 14px;
+        font-size: 12px;
     }
     .dashboard-badge-separator { width: 20%; height: 2px; background: white;}
 }
