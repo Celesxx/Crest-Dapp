@@ -3,6 +3,7 @@ import 'assets/css/blocks/navbarMobile.assets.css';
 import 'assets/css/blocks/mobile/navbarMobile.assets.css';
 import React from "react";
 import Logo from 'assets/img/crest-icon.png'
+import mobileSvg from 'assets/img/navbar-mobile.svg'
 import MobileBar from 'assets/img/mobile/mobile-bar.svg'
 import MobileBuy from 'assets/img/mobile/mobile-buy.svg'
 import MobileLeftRight from 'assets/img/mobile/mobile-left-right.svg'
@@ -60,28 +61,28 @@ class NavbarMobile extends React.Component
     if(this.state.currentPage == "home") 
     { 
       this.state.nav[2] = "current"
-      this.props.dashboardAction({navbarPosition : 200, action: "navbarPosition"})
+      this.props.dashboardAction({navbarPosition : "calc(100vw - ( (100vw / 5) * 3) - 2.5vw )", action: "navbarPosition"})
 
     }
     else if(this.state.currentPage == "dashboard") 
     { 
       this.state.nav[0] = "current"
-      this.props.dashboardAction({navbarPosition : 0, action: "navbarPosition"})
+      this.props.dashboardAction({navbarPosition : "calc(100vw - ( (100vw / 5) * 5) - 2.5vw )", action: "navbarPosition"})
     }
     else if(this.state.currentPage == "shop") 
     { 
       this.state.nav[1] = "current"
-      this.props.dashboardAction({navbarPosition : 100, action: "navbarPosition"})
+      this.props.dashboardAction({navbarPosition : "calc(100vw - ( (100vw / 5) * 4) - 2.5vw )", action: "navbarPosition"})
     }
     else if(this.state.currentPage == "profile") 
     { 
       this.state.nav[3] = "current"
-      this.props.dashboardAction({navbarPosition : 300, action: "navbarPosition"})
+      this.props.dashboardAction({navbarPosition : "calc(100vw - ( (100vw / 5) * 2) - 2.5vw )", action: "navbarPosition"})
     }
     else if(this.state.currentPage == "swap") 
     { 
       this.state.nav[4] = "current" 
-      this.props.dashboardAction({navbarPosition : 400, action: "navbarPosition"})
+      this.props.dashboardAction({navbarPosition : "calc(100vw - ( (100vw / 5) * 1) - 2.5vw )", action: "navbarPosition"})
     }
   }
 
@@ -92,29 +93,33 @@ class NavbarMobile extends React.Component
       return(
           <div className="mobile-navbar-base-core flex row" id="navbar-mobile">
 
-              <svg className="mobile-navbar-card-outer" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} viewBox="0 0 350 480" xmlns="http://www.w3.org/2000/svg">
+              {/* <svg className="mobile-navbar-card-outer" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} viewBox="0 0 350 480" xmlns="http://www.w3.org/2000/svg">
                 <ellipse cx="176" cy="241" fill="#000000" id="svg_7" rx="170.5" ry="234" stroke="#000000" strokeOpacity="0.01"/>
+              </svg> */}
+
+              <svg className="mobile-navbar-card-outer" style={{"--currentposition": `${this.state.navbarPosition}`, "--oldposition": `${this.state.oldPosition}`}} viewBox="0 0 280 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M280 0C215.98 -3.86504e-07 226.527 94.5 141.407 94.5C56.2873 94.5 64.02 1.18027e-06 0 0C4.22102 4.58185e-06 141.407 0 141.407 0C141.407 0 277.889 0.035113 280 0Z" fill="black"/>
               </svg>
 
-              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} id={this.state.nav[0]}>
+              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}`, "--oldposition": `${this.state.oldPosition}`}} id={this.state.nav[0]}>
                 <Link to="/dashboard" className="mobile-navbar-link flex row center">
                   <img className="mobile-navbar-icon" src={MobileBar} alt={MobileBar} />  
                 </Link>
               </div>
 
-              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} id={this.state.nav[1]}>
+              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}`, "--oldposition": `${this.state.oldPosition}`}} id={this.state.nav[1]}>
                 <Link to="/shop" className="mobile-navbar-link flex row center">
                   <img className="mobile-navbar-icon" src={MobileBuy} alt={MobileBuy} />
                 </Link> 
               </div>
 
-              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} id={this.state.nav[2]}>
+              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}`, "--oldposition": `${this.state.oldPosition}`}} id={this.state.nav[2]}>
                 <Link to="/home" className="mobile-navbar-link flex row center">
                   <img className="mobile-navbar-icon" src={Logo} alt={Logo} />
                 </Link>  
               </div>
 
-              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}%`, "--oldposition": `${this.state.oldPosition}%`}} id={this.state.nav[3]}>
+              <div className="mobile-navbar-card flex row center" style={{"--currentposition": `${this.state.navbarPosition}`, "--oldposition": `${this.state.oldPosition}`}} id={this.state.nav[3]}>
                 <Link to="/profile" className="mobile-navbar-link flex row center">
                   <img className="mobile-navbar-icon" src={MobileStack} alt={MobileStack} /> 
                 </Link>

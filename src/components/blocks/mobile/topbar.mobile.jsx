@@ -258,7 +258,7 @@ class Topbar extends React.Component
               <li><a className="navbar-mobile-item" href="https://playcrest.gitbook.io/documentation/" target="_blank" rel="noopener noreferrer">{Language[this.state.language].navbar.selectDocs.website }</a></li>
               <li><a className="navbar-mobile-item" href="https://discord.com/invite/mUHGNqN8Vj" target="_blank" rel="noopener noreferrer">{Language[this.state.language].navbar.selectDocs.discord }</a></li>
               <li><a className="navbar-mobile-item" href="https://medium.com/@playCrest" target="_blank" rel="noopener noreferrer">{Language[this.state.language].navbar.selectDocs.doc } </a></li>
-              <li><a className="navbar-mobile-item" href="https://twitter.com/playCrestXYZ" target="_blank" rel="noopener noreferrer">{Language[this.state.language].navbar.selectDocs.twitter }</a></li>
+              <li><a className="navbar-mobile-item" href="https://twitter.com/playCrest" target="_blank" rel="noopener noreferrer">{Language[this.state.language].navbar.selectDocs.twitter }</a></li>
           </ul>
 
           <div className='navbar-mobile-wallet-core flex center'>
