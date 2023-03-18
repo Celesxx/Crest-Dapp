@@ -52,7 +52,7 @@ class Leftbar extends React.Component
   render()
     {
       return(
-          <div className="leftbar flex column">
+          <div className="leftbar glow glow-right flex column">
 
             <div className="leftbar-hidden"></div>
 

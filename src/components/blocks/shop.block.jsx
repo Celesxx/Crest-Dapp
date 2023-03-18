@@ -140,7 +140,7 @@ class Shop extends React.Component
                         <div key={`shop-${key}`} className="shop-items-cards flex column">
 
                             <h3 className="shop-items-title">{value.name} </h3>
-                            <div className="shop-items">
+                            <div className={`shop-items glow-gem glow-${key}`}>
                                 <video className="shop-video" playsInline autoPlay muted loop>
                                     <source src={this.state.videoSrc[key]} type="video/mp4" />
                                 </video>

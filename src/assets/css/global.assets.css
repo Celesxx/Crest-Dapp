@@ -56,8 +56,96 @@ button
   color: white;
 }
 
+.glow
+{
+  --glow-color: rgb(255, 255, 255, 0.8);
+  --glow-spread-color: rgba(202, 202, 202, 0.781);
+  outline: none;
+  box-shadow: 
+  0 0 0.25em 0.05em var(--glow-color), 
+  0 0 0em 0em var(--glow-spread-color),
+  inset 0em -0.05em 0.5em 0em var(--glow-color);
+  transition: all 0.3s;
+}
 
 
+.glow-bottom
+{
+  box-shadow: 
+  1em 0 0 rgb(0 0 0), 
+  -1em 0 0 rgb(0 0 0), 
+  0 0.1em 0.6em var(--glow-color)
+}
+
+.glow-right
+{
+  box-shadow: 
+  0 0.1px 0 rgb(0 0 0), 
+  0 -0.1px 0 rgb(0 0 0), 
+  -0.5em 0 0 rgb(0 0 0), 
+  0.1em 0 0.6em var(--glow-color)
+}
+
+
+.glow-blue
+{
+  box-shadow: 
+  1px 1.5px 2.5px rgba(243, 255, 254, 0.8),
+  -1px -1.5px 2.5px rgba(1, 194, 222,0.781),
+  inset 2px 3px 5px rgba(1, 194, 222,0.781),
+  inset -2px -3px 5px rgba(243, 255, 254, 0.8);
+}
+
+.glow-red
+{
+  box-shadow:   
+  -1px -1.5px 2.5px rgba(233, 86, 157,0.781),
+  1px 1.5px 2.5px rgba(1, 194, 222,0.5),
+  inset 2px 3px 5px rgba(233, 86, 157,0.781),
+  inset -2px -3px 5px rgba(1, 194, 222,0.5);
+}
+
+.glow-gem
+{
+  background: rgba(0,0,0,0.0) !important;
+  border: 0 !important; 
+  border-left: 2px solid var(--primary-color) !important; 
+  border-right: 2px solid var(--secondary-transparent) !important;
+  background-image: 
+  linear-gradient(90deg, var(--primary-color), var(--secondary-color)),
+  linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
+  background-size: 100% 2px !important; 
+  background-position: 0 0, 0 100% !important;
+  background-repeat: no-repeat !important;
+  box-shadow:   
+  -2px -3px 5px var(--primary-transparent),
+  2px 3px 5px var(--secondary-transparent),
+  inset 2px 3px 5px var(--primary-transparent),
+  inset -2px -3px 5px var(--secondary-transparent);
+}
+
+.glow-0
+{
+  --primary-color: rgb(186, 118, 0);
+  --primary-transparent: rgba(186, 118, 0, 0.781);
+  --secondary-color: rgb(252, 162, 5);
+  --secondary-transparent: rgba(252, 162, 0, 0.8);
+}
+
+.glow-1
+{
+  --primary-color: rgb(32, 0, 107);
+  --primary-transparent: rgba(32, 0, 107, 0.781);
+  --secondary-color: rgb(29, 111, 244);
+  --secondary-transparent: rgba(29, 111, 244, 0.8);
+}
+.glow-2
+{
+  --primary-color: rgb(107, 0, 0);
+  --primary-transparent: rgb(107, 0, 0);
+  --secondary-color: rgb(255, 28, 28);
+  --secondary-transparent: rgba(255, 28, 28, 0.8);
+}
 
 
 #WEB3_CONNECT_MODAL_ID

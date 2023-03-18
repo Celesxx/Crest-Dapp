@@ -62,11 +62,16 @@ class Dashboard extends React.Component
           loadingOver: this.props.loadingOver,
           amountPrice: null,
           language: this.props.language,
-          width : props.width
+          width : props.width,
+          initialHeight: null,
+          currentHeight: null,
+          keyboard: false,
 
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleKeyboardResize = this.handleKeyboardResize.bind(this)
+        this.handleKeyboardDetect = this.handleKeyboardDetect.bind(this)
     }
 
     async UNSAFE_componentWillMount()
@@ -84,6 +89,43 @@ class Dashboard extends React.Component
               this.state.dataOut.balance = this.props.tokenUser.balance;
             }
         }
+
+        this.state.initialHeight = document.documentElement.clientHeight
+        console.log(this.state.initialHeight)
+        window.addEventListener('resize', this.handleKeyboardDetect);
+    }
+
+    handleKeyboardDetect()
+    {
+      if(this.state.keyboard) this.state.currentHeight = document.documentElement.clientHeight
+      if(this.state.keyboard && this.state.initialHeight == this.state.currentHeight) 
+      {
+        console.log("---------------------------")
+        console.log("test")
+        console.log(this.state.initialHeight)
+        console.log(this.state.currentHeight)
+        console.log(this.state.keyboard)
+        console.log("---------------------------")
+        const metaViewport = document.querySelector("meta[name=viewport]")
+        metaViewport.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+        this.state.keyboard = false
+      }
+    }
+    handleKeyboardResize()
+    {
+      this.state.currentHeight = document.documentElement.clientHeight
+      this.state.keyboard = true
+      const metaViewport = document.querySelector("meta[name=viewport]")
+      document.documentElement.style.setProperty("overflow", "auto")
+      metaViewport.setAttribute("content", "height=" + this.state.initialHeight + "px, width=device-width, initial-scale=1.0")
+      this.state.keyboard = true
+
+      console.log("---------------------------")
+      console.log("test1")
+      console.log(this.state.initialHeight)
+      console.log(this.state.currentHeight)
+      console.log(this.state.keyboard)
+      console.log("---------------------------")
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) 
@@ -277,7 +319,7 @@ class Dashboard extends React.Component
               <div className="swap-core flex column">
                 <div className="swap-content-core">
 
-                <button className="swap-button-mint button" onClick={() => this.mintToken()}>Mint $BUSD</button>
+                <button className="swap-button-mint glow glow-red button" onClick={() => this.mintToken()}>Mint $BUSD</button>
 
                 <div className="card-core flex column center">
                 
@@ -293,7 +335,7 @@ class Dashboard extends React.Component
                     </div>
 
                     <div className="card-input-core">
-                    <input className="card-input" type="text" name="crest" id="balanceIn" onKeyPress={this.checkNumber} onChange={this.handleChange}></input>
+                    <input className="card-input glow" type="text" name="crest" id="balanceIn" onFocus={this.handleKeyboardResize} onKeyPress={this.checkNumber} onChange={this.handleChange}></input>
                     <button className="card-max" onClick={() => this.setMaxValue()}>{ Language[this.state.language].swap.maxBtn }</button>
                     </div>
 
@@ -321,7 +363,7 @@ class Dashboard extends React.Component
                     </div>
 
                     <div className="card-input-core">
-                      <div className="card-input flex row center" type="text" name="crest">{this.state.amountPrice != null ? contractHelper.getNb(this.state.amountPrice, 6) : this.state.amountPrice}</div>
+                      <div className="card-input glow flex row center" type="text" name="crest">{this.state.amountPrice != null ? contractHelper.getNb(this.state.amountPrice, 6) : this.state.amountPrice}</div>
                     </div>
 
                 </div>
@@ -333,12 +375,12 @@ class Dashboard extends React.Component
                 
                   {
                     this.state.sellLoader === "token" && this.state.tokenUser.allowanceLm 
-                    ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
+                    ?( <button className="swap-button glow glow-red button " name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
                     
                     : this.state.sellLoader === "usdt" && this.state.stableUser.allowanceLm 
-                    ?( <button className="swap-button button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
+                    ?( <button className="swap-button glow glow-red button" name="submit" onClick={() => this.swapToken()}>{ Language[this.state.language].swap.swapBtn }</button> )
                     
-                    :( <button className="swap-button button" name="submit" onClick={() => this.setAllowance()}>{ Language[this.state.language].swap.approveBtn }</button> )
+                    :( <button className="swap-button glow glow-red button" name="submit" onClick={() => this.setAllowance()}>{ Language[this.state.language].swap.approveBtn }</button> )
                   }
                 </div>
 

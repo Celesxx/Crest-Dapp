@@ -247,7 +247,7 @@ class Navbar extends React.Component
     {
       
       return(
-          <div className="navbar flex row">
+          <div className="navbar glow glow-bottom flex row">
 
             <div className="navbar-logo flex row center">
               <img className="logo-crest" src={Logo} alt={Logo} />  
@@ -256,7 +256,7 @@ class Navbar extends React.Component
             <div className="navbar-core flex row">
 
                 
-              <form className="navbar-select" tabIndex="1" onChange={this.handleChange}>
+              <form className="navbar-select glow" tabIndex="1" onChange={this.handleChange}>
                 <input name="language-select" className="navbar-input" type="radio" id="english" defaultChecked={ this.state.language == "en" ? true : false }/>
                 <label htmlFor="english" className="navbar-option">English</label>
                 <input name="language-select" className="navbar-input" type="radio" id="spanish" defaultChecked={ this.state.language == "sp" ? true : false }/>
@@ -268,7 +268,7 @@ class Navbar extends React.Component
               </form>
 
 
-              <form className="navbar-select" tabIndex="1" onChange={this.handleChangeLink}>
+              <form className="navbar-select glow" tabIndex="1" onChange={this.handleChangeLink}>
                 <input name="doc-select" className="navbar-input" type="radio" id="opt1" defaultChecked/>
                 <label htmlFor="opt1" className="navbar-option"> { Language[this.state.language].navbar.selectDocs.default } </label>
                 <input name="doc-select" className="navbar-input" type="radio" id="opt2"/>
@@ -289,7 +289,7 @@ class Navbar extends React.Component
             <div className="navbar-button flex row">
               <div className="navbar-button-core flex row">
                 
-                  <button className="button market-button flex row center"> 
+                  <button className="button glow market-button flex row center"> 
                     <Link to="/swap" className="market-navbar-link flex row center"><p>{ Language[this.state.language].navbar.buyButton }</p></Link>
                   </button>
                 

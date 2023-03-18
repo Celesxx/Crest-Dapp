@@ -250,7 +250,7 @@ class Dashboard extends React.Component
                             return (
                                 <div key={`profile-${key}`} className="profile-laderboard-cards flex column">
                                     <p className="profile-title">{value.name}</p>
-                                    <div className="profile-score flex row center">{contractHelper.getNb(this.state.totalReward[key], 6)}</div>
+                                    <div className={`profile-score glow-gem glow-${key} flex row center`}>{contractHelper.getNb(this.state.totalReward[key], 6)}</div>
                                 </div>
                             )
                         })
@@ -259,15 +259,15 @@ class Dashboard extends React.Component
 
                 </div>
 
-                <button className="claim-all-button button" onClick={() => this.claimAllBadges()}>{ Language[this.state.language].profile.claimAllBtn } ({this.state.nbrCheck}/{this.state.claimBadges.length})</button>
+                <button className="claim-all-button glow-blue button" onClick={() => this.claimAllBadges()}>{ Language[this.state.language].profile.claimAllBtn } ({this.state.nbrCheck}/{this.state.claimBadges.length})</button>
 
             </div>
 
             <div className="profile-table-core flex column">
                 
-                <div className="profile-table-heads flex row">
+                <div className="profile-table-heads glow glow-bottom flex row">
                     <div className="profile-table-radio profile-table-title flex row center">
-                        <div className="profile-table-radio-core flex row center">
+                        <div className="profile-table-radio-core glow glow-right flex row center">
                             <div className="profile-table-input flex row center">
                                 <input type="checkbox" checked={this.state.allChecked} className="profile-radio-input" id="radio-all" name="radio-all" onChange={() => this.allSelect()} />
                                 { this.state.allChecked != false && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }

@@ -121,14 +121,14 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center" id="currentDashboard">
+                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash glow-red button-protocol flex row center" id="currentDashboard">
                             { 
                                 this.state.width <= 1200 
                                 ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>
                                 : Language[this.state.language].dashboard.protocolTitle
                             }
                         </button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center">
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash glow glow-blue button-personnal flex row center">
                             { 
                                 this.state.width <= 1200
                                 ? <img className="dashboard-button-logo" src={PersonnalIcon} alt={PersonnalIcon}></img>
@@ -143,35 +143,35 @@ class Dashboard extends React.Component
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">{ Language[this.state.language].dashboard.crestPrice }</p>
-                        <div className="dashboard-items flex row center">
+                        <div className="dashboard-items glow flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.price, 2)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">{ Language[this.state.language].dashboard.marketcap }</p>
-                        <div className="dashboard-items flex row center">
+                        <div className="dashboard-items glow flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.marketCap, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">{ Language[this.state.language].dashboard.totalNft }</p>
-                        <div className="dashboard-items flex row center">
+                        <div className="dashboard-items glow flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalBadges, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">{ Language[this.state.language].dashboard.totalSupply }</p>
-                        <div className="dashboard-items flex row center">
+                        <div className="dashboard-items glow flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalSupply, 0)}</p>
                         </div>
                     </div>
 
                     <div className="dashboard-cards flex column">
                         <p className="title-dashboard">{ Language[this.state.language].dashboard.totalBurn }</p>
-                        <div className="dashboard-items flex row center">
+                        <div className="dashboard-items glow flex row center">
                             <p className="dashboard-text-stat">{contractHelper.getNb(this.state.totalBurn, 0)}</p>
                         </div>
                     </div>
@@ -184,6 +184,8 @@ class Dashboard extends React.Component
                             (
                                 this.state.badges.map((value, key) => 
                                 {
+
+                                    
                                     if(this.state.width <= 1200)
                                     {
                                         return(
@@ -191,7 +193,7 @@ class Dashboard extends React.Component
                                                 <div className="dashboard-badge-img-core flex center">
                                                     <img className="dashboard-badge-img" src={this.state.badgesLogo[key]} alt={this.state.badgesLogo[key]}></img>
                                                 </div>
-                                                <div className="dashboard-badge-items flex row">
+                                                <div className={`dashboard-badge-items glow-gem glow-${key} flex row`}>
                                                     <p className="dashboard-badge-title">{value.name }</p>
                                                     <div className="dashboard-badge-separator"></div>
                                                     <p className="dashboard-badge-count">{contractHelper.getNb(value.totalSupply, 0)}/{contractHelper.getNb(value.max, 0)}</p>
@@ -201,7 +203,7 @@ class Dashboard extends React.Component
                                     }else 
                                     {
                                         return(
-                                            <div key={`dashboard-${key}`} className="dashboard-badge-items dashboard-badge-web flex row">
+                                            <div key={`dashboard-${key}`} className={`dashboard-badge-items glow-gem glow-${key} dashboard-badge-web flex row`}>
                                                 <p className="dashboard-badge-title">{value.name }</p>
                                                 <p className="dashboard-badge-count">{contractHelper.getNb(value.totalSupply, 0)}/{contractHelper.getNb(value.max, 0)}</p>
                                             </div>

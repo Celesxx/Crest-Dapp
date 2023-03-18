@@ -141,14 +141,14 @@ class Dashboard extends React.Component
                 <div className="dashboard-button flex row">
                     <div className="dashboard-button-core flex row">
 
-                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash button-protocol flex row center">
+                        <button onClick={() => this.props.history.push("/dashboard")} className="button-dash glow glow-red button-protocol flex row center">
                             { 
                                 this.state.width <= 1200
                                 ? <img className="dashboard-button-logo" src={GlobalIcon} alt={GlobalIcon}></img>
                                 : Language[this.state.language].dashboard.protocolTitle
                             }
                         </button>
-                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash button-personnal flex row center" id="currentDashboard">
+                        <button onClick={() => this.props.history.push("/dashboard/personnal")} className="button-dash glow glow-blue button-personnal flex row center" id="currentDashboard">
                             { 
                                 this.state.width <= 1200
                                 ? <img className="dashboard-button-logo" src={PersonnalIcon} alt={PersonnalIcon}></img>
@@ -171,7 +171,7 @@ class Dashboard extends React.Component
                                     if(value.userNbrBadge != 0)
                                     {
                                         return(
-                                            <div key={`personal-${key}`} className="personnal-cards flex column">
+                                            <div key={`personal-${key}`} className={`personnal-cards glow-gem glow-${key} flex column`}>
                                                 <video className="personnal-video" autoPlay muted loop>
                                                     <source src={this.state.videoSrc[key]} alt={this.state.videoSrc[key]} type="video/mp4" />
                                                 </video>
@@ -181,7 +181,7 @@ class Dashboard extends React.Component
                                     } else 
                                     {
                                         return(
-                                            <div key={`personal-${key}`} className="personnal-cards flex column">
+                                            <div key={`personal-${key}`} className={`personnal-cards glow-gem glow-${key}  flex column`}>
                                                 <video className="personnal-video" autoPlay muted loop>
                                                     <source src={this.state.videoSrc[key]} alt={this.state.videoSrc[key]} type="video/mp4" />
                                                 </video>
@@ -204,7 +204,7 @@ class Dashboard extends React.Component
 
                         <div className="personnal-info-cards flex column">
                             <p className="info-title">{ Language[this.state.language].personnal.myNft }</p>
-                            <div className="info-cards flex row center">
+                            <div className="info-cards glow flex row center">
                                 <p className="info-text">
                                     { this.state.amountNft }
                                 </p>
@@ -213,7 +213,7 @@ class Dashboard extends React.Component
 
                         <div className="personnal-info-cards flex column">
                             <p className="info-title">{ Language[this.state.language].personnal.crestBalance }</p>
-                            <div className="info-cards flex row center">
+                            <div className="info-cards glow flex row center">
                                 <p className="info-text">
                                     {contractHelper.getNb(this.state.tokenUser.balance, 2)}
                                 </p>
@@ -222,7 +222,7 @@ class Dashboard extends React.Component
 
                         <div className="personnal-info-cards flex column">
                             <p className="info-title">{ Language[this.state.language].personnal.dailyReward }</p>
-                            <div className="info-cards flex row center">
+                            <div className="info-cards glow flex row center">
                                 <p className="info-text">
                                     {contractHelper.getNb(this.state.amountDailyReward, 2)}
                                 </p>
@@ -231,7 +231,7 @@ class Dashboard extends React.Component
 
                         <div className="personnal-info-cards flex column">
                             <p className="info-title">{ Language[this.state.language].personnal.pendingReward }</p>
-                            <div className="info-cards flex row center">
+                            <div className="info-cards glow flex row center">
                                 <p className="info-text">
                                     {contractHelper.getNb(this.state.amountTotalPendingRewards, 6)}
                                 </p>

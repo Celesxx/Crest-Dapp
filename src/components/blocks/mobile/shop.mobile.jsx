@@ -244,7 +244,7 @@ class ShopMobile extends React.Component
                                                 </button>
                                             ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                         )
-                                    ) : <div className="shop-popup-button">{ Language[this.state.language].shopPop.soldout }</div>
+                                    ) : <div className="shop-items-button flex center">{ Language[this.state.language].shopPop.soldout }</div>
                                 }
                                         
                                     </div>

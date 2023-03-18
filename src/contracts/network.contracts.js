@@ -62,4 +62,4 @@ export const binance_test = {
     ],
 }
 
-export default binance_test
+export default avalanche_fuji

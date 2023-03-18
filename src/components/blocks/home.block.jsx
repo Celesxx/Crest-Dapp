@@ -153,4 +153,5 @@ class Home extends React.Component
   }
 }
 
+
 export default connect(MapStateToProps)(Home);
