@@ -184,9 +184,9 @@ class ShopMobile extends React.Component
                                         
                                         <h3 className="shop-items-title">{value.name} </h3>
                                         <div className="shop-count-core flex row center">
-                                            <button className="button shop-min" onClick={() => this.removeBadges(key)}>-</button>
+                                            <button className="button glow-red-mobile shop-min" onClick={() => this.removeBadges(key)}>-</button>
                                             <h1 className="shop-count-text">{this.state.buyNbr[key]}</h1>
-                                            <button className="button shop-max" onClick={() => this.addBadges(key)}>+</button>
+                                            <button className="button glow-red-mobile shop-max" onClick={() => this.addBadges(key)}>+</button>
                                         </div>
                                         <div className="shop-items-data-core">
                                         
@@ -232,25 +232,25 @@ class ShopMobile extends React.Component
                                         } */}
 
                                     {
-                                    parseInt(value.totalSupply) < parseInt(value.max)
-                                    ? (
-                                        this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
-                                        (
-                                            this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
-                                            ?(
-                                                <button className="button shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
-                                                    <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
-                                                    <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key]}$CREST</p>
-                                                </button>
-                                            ): <button className="button shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
-                                        )
-                                    ) : <div className="shop-items-button flex center">{ Language[this.state.language].shopPop.soldout }</div>
-                                }
+                                        parseInt(value.totalSupply) < parseInt(value.max)
+                                        ? (
+                                            this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
+                                            (
+                                                this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
+                                                ?(
+                                                    <button className="button glow-red-mobile shop-items-button flex row" onClick={() => this.buyBadges(key)}> 
+                                                        <img className="shop-items-button-icon" src={cartIcon} alt={cartIcon} />
+                                                        <p className="shop-items-button-text">{contractHelper.setFormatUnit(value.price, 18) * this.state.buyNbr[key]}$CREST</p>
+                                                    </button>
+                                                ): <button className="button glow-red-mobile shop-items-button flex center" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
+                                            )
+                                        ) : <div className="shop-items-button flex center">{ Language[this.state.language].shopPop.soldout }</div>
+                                    }
                                         
                                     </div>
 
 
-                                    <div className="shop-items">
+                                    <div className={`shop-items glow-gem glow-${key}`}>
                                         <video className="shop-video" autoPlay muted loop>
                                             <source src={this.state.videoSrc[key]} type="video/mp4" />
                                         </video>

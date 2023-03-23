@@ -31,7 +31,7 @@ p, h1, h2, h3, h4, input, a, button { font-family: "inter-Regular"; }
 {
     border: 0px !important;
     background: rgba(0,0,0,0.0) !important;
-    border: 0;
+    border: 0 !important;
     border-right: 2px solid rgb(0, 133, 255) !important;
     border-left: 2px solid rgba(255, 26, 136, 0.8) !important;
     background-image: 
@@ -56,22 +56,33 @@ button
   color: white;
 }
 
+
 .glow
 {
   --glow-color: rgb(255, 255, 255, 0.8);
   --glow-spread-color: rgba(202, 202, 202, 0.781);
   outline: none;
-  box-shadow: 
+  -webkit-box-shadow: 
   0 0 0.25em 0.05em var(--glow-color), 
   0 0 0em 0em var(--glow-spread-color),
-  inset 0em -0.05em 0.5em 0em var(--glow-color);
+  inset 0em -2px 0.5em 0em var(--glow-color);
+          box-shadow: 
+  0 0 0.25em 0.05em var(--glow-color), 
+  0 0 0em 0em var(--glow-spread-color),
+  inset 0em -2px 0.5em 0em var(--glow-color);
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 
 
 .glow-bottom
 {
-  box-shadow: 
+  -webkit-box-shadow: 
+  1em 0 0 rgb(0 0 0), 
+  -1em 0 0 rgb(0 0 0), 
+  0 0.1em 0.6em var(--glow-color);
+          box-shadow: 
   1em 0 0 rgb(0 0 0), 
   -1em 0 0 rgb(0 0 0), 
   0 0.1em 0.6em var(--glow-color)
@@ -79,7 +90,12 @@ button
 
 .glow-right
 {
-  box-shadow: 
+  -webkit-box-shadow: 
+  0 0.1px 0 rgb(0 0 0), 
+  0 -0.1px 0 rgb(0 0 0), 
+  -0.5em 0 0 rgb(0 0 0), 
+  0.1em 0 0.6em var(--glow-color);
+          box-shadow: 
   0 0.1px 0 rgb(0 0 0), 
   0 -0.1px 0 rgb(0 0 0), 
   -0.5em 0 0 rgb(0 0 0), 
@@ -89,20 +105,71 @@ button
 
 .glow-blue
 {
-  box-shadow: 
+  -webkit-box-shadow: 
+  1px 1.5px 2.5px rgba(243, 255, 254, 0.8),
+  -1px -1.5px 2.5px rgba(1, 194, 222,0.781),
+  inset 2px 3px 5px rgba(1, 194, 222,0.781),
+  inset -2px -3px 5px rgba(243, 255, 254, 0.8);
+          box-shadow: 
   1px 1.5px 2.5px rgba(243, 255, 254, 0.8),
   -1px -1.5px 2.5px rgba(1, 194, 222,0.781),
   inset 2px 3px 5px rgba(1, 194, 222,0.781),
   inset -2px -3px 5px rgba(243, 255, 254, 0.8);
 }
 
+.glow-blue-mobile
+{
+  -webkit-box-shadow: 
+  0.5px 1px 1.5px rgba(243, 255, 254, 0.8),
+  -0.5px -1px 1.5px rgba(1, 194, 222,0.781),
+  inset 1px 1.5px 2.5px rgba(1, 194, 222,0.781),
+  inset -1px -1.5px 2.5px rgba(243, 255, 254, 0.8);
+          box-shadow: 
+  0.5px 1px 1.5px rgba(243, 255, 254, 0.8),
+  -0.5px -1px 1.5px rgba(1, 194, 222,0.781),
+  inset 1px 1.5px 2.5px rgba(1, 194, 222,0.781),
+  inset -1px -1.5px 2.5px rgba(243, 255, 254, 0.8);
+}
+
+.glow-claim
+{
+  -webkit-box-shadow: 
+  0.5px 1px 2px rgba(243, 255, 254, 0.8),
+  -0.5px -1px 2px rgba(1, 194, 222,0.781),
+  inset 1px 1.5px 2.5px rgba(1, 194, 222,0.781),
+  inset -1px -1.5px 2.5px rgba(243, 255, 254, 0.8);
+          box-shadow: 
+  0.5px 1px 2px rgba(243, 255, 254, 0.8),
+  -0.5px -1px 2px rgba(1, 194, 222,0.781),
+  inset 1px 1.5px 2.5px rgba(1, 194, 222,0.781),
+  inset -1px -1.5px 2.5px rgba(243, 255, 254, 0.8);
+}
 .glow-red
 {
-  box-shadow:   
-  -1px -1.5px 2.5px rgba(233, 86, 157,0.781),
+  -webkit-box-shadow:   
+  -1px -1.5px 2.5px rgba(233, 86, 157,0.5),
   1px 1.5px 2.5px rgba(1, 194, 222,0.5),
-  inset 2px 3px 5px rgba(233, 86, 157,0.781),
+  inset 2px 3px 5px rgba(233, 86, 157,0.5),
   inset -2px -3px 5px rgba(1, 194, 222,0.5);
+          box-shadow:   
+  -1px -1.5px 2.5px rgba(233, 86, 157,0.5),
+  1px 1.5px 2.5px rgba(1, 194, 222,0.5),
+  inset 2px 3px 5px rgba(233, 86, 157,0.5),
+  inset -2px -3px 5px rgba(1, 194, 222,0.5);
+}
+
+.glow-red-mobile
+{
+  -webkit-box-shadow:   
+  -0.5px -1px 1.5px rgba(233, 86, 157,0.5),
+  0.5px 1px 1.5px rgba(1, 194, 222,0.5),
+  inset 1px 1.5px 2.5px rgba(233, 86, 157,0.5),
+  inset -1px -1.5px 2.5px rgba(1, 194, 222,0.5);
+          box-shadow:   
+  -0.5px -1px 1.5px rgba(233, 86, 157,0.5),
+  0.5px 1px 1.5px rgba(1, 194, 222,0.5),
+  inset 1px 1.5px 2.5px rgba(233, 86, 157,0.5),
+  inset -1px -1.5px 2.5px rgba(1, 194, 222,0.5);
 }
 
 .glow-gem
@@ -112,16 +179,35 @@ button
   border-left: 2px solid var(--primary-color) !important; 
   border-right: 2px solid var(--secondary-transparent) !important;
   background-image: 
+  -webkit-gradient(linear, left top, right top, from(var(--primary-color)), to(var(--secondary-color))),
+  -webkit-gradient(linear, left top, right top, from(var(--primary-color)), to(var(--secondary-color))) !important;
+  background-image: 
+  -o-linear-gradient(left, var(--primary-color), var(--secondary-color)),
+  -o-linear-gradient(left, var(--primary-color), var(--secondary-color)) !important;
+  background-image: 
   linear-gradient(90deg, var(--primary-color), var(--secondary-color)),
   linear-gradient(90deg, var(--primary-color), var(--secondary-color)) !important;
   background-size: 100% 2px !important; 
   background-position: 0 0, 0 100% !important;
   background-repeat: no-repeat !important;
-  box-shadow:   
-  -2px -3px 5px var(--primary-transparent),
-  2px 3px 5px var(--secondary-transparent),
-  inset 2px 3px 5px var(--primary-transparent),
-  inset -2px -3px 5px var(--secondary-transparent);
+  -webkit-box-shadow:   
+  -1px -1.5px 5px var(--primary-transparent),
+  1px 1.5px 5px var(--secondary-transparent),
+  inset 1px 1.5px 5px var(--primary-transparent),
+  inset -1px -1.5px 5px var(--secondary-transparent),
+  inset 0 2px 1px hsla(0, 0%, 100%, 0.5),
+  inset 0 -2px 1px hsla(250, 70%, 5%, 0.3),
+  0 -2px 6px hsla(0, 0%, 100%, 0.25);
+          box-shadow:   
+  -1px -1.5px 5px var(--primary-transparent),
+  1px 1.5px 5px var(--secondary-transparent),
+  inset 1px 1.5px 5px var(--primary-transparent),
+  inset -1px -1.5px 5px var(--secondary-transparent),
+  inset 0 2px 1px hsla(0, 0%, 100%, 0.5),
+  inset 0 -2px 1px hsla(250, 70%, 5%, 0.3),
+  0 -2px 6px hsla(0, 0%, 100%, 0.25);
+
+  
 }
 
 .glow-0
@@ -146,7 +232,6 @@ button
   --secondary-color: rgb(255, 28, 28);
   --secondary-transparent: rgba(255, 28, 28, 0.8);
 }
-
 
 #WEB3_CONNECT_MODAL_ID
 {

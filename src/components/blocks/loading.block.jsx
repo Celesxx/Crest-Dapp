@@ -12,7 +12,7 @@ class Loading extends React.Component
       return(
           <div className="loading-home flex column center">
 
-              <video className="shop-video" autoPlay muted loop>
+              <video className="loading-video" autoPlay muted loop>
                   <source src={LoadingAnimation} type="video/mp4" />
               </video>
 

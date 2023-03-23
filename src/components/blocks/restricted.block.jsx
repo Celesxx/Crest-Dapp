@@ -100,7 +100,7 @@ class LoadingData extends React.Component
             <div className="restricted-core flex column center">
                 <div className="restricted-card flex column">
                     <h1 className="restricted-title">Connect your wallet to unlock this panel!</h1>
-                    <button className="button restricted-button flex row center border-gradient-bluePink" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
+                    <button className="button glow-red restricted-button flex row center border-gradient-bluePink" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
                 </div>
                 
             </div>

@@ -235,14 +235,14 @@ class Topbar extends React.Component
   render()
     {
       return(
-        <div className="navbar-mobile-core flex row">
+        <div className="navbar-mobile-core glow glow-bottom flex row">
 
           <input id="navbar-toggle" type="checkbox" onClick={() => this.toggleMenu()} />
           <label className="navbar-mobile-label" htmlFor="navbar-toggle">
             <span className="navbar-mobile-span"></span>
           </label>
 
-          <form className="navbar-select navbar-select-mobile" tabIndex="1" onChange={this.handleChange}>
+          <form className="navbar-select glow navbar-select-mobile" tabIndex="1" onChange={this.handleChange}>
             <input name="language-select" className="navbar-input" type="radio" id="english" defaultChecked={ this.state.language == "en" ? true : false }/>
             <label htmlFor="english" className="navbar-option">English</label>
             <input name="language-select" className="navbar-input" type="radio" id="spanish" defaultChecked={ this.state.language == "sp" ? true : false }/>

@@ -133,7 +133,7 @@ class BuyPopup extends React.Component
                         
                         <button className="shop-popup-close button" onClick={close}> &times; </button>
                         
-                        <video className="shop-popup-items" autoPlay muted loop>
+                        <video className={`shop-popup-items glow-gem glow-${this.state.badgesIndex}`} autoPlay muted loop>
                             <source src={this.state.videoSrc[this.state.badgesIndex]} type="video/mp4" />
                         </video>
 
@@ -142,9 +142,9 @@ class BuyPopup extends React.Component
                             <h1 className="shop-popup-title">{this.state.badges[this.state.badgesIndex].name}</h1>
 
                             <div className="shop-popup-count-core flex row center">
-                                <button className="button shop-popup-min" onClick={() => this.removeBadges()}>-</button>
+                                <button className="button glow-red-mobile shop-popup-min" onClick={() => this.removeBadges()}>-</button>
                                 <h1 className="shop-popup-count-text">{this.state.buyNbr}</h1>
-                                <button className="button shop-popup-max" onClick={() => this.addBadges()}>+</button>
+                                <button className="button glow-red-mobile shop-popup-max" onClick={() => this.addBadges()}>+</button>
                             </div>
 
                             <div className="shop-popup-info-core flex row">
@@ -185,10 +185,10 @@ class BuyPopup extends React.Component
                                     this.state.erc20DispatchManager[this.state.tokenChoices] !== undefined &&
                                     (
                                         this.state.erc20DispatchManager[this.state.tokenChoices].allowance === true 
-                                        ? <button className="button shop-popup-button" onClick={() => this.buyBadges()}>{ Language[this.state.language].shopPop.buyBtn }</button>
-                                        : <button className="button shop-popup-button" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
+                                        ? <button className="button glow-red shop-popup-button" onClick={() => this.buyBadges()}>{ Language[this.state.language].shopPop.buyBtn }</button>
+                                        : <button className="button glow-red shop-popup-button" onClick={() => this.setAllowance()}>{ Language[this.state.language].shopPop.approveBtn }</button>
                                     )
-                                ) : <div className="shop-popup-button flex center">{ Language[this.state.language].shopPop.soldout }</div>
+                                ) : <div className="shop-popup-button glow-red flex center">{ Language[this.state.language].shopPop.soldout }</div>
                             }
                             
                             

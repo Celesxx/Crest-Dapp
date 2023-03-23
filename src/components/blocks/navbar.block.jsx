@@ -289,14 +289,14 @@ class Navbar extends React.Component
             <div className="navbar-button flex row">
               <div className="navbar-button-core flex row">
                 
-                  <button className="button glow market-button flex row center"> 
+                  <button className="button glow-red market-button border-gradient-bluePink flex row center"> 
                     <Link to="/swap" className="market-navbar-link flex row center"><p>{ Language[this.state.language].navbar.buyButton }</p></Link>
                   </button>
                 
                 {
                   this.state.address !== "" 
                   ?<div className="navbar-address-core flex row center"><p className='navbar-address'>{ this.state.address.substr(0, 6) + '...' +  this.state.address.substr( this.state.address.length - 6,  this.state.address.length)  }</p></div>
-                  :<button className="button dapp-button flex row center" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
+                  :<button className="button dapp-button glow-red border-gradient-bluePink flex row center" onClick={() => this.connectWallet()}> <p>Connect Wallet</p> </button>
                 }
                 
               </div>

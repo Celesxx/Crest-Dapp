@@ -302,9 +302,9 @@ class Dashboard extends React.Component
                         this.state.claimBadges.map((value, key) => 
                         {
                             return (
-                                <div key={key} className="profile-table-data flex row">
+                                <div key={key} className="profile-table-data glow glow-bottom flex row">
                                     <div className="profile-table-radio profile-table-title flex row center" >
-                                        <div className="profile-table-radio-core flex row center">
+                                        <div className="profile-table-radio-core glow glow-right flex row center">
                                             <div className="profile-table-input flex row center">
                                                 <input type="checkbox" checked={this.state.checked[key]} className="profile-radio-input" id={`radio-${key}`} name={`radio-${key}`} onChange={() => this.multipleSelect(key, value)} />
                                                 { this.state.checked[key] !== false && this.state.checked[key] !== undefined && <FontAwesomeIcon icon={faCheck} className="profile-radio-checked"/> }
@@ -319,12 +319,12 @@ class Dashboard extends React.Component
                                     { this.state.width > 1500 && <p className="profile-table-desc">{value.lifetime}</p> }
                                     <p className="profile-table-desc">{contractHelper.getNb(value.rewards, 6)}</p>
                                     <div className="profile-table-desc profile-table-button-core flex row center">
-                                        <button className="button profile-table-button" onClick={() => this.singleSelect(key, value)}>{ Language[this.state.language].profile.claimBtn }</button>
+                                        <button className="button glow-claim profile-table-button" onClick={() => this.singleSelect(key, value)}>{ Language[this.state.language].profile.claimBtn }</button>
                                     </div>
                                 </div>
                             )
                         })
-                    )
+                    ) 
                 }
 
             </div>
