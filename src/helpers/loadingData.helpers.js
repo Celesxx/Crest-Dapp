@@ -26,7 +26,7 @@ class LoadingHelper
         props.dashboardAction({loading : {}, action: "loading"})
         const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
         props.dashboardAction({loading : {}, action: "loading"})
-        const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 18)
+        const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
         props.dashboardAction({loading : {}, action: "loading"})
         const globalBadges = await contractHelper.getGlobalBadges(provider)
         props.dashboardAction({loading : {}, action: "loading"})
@@ -63,9 +63,9 @@ class LoadingHelper
         
         
         props.dashboardAction({loading : {}, action: "loading"})
-        data.tokenUser.balance = await contractHelper.setFormatUnit(userCrestBalance, 18)
+        data.tokenUser.balance = await contractHelper.setFormatUnit(userCrestBalance, 6)
         props.dashboardAction({loading : {}, action: "loading"})
-        data.stableUser.balance = await contractHelper.setFormatUnit(userStableBalance, 18)
+        data.stableUser.balance = await contractHelper.setFormatUnit(userStableBalance, 6)
         props.dashboardAction({loading : {}, action: "loading"})
 
         

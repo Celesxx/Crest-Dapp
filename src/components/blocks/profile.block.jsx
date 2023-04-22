@@ -122,13 +122,13 @@ class Dashboard extends React.Component
                 dataClaim.date = contractHelper.formatEpochToDate(new Date(valueNft.creationTime * 1000))
                 dataClaim.claimDate = contractHelper.formatEpochToDate(new Date(valueNft.lastClaim * 1000))
 
-                let [ formatPrice, formatRewardAmount ] = [ contractHelper.setFormatUnit(value.price, 18), contractHelper.setFormatUnit(value.rewardAmount, 18) ]
+                let [ formatPrice, formatRewardAmount ] = [ contractHelper.setFormatUnit(value.price, 6), contractHelper.setFormatUnit(value.rewardAmount, 6) ]
                 let roiTime = (formatPrice / formatRewardAmount) * 24 * 3600
 
                 dataClaim.roi = contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(roiTime)) * 1000))
                 dataClaim.lifetime = contractHelper.formatEpochToDate(new Date((valueNft.creationTime + parseInt(365 * 24 * 3600)) * 1000))
                 let formatRewards = contractHelper.getPendingRewards(valueNft, value.rewardAmount)
-                dataClaim.rewards = contractHelper.setFormatUnit(formatRewards.toString(), 18)
+                dataClaim.rewards = contractHelper.setFormatUnit(formatRewards.toString(), 6)
                 amountReward += parseFloat(dataClaim.rewards)
 
                 this.state.claimBadges.push(dataClaim)
@@ -221,7 +221,7 @@ class Dashboard extends React.Component
 
         const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
         const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-        const formatUnit = await contractHelper.setFormatUnits({userCrestBalance : userCrestBalance, totalSupply: totalSupply}, 18)
+        const formatUnit = await contractHelper.setFormatUnits({userCrestBalance : userCrestBalance, totalSupply: totalSupply}, 6)
         this.props.dashboardAction({data : {tokenUser: {balance : formatUnit.userCrestBalance}, totalSupply : formatUnit.totalSupply}, action : 'saveData'})
         
     }

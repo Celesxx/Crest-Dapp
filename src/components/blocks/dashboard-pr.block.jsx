@@ -66,11 +66,11 @@ class Dashboard extends React.Component
             for(const [key, value] of Object.entries(this.state.badges))
             {
                 let amountPendingRewards = 0
-                amountDailyReward += parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 18)) * value.userNbrBadge
+                amountDailyReward += parseFloat(contractHelper.setFormatUnit(value.rewardAmount, 6)) * value.userNbrBadge
                 amountNft += value.userNbrBadge
                 for(const value1 of value.userBadges)
                 {
-                    amountPendingRewards += parseFloat(contractHelper.setFormatUnit((contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),18))
+                    amountPendingRewards += parseFloat(contractHelper.setFormatUnit((contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),6))
                 }
                 amountTotalPendingRewards += amountPendingRewards
                 this.state.amountPendingRewards.push(amountPendingRewards)
@@ -116,7 +116,7 @@ class Dashboard extends React.Component
                 let amountPendingRewards = 0
                 for(const value1 of value.userBadges)
                 {
-                    amountPendingRewards += parseFloat(contractHelper.setFormatUnit((contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),18))
+                    amountPendingRewards += parseFloat(contractHelper.setFormatUnit((contractHelper.getPendingRewards(value1, value.rewardAmount)).toString(),6))
                 }
                 amountTotalPendingRewards += amountPendingRewards
                 this.state.amountPendingRewards.push(amountPendingRewards)

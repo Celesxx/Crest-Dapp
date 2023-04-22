@@ -192,7 +192,7 @@ class Topbar extends React.Component
 
     const { resToken, resStable } = await contractHelper.getReserves(provider)
     const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
-    const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 18)
+    const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn }, 6)
 
 
     let data = 

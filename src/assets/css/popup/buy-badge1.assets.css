@@ -85,6 +85,7 @@
     max-height: 80%;
     width: 40%;
     border: 1.5px solid white;
+    object-fit: cover;
     border-radius: 22px;
 }
 

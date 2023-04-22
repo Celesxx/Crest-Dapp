@@ -74,7 +74,7 @@ class Dashboard extends React.Component
         if(this.state.resStable != null && this.props.resToken && this.state.totalSupply != null && this.state.address != 0 && this.state.badges.length != 0)
         {
             let contractHelper = new ContractHelper()
-            const { price, marketCap } = contractHelper.getMarketCapAndPrice(this.props.resStable, this.props.resToken, this.props.totalSupply, 18)
+            const { price, marketCap } = contractHelper.getMarketCapAndPrice(this.props.resStable, this.props.resToken, this.props.totalSupply, 6)
             const totalNbrBadges = contractHelper.getTotalNft(this.props.badges)
             this.state.price = price
             this.state.marketCap = marketCap
@@ -93,7 +93,7 @@ class Dashboard extends React.Component
                 if(this.state.resStable != null && this.props.resToken && this.state.totalSupply != null && this.props.address != "" && this.state.badges.length != 0)
                 {
                     let contractHelper = new ContractHelper()
-                    const { price, marketCap } = contractHelper.getMarketCapAndPrice(this.props.resStable, this.props.resToken, this.props.totalSupply, 18)
+                    const { price, marketCap } = contractHelper.getMarketCapAndPrice(this.props.resStable, this.props.resToken, this.props.totalSupply, 6)
                     const totalNbrBadges = contractHelper.getTotalNft(this.props.badges)
                     this.state.price = price
                     this.state.marketCap = marketCap

@@ -70,6 +70,20 @@
     width: 30px; 
     -webkit-animation: link-groth 0.25s linear; 
             animation: link-groth 0.25s linear;
+    --glow-color: rgb(255, 255, 255, 0.8);
+    --glow-spread-color: rgba(202, 202, 202, 0.781);
+    outline: none;
+    -webkit-box-shadow: 
+    0 0 0.25em 0.05em var(--glow-color), 
+    0 0 0em 0em var(--glow-spread-color),
+    inset 0em -2px 0.5em 0em var(--glow-color);
+            box-shadow: 
+    0 0 0.25em 0.05em var(--glow-color), 
+    0 0 0em 0em var(--glow-spread-color),
+    inset 0em -2px 0.5em 0em var(--glow-color);
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
 
 .social-link

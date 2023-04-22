@@ -4,7 +4,7 @@ export const localhost = {
     nativeCurrency: {
         name: 'ETH',
         symbol: 'ETH',
-        decimals: 18, 
+        decimals: 6, 
     },  
     rpcUrls: [
         'http://localhost:8545/'
@@ -20,7 +20,7 @@ export const avalanche_fuji = {
     nativeCurrency: {
         name: 'AVAX',
         symbol: 'AVAX',
-        decimals: 18,
+        decimals: 6,
     },
     rpcUrls: [
         'https://api.avax-test.network/ext/bc/C/rpc'
@@ -52,7 +52,7 @@ export const binance_test = {
     nativeCurrency: {
         name: 'BNB',
         symbol: 'BNB',
-        decimals: 18,
+        decimals: 6,
     },
     rpcUrls: [
         'https://data-seed-prebsc-1-s1.binance.org:8545/'

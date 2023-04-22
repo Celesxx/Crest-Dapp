@@ -58,7 +58,7 @@ class Home extends React.Component
 
   componentDidMount()
   {
-    if(this.state.interval == null) this.state.interval = setInterval(() => this.loadRotationCards(), 6000)
+    if(this.state.interval == null) this.state.interval = setInterval(() => this.loadRotationCards(), 11000)
   }
 
   componentWillUnmount()
@@ -124,25 +124,32 @@ class Home extends React.Component
                   {
                     news[this.state.language].map((value, key) => 
                     {
+                      if(!value.visible)
+                      {
                         return(
-                        <label className="home-card flex row" key={`label-${key}`}  htmlFor={`item-${key+1}`} id={`card-${key+1}`}>
-                          <div className="home-card-image-core flex center">
-                              <img className="home-card-image" src={value.img} alt="" /> 
-                          </div>
-
-                          <div className="home-card-description-core flex column">
-                              <h1 className="home-card-title">{ value.title }</h1>
-                              <p className="home-card-description">{ value.desc }</p>
-                              {value.url != "" && <a target="_blank" rel="noopener noreferrer" className="home-card-link" href={value.url} >{ Language[this.state.language].home.link }</a> }
-                          </div>
-                          {
-                            !value.visible && 
+                          <label className="home-card glow flex row" key={`label-${key}`}  htmlFor={`item-${key+1}`} id={`card-${key+1}`}>
                             <div className="home-card-locked flex center">
                               <p className="home-card-title">{ Language[this.state.language].home.coming }</p>
                             </div>
-                          }
-                        </label>
-                    )})
+                          </label>
+                        )
+                      }else
+                      {
+                        return(
+                          <label className="home-card glow flex row" key={`label-${key}`}  htmlFor={`item-${key+1}`} id={`card-${key+1}`}>
+                            <div className="home-card-image-core flex center">
+                              <img className="home-card-image" src={value.img} alt="" /> 
+                            </div>
+  
+                            <div className="home-card-description-core flex column">
+                                <h1 className="home-card-title">{ value.title }</h1>
+                                <p className="home-card-description">{ value.desc }</p>
+                                {value.url != "" && <a target="_blank" rel="noopener noreferrer" className="home-card-link" href={value.url} >{ Language[this.state.language].home.link }</a> }
+                            </div>
+                          </label>
+                        )
+                      }
+                    })
                   }
                   
               </div>

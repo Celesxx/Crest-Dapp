@@ -6,8 +6,8 @@ import 'assets/css/blocks/mobile/swap.assets.css'
 import React from "react";
 import Address from 'contracts/address.contracts.json'
 import ContractHelper from "helpers/contract.helpers";
-import LogoCrest from "assets/img/logoCrest.svg"
-import LogoBusd from "assets/img/logoBusd.svg"
+import LogoCrest from "assets/img/logoCrest.svg"  
+import LogoBusd from "assets/img/logoUsdc.png"
 import ArrowUpDown from "assets/img/arrowUpDown.svg"
 import Restricted from "components/blocks/restricted.block.jsx"
 import Language from "assets/data/language.json"
@@ -53,7 +53,7 @@ class Dashboard extends React.Component
           resToken: this.props.resToken,
           resStable: this.props.resStable,
           address: this.props.address,
-          dataIn: { name: "$BUSD", balance: null, logo: LogoBusd },
+          dataIn: { name: "$USDC", balance: null, logo: LogoBusd },
           dataOut: { name: "$CREST", balance: null, logo: LogoCrest },
           sellLoader: "usdt",
           startLoading: this.props.startLoading,
@@ -161,15 +161,15 @@ class Dashboard extends React.Component
 
       if(this.state.sellLoader == "token" && target.value != "") 
       {
-        let value = contractHelper.setBignumberUnit(target.value, 18)
+        let value = contractHelper.setBignumberUnit(target.value, 6)
         let amountOut = contractHelper.getAmountOut(value, this.state.resToken, this.state.resStable, false)
-        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 18)
+        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
       }
       else if(this.state.sellLoader == "usdt" && target.value != "") 
       {
-        let value = contractHelper.setBignumberUnit(target.value, 18)
+        let value = contractHelper.setBignumberUnit(target.value, 6)
         let amountOut = contractHelper.getAmountOut(value, this.state.resStable, this.state.resToken, true)
-        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 18)
+        this.state.amountPrice = contractHelper.setFormatUnit(amountOut, 6)
       
       }else if(target.value == "") this.state.amountPrice = null
       this.forceUpdate()
@@ -203,7 +203,7 @@ class Dashboard extends React.Component
       if(this.state.sellLoader === "token") path = [Address.token, Address.stable]
       else if(this.state.sellLoader === "usdt") path = [Address.stable, Address.token] 
       
-      amountIn = await contractHelper.setBignumberUnit(document.getElementById("balanceIn").value, 18)
+      amountIn = await contractHelper.setBignumberUnit(document.getElementById("balanceIn").value, 6)
       
       const deadline = Math.floor((new Date()).getTime() / 1000) + 600
       await contractHelper.swapToken(this.state.address, amountIn, 0, path, deadline, provider)
@@ -212,7 +212,7 @@ class Dashboard extends React.Component
       const { totalSupply, totalBurn } = await contractHelper.getTotalSuplyAndBurn(provider)
       const userCrestBalance = await contractHelper.getERC20Balance(this.state.address, Address.token, provider)
       const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
-      const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn, userCrestBalance: userCrestBalance, userStableBalance: userStableBalance }, 18)
+      const formatUnit = await contractHelper.setFormatUnits({totalSupply: totalSupply, totalBurn: totalBurn, userCrestBalance: userCrestBalance, userStableBalance: userStableBalance }, 6)
       
       let data = 
       {
@@ -234,7 +234,7 @@ class Dashboard extends React.Component
       document.getElementById('WEB3_CONNECT_MODAL_ID').remove()
       await contractHelper.mintStable(provider)
       const userStableBalance = await contractHelper.getERC20Balance(this.state.address, Address.stable, provider)
-      const formatUnit = await contractHelper.setFormatUnit(userStableBalance, 18)
+      const formatUnit = await contractHelper.setFormatUnit(userStableBalance, 6)
       let data = { stableUser: {balance: formatUnit} }
       this.props.dashboardAction({data: data, action: "saveData"})
     }
@@ -251,7 +251,7 @@ class Dashboard extends React.Component
       {
         this.state.sellLoader = "usdt"
         this.state.dataIn.balance = this.props.stableUser.balance;
-        this.state.dataIn.name = "$BUSD"
+        this.state.dataIn.name = "$USDC"
         this.state.dataIn.logo = LogoBusd
         this.state.dataOut.balance = this.props.tokenUser.balance;
         this.state.dataOut.name = "$CREST";
@@ -261,7 +261,7 @@ class Dashboard extends React.Component
       {
         this.state.sellLoader = "token"
         this.state.dataOut.balance = this.props.stableUser.balance;
-        this.state.dataOut.name = "$BUSD"
+        this.state.dataOut.name = "$USDC"
         this.state.dataOut.logo = LogoBusd
         this.state.dataIn.balance = this.props.tokenUser.balance;
         this.state.dataIn.name = "$CREST";
@@ -319,7 +319,7 @@ class Dashboard extends React.Component
               <div className="swap-core flex column">
                 <div className="swap-content-core">
 
-                <button className="swap-button-mint glow glow-red button" onClick={() => this.mintToken()}>Mint $BUSD</button>
+                <button className="swap-button-mint glow glow-red button" onClick={() => this.mintToken()}>Mint $USDC</button>
 
                 <div className="card-core flex column center">
                 
